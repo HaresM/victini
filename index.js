@@ -14,13 +14,6 @@ bot.on('guildMemberAdd', member => {
 
   });
 
-bot.on('message', message => {
-    if(message.content == 'beep') {
-        message.channe.sendMessage('Test. Bot is working correctly!');
-    }
-)};
-
 //bot.login('MzcyMDM3ODQzNTc0NDU2MzQy.DM-WxQ.XrRQRbNdbV9VPD9DYgSHQIfMqdQ');
 
 bot.login(process.env.BOT_TOKEN);
-
