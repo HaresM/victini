@@ -1,5 +1,6 @@
 const Discord = require('discord.js');
-const bot = new Discord.Client();
+const bot = new commando.Client({ id:'id', commandPrefix:'~'
+});
 
 //bot.registry.registerGroup('random', 'Random');
 //bot.regisrtry.registerDefaults();
@@ -14,6 +15,13 @@ bot.on('guildMemberAdd', member => {
 
   });
 
+bot.on('message', message => {
+    if(message.content == 'beep') {
+        message.channe.sendMessage('Test. Bot is working correctly!');
+    }
+)};
+
 //bot.login('MzcyMDM3ODQzNTc0NDU2MzQy.DM-WxQ.XrRQRbNdbV9VPD9DYgSHQIfMqdQ');
 
 bot.login(process.env.BOT_TOKEN);
+
