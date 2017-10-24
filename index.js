@@ -14,6 +14,19 @@ bot.on('guildMemberAdd', member => {
 
   });
 
+bot.on('message', (message) => {
+
+    if (message.content == '1') {
+    if (hasRole (user, 'Intro')){
+    removeRole(member, 'Intro');
+    if (addRole(member, 'Fan/Supporter')){
+          sendMessage(member.user + ' has become a Pokémon Victorius-fan! Please read <#369529917853138945>, and enjoy your stay!', 'community-general');
+    channel.bulkDelete(25);
+    }
+    }
+  }
+});
+
 //bot.login('MzcyMDM3ODQzNTc0NDU2MzQy.DM-WxQ.XrRQRbNdbV9VPD9DYgSHQIfMqdQ');
 
 bot.login(process.env.BOT_TOKEN);
