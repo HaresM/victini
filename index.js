@@ -14,6 +14,12 @@ bot.on('guildMemberAdd', member => {
 
   });
 
+  bot.on('guildMemberRemove', member => {
+
+    bot.channels.get('369492433592909844').send('Sadly, ${member.user.username} has just left the server. RIP...!');
+
+  });
+
 //bot.login('MzcyMDM3ODQzNTc0NDU2MzQy.DM-WxQ.XrRQRbNdbV9VPD9DYgSHQIfMqdQ');
 
 bot.login(process.env.BOT_TOKEN);
