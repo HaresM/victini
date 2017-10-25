@@ -16,7 +16,7 @@ bot.on('guildMemberAdd', member => {
 
   bot.on('guildMemberRemove', member => {
 
-    bot.channels.get('369492433592909844').send('Sadly, ${member.user.username} has just left the server. RIP...!');
+    bot.channels.get('369492433592909844').send('Sadly, ' + member.user.username + ' has just left the server. RIP...!');
 
   });
 
