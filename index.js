@@ -44,7 +44,7 @@ bot.on('guildMemberAdd', member => {
 
   });
 
-client.on('message', (message) => {
+  bot.on('message', (message) => {
   if (message.content == 'v.8ball') {
     message.channel.send(magic8ball[rand(magic8ball.length)]);
 }
