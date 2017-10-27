@@ -4,6 +4,8 @@ const client = new commando.Client({
     commandPrefix: 'v.'
     });
 
+const prefix = "v.";
+
 //bot.registry.registerGroup('random', 'Random');
 //bot.regisrtry.registerDefaults();
 //bot.regisrtry.registerCommandsIn(__dirname + "/commands");
@@ -47,14 +49,18 @@ bot.on('guildMemberAdd', member => {
 
   });
 
-  bot.on('message', (message) => {
-  //if (message.content == 'v.8ball') {
-  //  message.channel.send(magic8ball[rand(magic8ball.length)]);
+
+
+bot.on("message", (message) => {
     
-     if (message.content == 'v.lenny') {
-        channel.bulkDelete(1);
-        sendMessage('( ͡° ͜ʖ ͡°)');
-}
+  if (!message.content.startsWith(prefix)) return;
+
+  if (message.content.startsWith(prefix + "lenny")) {
+    message.channel.send("( ͡° ͜ʖ ͡°)");
+  } else
+  if (message.content.startsWith(prefix + "shrug")) {
+    message.channel.send("¯\_(ツ)_/¯");
+  }
 });
 
 
