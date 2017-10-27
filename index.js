@@ -5,6 +5,34 @@ const bot = new Discord.Client();
 //bot.regisrtry.registerDefaults();
 //bot.regisrtry.registerCommandsIn(__dirname + "/commands");
 
+const magic8ball = [
+  "It is certain.",
+  "It is decidedly so.",
+  "Without a doubt.",
+  "Yes - definitely.",
+  "You may rely on it.",
+  "As I see it, yes.",
+  "Most likely.",
+  "Outlook good.",
+  "Yes.",
+  "Signs point to yes.",
+  "Reply hazy, try again.",
+  "Ask again later.",
+  "Better not tell you now.",
+  "Cannot predict now.",
+  "Concentrate and ask again.",
+  "Don't count on it.",
+  "My reply is no.",
+  "My sources say no.",
+  "Outlook not so good.",
+  "Very doubtful."
+]
+
+const commands = [
+  "magic8ball"
+]
+
+
 bot.on('guildMemberAdd', member => {
 
     bot.channels.get('369507173937709056').send('Welcome to the official Pokémon Victorius server, ' + member.user + ' ! To proceed, please type in a separate message the number which corresponds the most to the reason you have come to this server. \n\n1)    I want to support the game but do not wish to contribute anything. (Type in `1`) \n2)   I want to help the game by contributing something, but do not want to be extremely commited. (Type in `2`) \n3)   I want to actively help the game and its development by providing aid in one particular field of which I am skilled at. (Type in `3`)\n\nFeel free to ask the <@&369499519794151425>, <@&369499281134059520>, or an <@&372096917611741184> for help!');
@@ -14,11 +42,17 @@ bot.on('guildMemberAdd', member => {
 
   });
 
+
   bot.on('guildMemberRemove', member => {
 
     bot.channels.get('369492433592909844').send('Sadly, ' + member.user.username + ' has just left the server. RIP...!');
 
   });
+
+  if (command(channel, cmd, "8ball")){
+    message.channel.send(magic8ball[rand(magic8ball.length)]);
+}
+
 
 //bot.login('MzcyMDM3ODQzNTc0NDU2MzQy.DM-WxQ.XrRQRbNdbV9VPD9DYgSHQIfMqdQ');
 
