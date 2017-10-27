@@ -1,8 +1,5 @@
 const Discord = require('discord.js');
 const bot = new Discord.Client();
-const client = new commando.Client({
-    commandPrefix: 'v.'
-    });
 
 const prefix = "v.";
 
