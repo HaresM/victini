@@ -46,9 +46,9 @@ bot.on("message", (message) => {
 	    'Better not tell you now.',
 	    'Cannot predict now.',
 	    'Concentrate and ask again.',
-	    'I would not count on it.,
+	    'I would not count on it.',
 	    'My reply is no.',
-	    'My sources say no.,
+	    'My sources say no.',
 	    'Outlook not so good.',
 	    'Very doubtful.'
     ];
