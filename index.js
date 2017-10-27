@@ -45,8 +45,12 @@ bot.on('guildMemberAdd', member => {
   });
 
   bot.on('message', (message) => {
-  if (message.content == 'v.8ball') {
-    message.channel.send(magic8ball[rand(magic8ball.length)]);
+  //if (message.content == 'v.8ball') {
+  //  message.channel.send(magic8ball[rand(magic8ball.length)]);
+    
+     if (message.content == 'v.lenny') {
+        channel.bulkDelete(1);
+        sendMessage('( ͡° ͜ʖ ͡°)');
 }
 });
 
