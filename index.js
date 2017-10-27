@@ -53,10 +53,12 @@ bot.on("message", (message) => {
   if (!message.content.startsWith(prefix)) return;
 
   if (message.content.startsWith(prefix + "lenny")) {
-    message.channel.send("( ͡° ͜ʖ ͡°)");
+        message.delete();
+        message.channel.send("( ͡° ͜ʖ ͡°)");
   } else
   if (message.content.startsWith(prefix + "shrug")) {
-    message.channel.send("¯\_(ツ)_/¯");
+        message.delete();
+        message.channel.send("¯\\_(ツ)_/¯");
   }
 });
 
