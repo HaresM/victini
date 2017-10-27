@@ -58,9 +58,12 @@ bot.on("message", (message) => {
   if (message.content.startsWith(prefix + "shrug")) {
         message.delete();
         message.channel.send("¯\\_(ツ)_/¯");
+  } else
+  if (message.content.startsWith(prefix + "lenny")) {
+        message.delete();
+        message.channel.send("( ͡° ͜ʖ ͡°)");
   }
 });
-
 
 //bot.login('MzcyMDM3ODQzNTc0NDU2MzQy.DM-WxQ.XrRQRbNdbV9VPD9DYgSHQIfMqdQ');
 
