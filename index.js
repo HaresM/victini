@@ -53,6 +53,7 @@ bot.on("message", (message) => {
 	    'Very doubtful.'
     ];
     var randomReply = Math.floor(Math.random()*magicArray.length);
+    message.reply(`${magicArray[randomReply]}`)
   } else
   if (message.content.startsWith(prefix + "shrug")) {
         message.delete();
