@@ -41,7 +41,7 @@ bot.on("message", (message) => {
 	    'Outlook good.',
 	    'Yes.',
 	    'Signs point to yes.',
-	    'Reply hazy, try again.,
+	    'Reply hazy, try again.',
 	    'Ask again later.',
 	    'Better not tell you now.',
 	    'Cannot predict now.',
