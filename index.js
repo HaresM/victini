@@ -29,6 +29,7 @@ bot.on("message", (message) => {
     
   if (!message.content.startsWith(prefix)) return;
 
+ //8ball command
   if (message.content.startsWith(prefix + "8ball")) {
         var magicArray = [
       'It is certain.',
@@ -50,11 +51,17 @@ bot.on("message", (message) => {
 	    'My reply is no.',
 	    'My sources say no.',
 	    'Outlook not so good.',
+	    'Are you done asking questions yet?',
+	    'Why the fuck should I even know this?',
+            'The answer lies within yourself.',
+	    'why are you asking me?',
+	    'Follow the seahorse.',
 	    'Very doubtful.'
     ];
     var randomReply = Math.floor(Math.random()*magicArray.length);
     message.channel.sendMessage(`${magicArray[randomReply]}`)
   } else
+ //face commands
   if (message.content.startsWith(prefix + "shrug")) {
         message.delete();
         message.channel.send("¯\\_(ツ)_/¯");
@@ -62,6 +69,22 @@ bot.on("message", (message) => {
   if (message.content.startsWith(prefix + "lenny")) {
         message.delete();
         message.channel.send("( ͡° ͜ʖ ͡°)");
+  } else
+   if (message.content.startsWith(prefix + "dead")) {
+        message.delete();
+        message.channel.send("( ×ω× )");
+  } else
+   if (message.content.startsWith(prefix + "angry")) {
+        message.delete();
+        message.channel.send("ヽ(#`Д´)ﾉ");
+  } else
+   if (message.content.startsWith(prefix + "shocked")) {
+        message.delete();
+        message.channel.send("Σ(ﾟДﾟ；≡；ﾟдﾟ)");
+  } else
+   if (message.content.startsWith(prefix + "superlenny")) {
+        message.delete();
+        message.channel.send("( ͡o ͜ʖ ͡o)");
   }
 });
 
