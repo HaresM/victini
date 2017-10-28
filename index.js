@@ -85,11 +85,11 @@ bot.on("message", (message) => {
    if (message.content.startsWith(prefix + "superlenny")) {
         message.delete();
         message.channel.send("( ͡o ͜ʖ ͡o)");
-  } else
+  } 
   //story commmand
-   if (message.content.startsWith(prefix + "story")) {
-        message.channel.send("Fated boy/girl who happens to live next to the pokemon lab gets tangled up with an evil organization after receiving a starter pokemon with a very rare genetic condition called "Alium Syndrome", works with professor and friends to prevent world annihilation from happening due to some evil dude taking advantage of this pokemon condition and abusing their power for his own gains. Using his newfound power he convinces a few renowned evil team leaders from around the pokemon world to help him create the perfect pokemon and rule over the world and its fate. However, the main character has the power to raise the odd pokemon to their full potential and use their power to foil the last part of the perfect pokemon, his creation, by obtaining victini, and then with the power of the victory pokemon is able to defeat the imperfect pokemon and restore peace.");
-  }
+   //if (message.content.startsWith(prefix + "story")) {
+    //    message.channel.send("Fated boy/girl who happens to live next to the pokemon lab gets tangled up with an evil organization after receiving a starter pokemon with a very rare genetic condition called "Alium Syndrome", works with professor and friends to prevent world annihilation from happening due to some evil dude taking advantage of this pokemon condition and abusing their power for his own gains. Using his newfound power he convinces a few renowned evil team leaders from around the pokemon world to help him create the perfect pokemon and rule over the world and its fate. However, the main character has the power to raise the odd pokemon to their full potential and use their power to foil the last part of the perfect pokemon, his creation, by obtaining victini, and then with the power of the victory pokemon is able to defeat the imperfect pokemon and restore peace.");
+  //}
 });
 
 //bot.login('MzcyMDM3ODQzNTc0NDU2MzQy.DM-WxQ.XrRQRbNdbV9VPD9DYgSHQIfMqdQ');
