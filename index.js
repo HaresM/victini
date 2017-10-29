@@ -97,11 +97,11 @@ bot.on("message", (message) => {
 
   //admin only commands
   //say command
-   if(message.member.roles.has(role.id)) {
+   if(message.member.roles.some(r=>["Director", "Co-director", "Admin",].includes(r.name)) ) {
             var args = message.content.split(' ');
             var cmd = args[0].substr(1);
             args.splice(0, 1);
-            if (message.content(prefix + "say")) {
+            if (message.content.startWith(prefix + "say")) {
                 if (args[0]){
                     var channel = getChannel(args[0]);
                     args.splice(0, 1);
