@@ -26,7 +26,7 @@ bot.on('guildMemberAdd', member => {
 
 
 
-bot.on("message", (message) => {
+bot.on("message", async message => {
 	
   if(message.author.bot) return;
   if(message.content.indexOf(config.prefix) !== 0) return;
