@@ -74,7 +74,7 @@ client.on("message",  (message) => {
       }
     //Admin-only commands
     //Say commands
-    if(message.member.roles.some(r=>["Dev", "Mod", "Server Staff", "Proficient"].includes(r.name)) ) {
+    if(message.member.roles.some(r=>["Director", "Co-director", "Admin"].includes(r.name)) ) {
             var args = message.content.split(' ');
             var cmd = args[0].substr(1);
             args.splice(0, 1);
