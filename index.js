@@ -10,8 +10,8 @@ client.on("message",  (message) => {
     if (message.content.indexOf(prefix) !== 0) return;
 
     
-            var args = message.content.split(' ');
-            var cmd = args[0].substr(1);
+    const args = message.content.slice(prefix.length).trim().split(/ +/g);
+    const command = args.shift().toLowerCase();
 
     //8ball command
     if (command === "8ball") {
