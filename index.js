@@ -72,7 +72,24 @@ client.on("message",  (message) => {
         message.delete();
         message.channel.send("( ͡o ͜ʖ ͡o)");
       }
-
+    //Admin-only commands
+    //Say commands
+    if if(message.member.roles.some(r=>["Dev", "Mod", "Server Staff", "Proficient"].includes(r.name)) ) {
+            var args = message.content.split(' ');
+            var cmd = args[0].substr(1);
+            args.splice(0, 1);
+            if (command === "say"){
+                if (args[0]){
+                    var channel = getChannel(args[0]);
+                    args.splice(0, 1);
+                    var msg = args.join(' ');
+                    if (!message.channel.sendd(msg, channel)){
+                        message.channel.send('Could not send the message. (Did you specify a valid channel?)');
+                    }
+                }
+            }
+        }
+    
 });
 
 client.login(process.env.BOT_TOKEN);
