@@ -1,5 +1,7 @@
 const Discord = require('discord.js');
 const bot = new Discord.Client();
+const args = message.content.slice(prefix.length).trim().split(/ +/g);
+const command = args.shift().toLowerCase();
 
 const prefix = "v.";
 var story = "Fated boy/girl who happens to live next to the Pokémon lab gets tangled up with an evil organization after receiving a starter Pokémon with a very rare genetic condition called *Alium Syndrome*, works with professor and friends to prevent world annihilation from happening due to some evil dude taking advantage of this Pokémon condition and abusing their power for his own gains. Using his newfound power he convinces a few *renowned evil team leaders* from around the Pokémon-world to help him create the perfect Pokémon and rule over the world and its fate. However, the main character has the power to raise the odd Pokémon to their full potential and use their power to foil the last part of the perfect Pokémon, his creation, by *obtaining Victini*, and then with the power of the victory Pokémon is able to defeat the imperfect Pokémon and restore peace."
@@ -34,7 +36,7 @@ bot.on("message", (message) => {
   if (!message.content.startsWith(prefix)) return;
 
  //8ball command
-  if (message.content.startsWith(prefix + "8ball")) {
+  if (command === "8ball")) {
         var magicArray = [
       'It is certain.',
 	    'It is decidedly so.',
@@ -66,11 +68,11 @@ bot.on("message", (message) => {
     message.channel.sendMessage(`${magicArray[randomReply]}`)
   } else
  //face commands
-  if (message.content.startsWith(prefix + "shrug")) {
+  if (command === "shrug")) {
         message.delete();
         message.channel.send("¯\\_(ツ)_/¯");
   } else
-  if (message.content.startsWith(prefix + "lenny")) {
+  if (command === "lenny")) {
         message.delete();
         message.channel.send("( ͡° ͜ʖ ͡°)");
   } else
