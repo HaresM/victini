@@ -26,7 +26,10 @@ bot.on('guildMemberAdd', member => {
 
 
 
-bot.on("message", (message) => {
+bot.on("message", async (message) => {
+	
+  if(message.author.bot) return;
+  if(message.content.indexOf(config.prefix) !== 0) return;
     
   if (!message.content.startsWith(prefix)) return;
 
@@ -90,7 +93,25 @@ bot.on("message", (message) => {
   //story commmand
    if (message.content.startsWith(prefix + "story")) {
       message.channel.send(story);
-  }
+  } else
+
+  //admin only commands
+  //say command
+   if(message.member.roles.has(role.id)) {
+            var args = message.content.split(' ');
+            var cmd = args[0].substr(1);
+            args.splice(0, 1);
+            if (cmd == "say"){
+                if (args[0]){
+                    var channel = getChannel(args[0]);
+                    args.splice(0, 1);
+                    var msg = args.join(' ');
+                    if (!send(msg, channel)){
+                        send('Could not send the message. (Did you specify a valid channel?)');
+                    }
+                }
+            }
+   }
 });
 
 //bot.login('MzcyMDM3ODQzNTc0NDU2MzQy.DM-WxQ.XrRQRbNdbV9VPD9DYgSHQIfMqdQ');
