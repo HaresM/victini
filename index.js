@@ -101,7 +101,7 @@ bot.on("message", async (message) => {
             var args = message.content.split(' ');
             var cmd = args[0].substr(1);
             args.splice(0, 1);
-            if (cmd == "say"){
+            if (message.content(prefix + "say")) {
                 if (args[0]){
                     var channel = getChannel(args[0]);
                     args.splice(0, 1);
