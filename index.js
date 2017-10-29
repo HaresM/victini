@@ -55,7 +55,7 @@ bot.on("message", (message) => {
 	    'Are you done asking questions yet?',
 	    'Why the fuck should I even know this?',
             'The answer lies within yourself.',
-	    'why are you asking me?',
+	    'Why are you asking me?',
 	    'Follow the seahorse.',
 	    'Very doubtful.'
     ];
