@@ -90,7 +90,7 @@ bot.on("message", (message) => {
   //story commmand
    if (message.content.startsWith(prefix + "story")) {
       message.channel.send(story);
-  } else
+  }
 });
 
 //bot.login('MzcyMDM3ODQzNTc0NDU2MzQy.DM-WxQ.XrRQRbNdbV9VPD9DYgSHQIfMqdQ');
