@@ -9,8 +9,9 @@ client.on("message",  (message) => {
 
     if (message.content.indexOf(prefix) !== 0) return;
 
-    const args = message.content.slice(prefix.length).trim().split(/ +/g);
-    const command = args.shift().toLowerCase();
+    
+            var args = message.content.split(' ');
+            var cmd = args[0].substr(1);
 
     //8ball command
     if (command === "8ball") {
@@ -75,8 +76,6 @@ client.on("message",  (message) => {
     //Admin-only commands
     //Say commands
     if(message.member.roles.some(r=>["Director", "Co-director", "Admin"].includes(r.name)) ) {
-            var args = message.content.split(' ');
-            var cmd = args[0].substr(1);
             args.splice(0, 1);
             if (command === "say"){
                 if (args[0]){
