@@ -40,10 +40,9 @@ client.on("message",  (message) => {
     const args = message.content.slice(prefix.length).trim().split(/ +/g);
     const command = args.shift().toLowerCase();
 
-
-    if (command === "8ball") {
-                if (message.content.startsWith(prefix + "8ball")) {
-                    var magicArray = [
+    switch(command){
+        case: 
+        var magicArray = [
                         'It is certain.',
                         'It is decidedly so.',
                         'Without a doubt.',
@@ -72,8 +71,7 @@ client.on("message",  (message) => {
                     ];
                     var randomReply = Math.floor(Math.random() * magicArray.length);
                     message.channel.sendMessage(`${magicArray[randomReply]}`)
-                }
-    }
+break;
 
 });
 
