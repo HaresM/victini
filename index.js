@@ -1,34 +1,6 @@
-//const Discord = require('discord.js');
-//const bot = new Discord.Client();
-
-const prefix = "v.";
-//var story = "Fated boy/girl who happens to live next to the Pokémon lab gets tangled up with an evil organization after receiving a starter Pokémon with a very rare genetic condition called *Alium Syndrome*, works with professor and friends to prevent world annihilation from happening due to some evil dude taking advantage of this Pokémon condition and abusing their power for his own gains. Using his newfound power he convinces a few *renowned evil team leaders* from around the Pokémon-world to help him create the perfect Pokémon and rule over the world and its fate. However, the main character has the power to raise the odd Pokémon to their full potential and use their power to foil the last part of the perfect Pokémon, his creation, by *obtaining Victini*, and then with the power of the victory Pokémon is able to defeat the imperfect Pokémon and restore peace."
-
-//bot.registry.registerGroup('random', 'Random');
-//bot.regisrtry.registerDefaults();
-//bot.regisrtry.registerCommandsIn(__dirname + "/commands");
-
-//bot.on('guildMemberAdd', member => {
-
-  //  bot.channels.get('369507173937709056').send('Welcome to the official Pokémon Victorius server, ' + member.user + ' ! To proceed, please type in a separate message the number which corresponds the most to the reason you have come to this server. \n\n1)    I want to support the game but do not wish to contribute anything. (Type in `1`) \n2)   I want to help the game by contributing something, but do not want to be extremely commited. (Type in `2`) \n3)   I want to actively help the game and its development by providing aid in one particular field of which I am skilled at. (Type in `3`)\n\nFeel free to ask the <@&369499519794151425>, <@&369499281134059520>, or an <@&372096917611741184> for help!');
-
-    //var roleIntro = member.guild.roles.find('name', 'Intro');
-    //member.addRole(roleIntro);
-
-  //});
-
-
-  //bot.on('guildMemberRemove', member => {
-
-    //bot.channels.get('369492433592909844').send('Sadly, ' + member.user.username + ' has just left the server. RIP...!');
-
- // });
-
-
-
 const Discord = require("discord.js");
-
 const client = new Discord.Client();
+const prefix = "v.";
 
 
 client.on("message",  (message) => {
@@ -40,7 +12,7 @@ client.on("message",  (message) => {
     const args = message.content.slice(prefix.length).trim().split(/ +/g);
     const command = args.shift().toLowerCase();
 
-
+    //8ball command
     if (command === "8ball") {
                 if (message.content.startsWith(prefix + "8ball")) {
                     var magicArray = [
@@ -74,9 +46,33 @@ client.on("message",  (message) => {
                     message.channel.sendMessage(`${magicArray[randomReply]}`)
                 }
     }
+  
+  //face commands
+      if(command === "lenny") {
+                    message.delete();
+        message.channel.send("( ͡° ͜ʖ ͡°)");
+      } 
+        if(command === "shrug") {
+        message.delete();
+        message.channel.send("¯\\_(ツ)_/¯");
+      } 
+       if(command === "dead") {
+        message.delete();
+        message.channel.send("( ×ω× )");
+      } 
+            if(command === "angry") {
+        message.delete();
+        message.channel.send("ヽ(#`Д´)ﾉ");
+      } 
+               if(command === "shocked") {
+        message.delete();
+        message.channel.send("Σ(ﾟДﾟ；≡；ﾟдﾟ)");
+      }
+                 if(command === "superlenny") {
+        message.delete();
+        message.channel.send("( ͡o ͜ʖ ͡o)");
+      }
 
 });
-
-//bot.login('MzcyMDM3ODQzNTc0NDU2MzQy.DM-WxQ.XrRQRbNdbV9VPD9DYgSHQIfMqdQ');
 
 client.login(process.env.BOT_TOKEN);
