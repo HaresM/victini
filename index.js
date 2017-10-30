@@ -31,9 +31,8 @@ client.on("message", (message) => {
 	const args = message.content.slice(prefix.length).trim().split(/ +/g);
 	const command = args.shift().toLowerCase();
 
-	//8ball command
+	// 8ball command
 	if (command === "8ball") {
-		if (message.content.startsWith(prefix + "8ball")) {
 			var magicArray = [
 				'It is certain.',
 				'It is decidedly so.',
@@ -66,7 +65,7 @@ client.on("message", (message) => {
 		}
 	}
 
-	//face commands
+	// Face command
 	if (command === "lenny") {
 		message.delete();
 		message.channel.send("( ͡° ͜ʖ ͡°)");
@@ -91,7 +90,14 @@ client.on("message", (message) => {
 		message.delete();
 		message.channel.send("( ͡o ͜ʖ ͡o)");
 	}
-
+	// Choose command
+	if (command === "choose") {
+	var tmp = message.content.split(`${prefix}choose`);
+            tmp.splice(0, 1);
+            tmp = tmp.join(`${prefix}choose`);
+            var sep = tmp.split('|');
+            message.channel.send(sep[rand(options.length)]);
+        }
 });
 
 client.login(process.env.BOT_TOKEN);
