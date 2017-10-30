@@ -63,7 +63,6 @@ client.on("message", (message) => {
 			var randomReply = Math.floor(Math.random() * magicArray.length);
 			message.channel.sendMessage(`${magicArray[randomReply]}`)
 		}
-	}
 
 	// Face command
 	if (command === "lenny") {
