@@ -2,38 +2,7 @@ const Discord = require("discord.js");
 const client = new Discord.Client();
 const prefix = "v.";
 
-// Victini Exec role
-var role = message.guild.roles.find("name", "Victini Exec");
-if (role === null || role === undefined) {
-	guild.createRole({
-		name: 'Victini Exec',
-		color: '#e58927',
-		permissions: [
-			"KICK_MEMBERS", "ADD_REACTIONS",
-			"READ_MESSAGES", "SEND_MESSAGES",
-			"SEND_TTS_MESSAGES", "MANAGE_MESSAGES",
-			"READ_MESSAGE_HISTORY", "EXTERNAL_EMOJIS",
-			"CONNECT", "SPEAK", "CHANGE_NICKNAME",
-			"MANAGE_NICKNAMES", "MANAGE_ROLES_OR_PERMISSIONS",
-			"MUTE_MEMBERS", "MOVE_MEMBERS",
-			"USE_VAD", "MANAGE_WEBHOOKS"
-		],
-		mentionable: true
-	});
-}
 
-function vicExec(member) {
-	return hasRole(member, "Victini Exec") || member.user.id == member.guild.ownerID;
-}
-
-
-if (message.guild.id !== "296232451372744705") {
-	   	if (command === "test") {
-		message.channel.send("Congrats, the test was successful!");
-	}
-           return;
-        }
-    else {
 client.on('guildMemberAdd', member => {
 
 	client.channels.get('369507173937709056').send('Welcome to the official Pokémon Victorius server, ' + member.user + ' ! To proceed, please type in a separate message the number which corresponds the most to the reason you have come to this server. \n\n1)    I want to support the game but do not wish to contribute anything. (Type in `1`) \n2)   I want to help the game by contributing something, but do not want to be extremely commited. (Type in `2`) \n3)   I want to actively help the game and its development by providing aid in one particular field of which I am skilled at. (Type in `3`)\n\nFeel free to ask the <@&369499519794151425>, <@&369499281134059520>, or an <@&372096917611741184> for help!');
@@ -49,8 +18,7 @@ client.on('guildMemberRemove', member => {
 	client.channels.get('369492433592909844').send('Sadly, ' + member.user.username + ' has left the server. RIP...!');
 
 });
-	    
-    }
+	  
 
 
 client.on("message", (message) => {
