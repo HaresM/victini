@@ -1,6 +1,29 @@
 const Discord = require("discord.js");
 const client = new Discord.Client();
+var fs = require('fs');
 const prefix = "v.";
+
+//Victini Exec role
+    saveConfig();
+    var role = guild.roles.find("name", "Victini Exec");
+    if (role == null || role == undefined){
+        guild.createRole({
+            name: 'Victini Exec',
+            color: '#e58927',
+            permissions: [
+                "KICK_MEMBERS", "ADD_REACTIONS",
+                "READ_MESSAGES", "SEND_MESSAGES",
+                "SEND_TTS_MESSAGES", "MANAGE_MESSAGES",
+                "READ_MESSAGE_HISTORY", "EXTERNAL_EMOJIS",
+                "CONNECT", "SPEAK", "CHANGE_NICKNAME", 
+                "MANAGE_NICKNAMES", "MANAGE_ROLES_OR_PERMISSIONS", 
+                "MUTE_MEMBERS", "MOVE_MEMBERS", 
+                "USE_VAD", "MANAGE_WEBHOOKS"
+            ],
+            mentionable: true
+        })
+    }
+}
 
 
 client.on('guildMemberAdd', member => {
