@@ -122,13 +122,13 @@ client.on("message", (message) => {
 	//Say commands
 	if (vicExec(message.member)) {
 		var execArg = message.content.split(' ');
-		var cmd = args[0].substr(1);
-		args.splice(0, 1);
+		var cmd = execArg[0].substr(1);
+		execArg.splice(0, 1);
 		if (cmd == "say") {
-			if (args[0]) {
-				var channel = getChannel(args[0]);
-				args.splice(0, 1);
-				var msg = args.join(' ');
+			if (execArg[0]) {
+				var channel = getChannel(execArg[0]);
+				execArg.splice(0, 1);
+				var msg = execArg.join(' ');
 				if (!send(msg, channel)) {
 					send('Message could not me sent. Check whether a valid channel is specified.');
 				}
