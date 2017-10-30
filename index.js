@@ -2,7 +2,7 @@ const Discord = require("discord.js");
 const client = new Discord.Client();
 const prefix = "v.";
 
-Victini Exec role
+// Victini Exec role
 var role = message.guild.roles.find("name", "Victini Exec");
 if (role === null || role === undefined) {
 	guild.createRole({
