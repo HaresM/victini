@@ -1,6 +1,5 @@
 const Discord = require("discord.js");
 const client = new Discord.Client();
-var fs = require('fs');
 const prefix = "v.";
 
 //Victini Exec role
@@ -28,7 +27,7 @@ const prefix = "v.";
 //}
 
 
-if (msg.guild.id !== "296232451372744705") {
+if (message.guild.id !== "296232451372744705") {
 	   	if (command === "test") {
 		message.channel.send("Congrats, the test was successful!");
 	}
