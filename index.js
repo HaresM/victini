@@ -4,7 +4,6 @@ var fs = require('fs');
 const prefix = "v.";
 
 //Victini Exec role
-saveConfig();
 var role = guild.roles.find("name", "Victini Exec");
 if (role === null || role === undefined) {
 	guild.createRole({
