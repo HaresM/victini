@@ -6,7 +6,7 @@ const prefix = "v.";
 //Victini Exec role
     saveConfig();
     var role = guild.roles.find("name", "Victini Exec");
-    if (role == null || role == undefined){
+    if (role === null || role === undefined){
         guild.createRole({
             name: 'Victini Exec',
             color: '#e58927',
@@ -21,8 +21,11 @@ const prefix = "v.";
                 "USE_VAD", "MANAGE_WEBHOOKS"
             ],
             mentionable: true
-        })
+        });
     }
+
+function vicExec(member){
+    return hasRole(member, "Victini Exec") || member.user.id == member.guild.ownerID;
 }
 
 
@@ -113,17 +116,19 @@ client.on("message",  (message) => {
         message.delete();
         message.channel.send("( ͡o ͜ʖ ͡o)");
       }
-    //Admin-only commands
+    //Exec-only commands
     //Say commands
-    if(message.member.roles.some(r=>["Director", "Co-director", "Admin"].includes(r.name)) ) {
+        if (vicExec(message.member)) {
+            var execArg = message.content.split(' ');
+            var cmd = args[0].substr(1);
             args.splice(0, 1);
-            if (command === "say"){
+            if (cmd == "say"){
                 if (args[0]){
                     var channel = getChannel(args[0]);
                     args.splice(0, 1);
                     var msg = args.join(' ');
-                    if (!message.channel.sendd(msg, channel)){
-                        message.channel.send('Could not send the message. (Did you specify a valid channel?)');
+                    if (!send(msg, channel)){
+                        send('Message could not me sent. Check whether a valid channel is specified.');
                     }
                 }
             }
