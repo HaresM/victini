@@ -28,7 +28,7 @@ const prefix = "v.";
 //}
 
 
-if (message.guild.id !== "296232451372744705") {
+if (msg.guild.id !== "296232451372744705") {
 	   	if (command === "test") {
 		message.channel.send("Congrats, the teest was successful!");
 	}
