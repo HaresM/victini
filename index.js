@@ -30,7 +30,7 @@ const prefix = "v.";
 
 if (msg.guild.id !== "296232451372744705") {
 	   	if (command === "test") {
-		message.channel.send("Congrats, the teest was successful!");
+		message.channel.send("Congrats, the test was successful!");
 	}
            return;
         }
