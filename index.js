@@ -92,13 +92,6 @@ client.on("message", (message) => {
 		message.channel.send("( ͡o ͜ʖ ͡o)");
 	}
 	// Choose command
-	if (command === "choose") {
-	var tmp = message.content.split(prefix`choose`);
-            tmp.splice(0, 1);
-            tmp = tmp.join(prefix`choose`);
-            var sep = tmp.split('|');
-            message.channel.send(sep[rand(options.length)]);
-        }
 });
 
 client.login(process.env.BOT_TOKEN);
