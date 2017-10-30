@@ -33,6 +33,7 @@ client.on("message", (message) => {
 
 	// 8ball command
 	if (command === "8ball") {
+		if (message.content.startsWith(prefix + "8ball")) {
 			var magicArray = [
 				'It is certain.',
 				'It is decidedly so.',
@@ -63,6 +64,7 @@ client.on("message", (message) => {
 			var randomReply = Math.floor(Math.random() * magicArray.length);
 			message.channel.sendMessage(`${magicArray[randomReply]}`)
 		}
+	}
 
 	// Face command
 	if (command === "lenny") {
