@@ -93,9 +93,9 @@ client.on("message", (message) => {
 	}
 	// Choose command
 	if (command === "choose") {
-	var tmp = message.content.split(`${prefix}choose`);
+	var tmp = message.content.split(prefix`choose`);
             tmp.splice(0, 1);
-            tmp = tmp.join(`${prefix}choose`);
+            tmp = tmp.join(prefix`choose`);
             var sep = tmp.split('|');
             message.channel.send(sep[rand(options.length)]);
         }
