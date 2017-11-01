@@ -3,25 +3,25 @@ const client = new Discord.Client();
 const prefix = "v.";
 
 
-client.on("ready", () => {
-
-    var role = guild.roles.find("name", "Victini Exec");
-	
-    if (role == null || role == undefined){
-        guild.createRole({
-            name: 'Victini Exec',
-            color: '#e59239',
-            permissions: [
-                "ADD_REACTIONS", "READ_MESSAGES", "SEND_MESSAGES",
-                "SEND_TTS_MESSAGES", "EMBED_LINKS", "ATTACH_FILES",
-                "READ_MESSAGE_HISTORY", "EXTERNAL_EMOJIS",
-                "CONNECT", "SPEAK", "CHANGE_NICKNAME", 
-		"USE_VAD", "MANAGE_WEBHOOKS"
-            ],
-            mentionable: true
-        })
-    }
-});
+//client.on("ready", () => {
+//
+  //  var role = guild.roles.find("name", "Victini Exec");
+//	
+  //  if (role == null || role == undefined){
+    //    guild.createRole({
+      //      name: 'Victini Exec',
+        //    color: '#e59239',
+          //  permissions: [
+            //    "ADD_REACTIONS", "READ_MESSAGES", "SEND_MESSAGES",
+              //  "SEND_TTS_MESSAGES", "EMBED_LINKS", "ATTACH_FILES",
+                //"READ_MESSAGE_HISTORY", "EXTERNAL_EMOJIS",
+//                "CONNECT", "SPEAK", "CHANGE_NICKNAME", 
+//		"USE_VAD", "MANAGE_WEBHOOKS"
+  //          ],
+    //        mentionable: true
+      //  })
+//    }
+//});
 
 
 client.on('guildMemberAdd', member => {
