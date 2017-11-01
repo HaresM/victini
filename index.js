@@ -110,7 +110,10 @@ client.on("message", (message) => {
         message.delete();
         message.channel.send("( ͡o ͜ʖ ͡o)");
     }
-    // Choose command
+    // Thinking command
+    if (command === "thinking") {
+        message.channel.send("https://cdn.discordapp.com/attachments/347376772951572490/364168246628188162/the_real_thinking_emoji.gif");
+    }
 });
 
 client.login(process.env.BOT_TOKEN);
