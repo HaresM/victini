@@ -3,7 +3,7 @@ const client = new Discord.Client();
 const prefix = "v.";
 
 
-client.on("guildCreate", guild => {
+client.on("ready", () => {
 
     var role = guild.roles.find("name", "Victini Exec");
 	
