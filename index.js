@@ -75,7 +75,7 @@ client.on("message", (message) => {
 				'My reply is no.',
 				'My sources say no.',
 				'Outlook not so good.',
-				'Are you done asking questions yet?'
+				'Are you done asking questions yet?',
 				'Why the fuck should I even know this?',
 				'The answer lies within yourself.',
 				'Why are you asking me?',
@@ -83,7 +83,7 @@ client.on("message", (message) => {
 				'Very doubtful.'
 			];
 			var randomReply = Math.floor(Math.random() * magicArray.length);
-			message.channel.sendMessage(`${magicArray[randomReply]}`)
+			message.channel.sendMessage(`${magicArray[randomReply]}`);
 		}
 	}
 
