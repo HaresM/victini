@@ -5,22 +5,18 @@ const prefix = "v.";
 
 client.on("guildCreate", guild => {
 
-    var role = guild.roles.find("name", "Vulpix Admin");
+    var role = guild.roles.find("name", "Victini Exec");
+	
     if (role == null || role == undefined){
         guild.createRole({
-            name: 'Vulpix Admin',
-            color: '#C6C6C6',
+            name: 'Victini Exec',
+            color: '#e59239',
             permissions: [
-                "KICK_MEMBERS", "ADD_REACTIONS",
-                "READ_MESSAGES", "SEND_MESSAGES",
-                "SEND_TTS_MESSAGES", "MANAGE_MESSAGES",
-                "EMBED_LINKS", "ATTACH_FILES",
+                "ADD_REACTIONS", "READ_MESSAGES", "SEND_MESSAGES",
+                "SEND_TTS_MESSAGES", "EMBED_LINKS", "ATTACH_FILES",
                 "READ_MESSAGE_HISTORY", "EXTERNAL_EMOJIS",
-                "CONNECT", "SPEAK", "DEAFEN_MEMBERS",
-                "CHANGE_NICKNAME", "MANAGE_NICKNAMES",
-                "MANAGE_ROLES_OR_PERMISSIONS", "MUTE_MEMBERS",
-                "MOVE_MEMBERS", "USE_VAD", "MANAGE_WEBHOOKS",
-                "MANAGE_EMOJIS"
+                "CONNECT", "SPEAK", "CHANGE_NICKNAME", 
+		"USE_VAD", "MANAGE_WEBHOOKS"
             ],
             mentionable: true
         })
