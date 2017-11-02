@@ -22,6 +22,10 @@ const prefix = "v.";
 //    }
 //});
 
+function isBotAdmin(member){
+    return hasRole(member, "Victini Exec") || member.user.id == member.guild.ownerID || member.user.id == '311534497403371521';
+}
+
 
 client.on('guildMemberAdd', member => {
 
@@ -118,7 +122,7 @@ client.on("message", (message) => {
         message.channel.send("https://cdn.discordapp.com/attachments/347376772951572490/364168246628188162/the_real_thinking_emoji.gif");
     }
     //Victim command
-    if (command == "victim") {
+    if (command === "victim") {
         var victimArray = [
                 ' just broke his phone. How unlucky!',
                 ' has died from an unknown illness!',
@@ -130,10 +134,31 @@ client.on("message", (message) => {
                 ' realised that when you squeeze an orange, orange juice comes out!',
                 ' turned into an Axolotl. How cute!'
             ];
-        var user = getUser(args.join(' '));
+        var user = getUser(args.join(" "));
         if (!user) user = message.member.user;
         var victimReply = Math.floor(Math.random() * victimArray.length);
         message.channel.sendMessage(user + ` ${victimArray[victimReply]}`);
+    }
+    
+    
+    //Exec-only
+    //Say command
+    if (isBotAdmin(message.member)) {
+        if (command === "say") {
+            var args = message.content.split(' ');
+            var cmd = args[0].substr(1);
+            args.splice(0, 1);
+            if (cmd == "say"){
+                if (args[0]){
+                    var channel = getChannel(args[0]);
+                    args.splice(0, 1);
+                    var msg = args.join(' ');
+                    if (!send(msg, channel)){
+                        send('Could not send the message. (Did you specify a valid channel?)');
+                    }
+                }
+            }
+        }
     }
 });
 
