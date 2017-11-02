@@ -23,7 +23,7 @@ const prefix = "v.";
 //});
 
 function isBotAdmin(member){
-    return hasRole(member, "Victini Exec") || member.user.id == member.guild.ownerID || member.user.id == '311534497403371521';
+    return member.user.id == member.guild.ownerID;
 }
 
 
