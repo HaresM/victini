@@ -142,24 +142,21 @@ client.on("message", (message) => {
     
     
     //Exec-only
-    //Say command
     if (isBotAdmin(message.member)) {
-        if (command === "say") {
-            var execArgs = message.content.split(' ');
-            var execCmd = execArgs[0].substr(1);
-            execArgs.splice(0, 1);
+            var execCmd = args[0].substr(1);
+            args.splice(0, 1);  
+            //Say command
             if (execCmd == "say"){
-                if (execArgs[0]){
-                    var channel = getChannel(execArgs[0]);
-                    execArgs.splice(0, 1);
-                    var msg = execArgs.join(' ');
+                if (args[0]){
+                    var channel = getChannel(args[0]);
+                    args.splice(0, 1);
+                    var msg = args.join(' ');
                     if (!send(msg, channel)){
                         send('Could not send the message. (Did you specify a valid channel?)');
                     }
                 }
             }
-        }
-    }
+        }\
 });
 
 client.login(process.env.BOT_TOKEN);
