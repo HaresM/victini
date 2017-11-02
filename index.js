@@ -134,6 +134,7 @@ client.on("message", (message) => {
         if (!user) user = message.member.user;
         var victimReply = Math.floor(Math.random() * victimArray.length);
         message.channel.sendMessage(user + ` ${victimArray[victimReply]}`);
+    }
 });
 
 client.login(process.env.BOT_TOKEN);
