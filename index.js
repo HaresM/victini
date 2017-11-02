@@ -7,7 +7,7 @@ const prefix = "v.";
 //    var role = guild.roles.find("name", "Victini Exec");
 //
 //    if (role == null || role == undefined) {
-//        guild.createRole({
+//        Discord.guild.createRole({
 //            name: 'Victini Exec',
 //           color: '#e59239',
 //            permissions: [
