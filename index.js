@@ -130,7 +130,7 @@ client.on("message", (message) => {
                 ' realised that when you squeeze an orange, orange juice comes out!',
                 ' turned into an Axolotl. How cute!'
             ];
-        var user = getUser(args.join(" "));
+        var user = getUser(args.join(' '));
         if (!user) user = message.member.user;
         var victimReply = Math.floor(Math.random() * victimArray.length);
         message.channel.sendMessage(user + ` ${victimArray[victimReply]}`);
