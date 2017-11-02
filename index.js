@@ -118,7 +118,7 @@ client.on("message", (message) => {
         message.channel.send("https://cdn.discordapp.com/attachments/347376772951572490/364168246628188162/the_real_thinking_emoji.gif");
     }
     //Victim command
-    if (command == "victim"
+    if (command == "victim")
         var victimArray = [
                 ' just broke his phone. How unlucky!',
                 ' has died from an unknown illness!',
