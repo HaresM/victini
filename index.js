@@ -145,14 +145,14 @@ client.on("message", (message) => {
     //Say command
     if (isBotAdmin(message.member)) {
         if (command === "say") {
-            var args = message.content.split(' ');
-            var cmd = args[0].substr(1);
-            args.splice(0, 1);
-            if (cmd == "say"){
-                if (args[0]){
-                    var channel = getChannel(args[0]);
-                    args.splice(0, 1);
-                    var msg = args.join(' ');
+            var execArgs = message.content.split(' ');
+            var execCmd = execArgs[0].substr(1);
+            execArgs.splice(0, 1);
+            if (execCmd == "say"){
+                if execArgs[0]){
+                    var channel = getChannel(execArgs[0]);
+                    execArgs.splice(0, 1);
+                    var msg = execArgs.join(' ');
                     if (!send(msg, channel)){
                         send('Could not send the message. (Did you specify a valid channel?)');
                     }
