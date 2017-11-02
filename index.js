@@ -117,6 +117,23 @@ client.on("message", (message) => {
     if (command === "thinking") {
         message.channel.send("https://cdn.discordapp.com/attachments/347376772951572490/364168246628188162/the_real_thinking_emoji.gif");
     }
+    //Victim command
+    if (command == "victim"
+        var victimArray = [
+                ' just broke his phone. How unlucky!',
+                ' has died from an unknown illness!',
+                ' was murdered by his best friend. Oops!',
+                ' was kidnapped by Scarface',
+                ' burnt his house down. What a shame!',
+                ' just turned into a lemon!',
+                ' got kissed by a frog!',
+                ' realised that when you squeeze an orange, orange juice comes out!',
+                ' turned into an Axolotl. How cute!'
+            ];
+        var user = getUser(args.join(' '));
+        if (!user) user = message.member.user;
+        var victimReply = Math.floor(Math.random() * victimArray.length);
+        message.channel.sendMessage(user + ` ${victimArray[victimReply]}`);
 });
 
 client.login(process.env.BOT_TOKEN);
