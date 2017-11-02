@@ -149,7 +149,7 @@ client.on("message", (message) => {
             var execCmd = execArgs[0].substr(1);
             execArgs.splice(0, 1);
             if (execCmd == "say"){
-                if execArgs[0]){
+                if (execArgs[0]){
                     var channel = getChannel(execArgs[0]);
                     execArgs.splice(0, 1);
                     var msg = execArgs.join(' ');
