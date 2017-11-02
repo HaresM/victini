@@ -134,8 +134,7 @@ client.on("message", (message) => {
                 ' realised that when you squeeze an orange, orange juice comes out!',
                 ' turned into an Axolotl. How cute!'
             ];
-        var user = getUser(args.join(" "));
-        if (!user) user = message.member.user;
+        var user = message.member.user;
         var victimReply = Math.floor(Math.random() * victimArray.length);
         message.channel.sendMessage(user + ` ${victimArray[victimReply]}`);
     }
@@ -143,20 +142,10 @@ client.on("message", (message) => {
     
     //Exec-only
     if (isBotAdmin(message.member)) {
-            var execCmd = args[0].substr(1);
-            args.splice(0, 1);  
-            //Say command
-            if (execCmd == "say"){
-                if (args[0]){
-                    var channel = getChannel(args[0]);
-                    args.splice(0, 1);
-                    var msg = args.join(' ');
-                    if (!send(msg, channel)){
-                        send('Could not send the message. (Did you specify a valid channel?)');
-                    }
-                }
-            }
-        }
+    
+           
+        
+    }
 });
 
 client.login(process.env.BOT_TOKEN);
