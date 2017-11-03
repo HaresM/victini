@@ -4,14 +4,251 @@ var fs = require('fs');
 
 const prefix = "v.";
 
+// Functions EDIT ASAP AS WELL!!!!
+function getDate(date = null){
+    var d = date ? date : new Date();
+    var y = d.getFullYear();
+    var m = d.getMonth() + 1;
+    var dt = d.getDate();
+    var hr = d.getHours() + 1;
+    var mnts = d.getMinutes() + 1;
+    if (m < 10) { m = '0'+m.toString(); }
+    if (dt < 10) { dt = '0'+dt.toString(); }
+    if (hr < 10) { hr = '0'+hr.toString(); }
+    if (mnts < 10) { mnts = '0'+mnts.toString(); }
+    y = y.toString();
+    m = m.toString();
+    dt = dt.toString();
+    hr = hr.toString();
+    mnts = mnts.toString();
+    return y + '-' + m + '-' + dt + '__' + hr + ':' + mnts;
+}
+
+function getChannelMembers(channel){
+	var total = channel.members.map(m => m).length;
+	var members;
+	if (total == 0){
+		members = "---";
+	}
+	else if (total <= 10){
+		members = channel.members.map(m => m.user.username).join('\n');
+	}
+	else{
+		members = total;
+	}
+	return members;
+}
+
+function getGuildMembers(guild){
+	var total = guild.memberCount;
+	var members;
+	if (total == 0){
+		members = "---";
+	}
+	else if (total <= 10){
+		members = guild.members.map(m => m.user.username).join('\n');
+	}
+	else{
+		members = guild.memberCount;
+	}
+	return members;
+}
+
+function getAbility(ability){
+    return `[${ability.replace(`_`, ` `)}](https://bulbapedia.bulbagarden.net/wiki/${ability}_(Ability\\))`;
+}
+
+function hasRole(member, role){
+    var _role = member.guild.roles.find("name", role);
+    try{
+        return member.roles.has(_role.id);
+    }
+    catch (Error){
+        return false;
+    }
+}
+
+function getRank(guild, user){
+    var sortable = [];
+    for (var id in config[guild.id].ranks) {
+        sortable.push([id, config[guild.id].ranks[id]]);
+    }
+    sortable.sort(function(a, b) {
+        return b[1] - a[1]
+    });
+    for (i = 0; i < sortable.length; i++){
+        if (sortable[i][0] == user.id){
+            return i + 1;
+        }
+    }
+}
+
+function isBotAdmin(member){
+    return hasRole(member, "Vulpix Admin") || member.user.id == member.guild.ownerID || member.user.id == '270175313856561153';
+}
+
+function isDeveloper(member){
+    return isBotAdmin(member) || hasRole(member, "Developers");
+}
+
+function defaultChannel(guild){
+    if (guild.defaultChannel && guild.defaultChannel.constructor && guild.defaultChannel.constructor.name == 'TextChannel'){
+        return guild.defaultChannel
+    }
+    else{
+        return guild.channels.map(c => c)[0];
+    }
+}
+
+function setDefaults(guild){
+    var g = guild.id; // Default Config settings.
+    config[g] = {
+        "prefix": "?",
+        "servername": guild.name,
+        "ranks": {
+
+        },
+        "users": {
+
+        },
+        "channels": {
+
+        },
+        "suggestions": [
+
+        ],
+        "commands": {
+
+        },
+        "messages": {
+            "welcome": {
+                "msg": "Welcome to the server, (user)!",
+                "status": "on",
+                "role": "Member",
+                "channel": defaultChannel(guild).name
+            },
+            "levelup": {
+                "msg": "Congrats, (@user)! You leveled up to level (level)!",
+                "status": "on"
+            },
+            "goodbye": {
+                "msg": "(user) has just left the server. Rest in peace!",
+                "status": "on",
+                "channel": defaultChannel(guild).name
+            },
+            "news": {
+                "status": "on",
+                "channel": defaultChannel(guild).name
+            }
+        },
+        "bot_log": {
+            "channel": defaultChannel(guild).name,
+            "status": "on"
+        },
+        "roles": {
+
+        },
+        "quotes": {
+
+        },
+        "bugs": {
+
+        },
+        "commandlog": [
+
+        ]
+    }
+
+    saveConfig();
+    var role = guild.roles.find("name", "Vulpix Admin");
+    if (role == null || role == undefined){
+        guild.createRole({
+            name: 'Vulpix Admin',
+            color: '#C6C6C6',
+            permissions: [
+                "KICK_MEMBERS", "ADD_REACTIONS",
+                "READ_MESSAGES", "SEND_MESSAGES",
+                "SEND_TTS_MESSAGES", "MANAGE_MESSAGES",
+                "EMBED_LINKS", "ATTACH_FILES",
+                "READ_MESSAGE_HISTORY", "EXTERNAL_EMOJIS",
+                "CONNECT", "SPEAK", "DEAFEN_MEMBERS",
+                "CHANGE_NICKNAME", "MANAGE_NICKNAMES",
+                "MANAGE_ROLES_OR_PERMISSIONS", "MUTE_MEMBERS",
+                "MOVE_MEMBERS", "USE_VAD", "MANAGE_WEBHOOKS",
+                "MANAGE_EMOJIS"
+            ],
+            mentionable: true
+        })
+    }
+}
+
+function getSingleChannel(arg, arg2){
+    if (arg && arg.constructor && arg.constructor.name == 'TextChannel') return arg;
+    var chnl = arg2.channels.find(c => c.name == arg && c.type == 'text');
+    if (!chnl){
+        chnl = arg2.channels.get(arg);
+    }
+    if (!chnl){
+        try{ chnl = arg2.channels.find(c => c.name.toLowerCase() == arg.toLowerCase() && c.type == 'text'); } catch (e){}
+    }
+    if (!chnl){
+        if (arg.toString().contains('<#') && arg.toString().contains('>')){
+            arg = arg.split('<#')[1].split('>')[0];
+            chnl = arg2.channels.get(arg);
+        }
+    }
+    return chnl;
+}
 
 function saveConfig(){
     ref.update(config);
 }
 
+function logMessage(guild, message){
+    if (!config[guild.id].commandlog) config[guild.id].commandlog = []
+    config[guild.id].commandlog.push(message);
+}
+
 function rand(int){
     return Math.floor(Math.random() * parseInt(int));
 }
+
+function command(channel, arg, cmd){
+    try{
+        return arg == cmd && !config[channel.guild.id].channels[channel.id].disabled_commands.contains(cmd);
+    }
+    catch (err){
+        return true;
+    }
+}
+
+function getBugEmbed(title, description, username, url){
+    return {embed: {
+        color: main_color,
+        footer: {
+            text: username,
+            icon_url: url
+        },
+        fields: [{
+            name: `**Bug Title**`,
+            value: title
+        },{
+            name: `**Bug Description**`,
+            value: description
+        }]
+    }};
+}
+
+function getQuotes(member){
+	if (!config[member.guild.id].quotes || !config[member.guild.id].quotes[member.user.id]) return [];
+	return config[member.guild.id].quotes[member.user.id];
+}
+
+function changeAvatar(){
+    var avatars = JSON.parse(fs.readFileSync('database/avatars.json')).avatars;
+    bot.user.setAvatar(avatars[rand(avatars.length)]);
+}
+
 
 //client.on("ready", () => {
 //    var role = guild.roles.find("name", "Victini Exec");
