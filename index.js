@@ -4,7 +4,19 @@ var fs = require('fs');
 
 const prefix = "v.";
 
+function hasRole(member, role){
+    var _role = member.guild.roles.find("name", role);
+    try{
+        return member.roles.has(_role.id);
+    }
+    catch (Error){
+        return false;
+    }
+}
 
+function rand(int){
+    return Math.floor(Math.random() * parseInt(int));
+}
 
 //client.on("ready", () => {
 //    var role = guild.roles.find("name", "Victini Exec");
