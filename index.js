@@ -1,5 +1,8 @@
 const Discord = require("discord.js");
 const client = new Discord.Client();
+var fs = require('fs');
+var victimArray = fs.readFileSync('database/victim.json');
+
 const prefix = "v.";
 
 
@@ -56,7 +59,10 @@ client.on("message", (message) => {
 
     const args = message.content.slice(prefix.length).trim().split(/ +/g);
     const command = args.shift().toLowerCase();
-
+    // Help command
+    if (command === "8ball") {
+        message.channel.sendMessage("Command under construction.");    
+    }
     // 8ball command
     if (command === "8ball") {
         if (message.content.startsWith(prefix + "8ball")) {
@@ -121,26 +127,14 @@ client.on("message", (message) => {
     if (command === "thinking") {
         message.channel.send("https://cdn.discordapp.com/attachments/347376772951572490/364168246628188162/the_real_thinking_emoji.gif");
     }
-    //Victim command
+    // Victim command
     if (command === "victim") {
-        var victimArray = [
-                ' just broke his phone. How unlucky!',
-                ' has died from an unknown illness!',
-                ' was murdered by his best friend. Oops!',
-                ' was kidnapped by Scarface',
-                ' burnt his house down. What a shame!',
-                ' just turned into a lemon!',
-                ' got kissed by a frog!',
-                ' realised that when you squeeze an orange, orange juice comes out!',
-                ' turned into an Axolotl. How cute!'
-            ];
-        var user = message.member.user;
         var victimReply = Math.floor(Math.random() * victimArray.length);
-        message.channel.sendMessage(user + ` ${victimArray[victimReply]}`);
+        message.channel.sendMessage(message.member.user + ` ${victimArray[victimReply]}`);
     }
     
     
-    //Exec-only
+    // Exec-only
     if (isBotAdmin(message.member)) {
     
            
