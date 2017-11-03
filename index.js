@@ -129,6 +129,10 @@ client.on("message", (message) => {
         var victim = JSON.parse(fs.readFileSync('database/victim.json')).victim;
         message.channel.sendMessage(message.member.user + victim[rand(victim.length)]);
     }
+  
+  
+  
+});
     
 
 
