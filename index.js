@@ -5,6 +5,14 @@ var fs = require('fs');
 const prefix = "v.";
 
 
+function saveConfig(){
+    ref.update(config);
+}
+
+function rand(int){
+    return Math.floor(Math.random() * parseInt(int));
+}
+
 //client.on("ready", () => {
 //    var role = guild.roles.find("name", "Victini Exec");
 //
