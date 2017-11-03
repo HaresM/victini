@@ -1,7 +1,6 @@
 const Discord = require("discord.js");
 const client = new Discord.Client();
 var fs = require('fs');
-var victimArray = fs.readFileSync('database/victim.json');
 
 const prefix = "v.";
 
@@ -135,8 +134,8 @@ client.on("message", (message) => {
     }
     // Victim command
     if (command === "victim") {
-        var victimReply = Math.floor(Math.random() * victimArray.length);
-        message.channel.sendMessage(message.member.user + ` ${victimArray[victimReply]}`);
+        var avatars = JSON.parse(fs.readFileSync('database/victim.json')).victimArray;
+        message.channel.sendMessage(message.member.user + avatars[rand(avatars.length)]);
     }
     
     
