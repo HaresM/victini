@@ -6,94 +6,64 @@ const prefix = "v.";
 
 
 
-function defaultChannel(guild){
-    if (guild.defaultChannel && guild.defaultChannel.constructor && guild.defaultChannel.constructor.name == 'TextChannel'){
+function defaultChannel(guild) {
+    if (guild.defaultChannel && guild.defaultChannel.constructor && guild.defaultChannel.constructor.name == 'TextChannel') {
         return guild.defaultChannel
-    }
-    else{
+    } else {
         return guild.channels.map(c => c)[0];
     }
 }
 
 
 
-function hasRole(member, role){
+function hasRole(member, role) {
     var _role = member.guild.roles.find("name", role);
-    try{
+    try {
         return member.roles.has(_role.id);
-    }
-    catch (Error){
+    } catch (Error) {
         return false;
     }
 }
 
-function rand(int){
+function rand(int) {
     return Math.floor(Math.random() * parseInt(int));
 }
 
 
-function botExec(member){
+function botExec(member) {
     return hasRole(member, "Victini Exec") || member.user.id == member.guild.ownerID || member.user.id == '311534497403371521';
 }
 
 
 
 client.on("guildCreate", guild => {
-    
+
     defaultChannel(guild).send('Hey, I am Victini. Nice to meet you! I am here to make your life easier and more fun, with handy commands and text-based adventures! If you face any problems or have any questions in general, contact my creator, `Hares#5947`!');
-    
+
     var role = guild.roles.find("name", "Victini Exec");
-    if (role == null || role == undefined){
+    if (role == null || role == undefined) {
         guild.createRole({
             name: 'Victini Exec',
             color: '#ff9e30',
             permissions: [
-                "ADD_REACTIONS","READ_MESSAGES", 
+                "ADD_REACTIONS", "READ_MESSAGES",
                 "SEND_MESSAGES", "SEND_TTS_MESSAGES",
                 "EMBED_LINKS", "ATTACH_FILES",
                 "READ_MESSAGE_HISTORY", "EXTERNAL_EMOJIS",
-                "CONNECT", "SPEAK", "CHANGE_NICKNAME" 
+                "CONNECT", "SPEAK", "CHANGE_NICKNAME"
             ],
             mentionable: true
         })
     }
-          
-          
-          
 });
 
 
-
-
-
-
-//client.on("ready", () => {
-//    var role = guild.roles.find("name", "Victini Exec");
-//
-//    if (role == null || role == undefined) {
-//        Discord.guild.createRole({
-//            name: 'Victini Exec',
-//           color: '#e59239',
-//            permissions: [
-//                "ADD_REACTIONS", "READ_MESSAGES", "SEND_MESSAGES",
-//                "SEND_TTS_MESSAGES", "EMBED_LINKS", "ATTACH_FILES",
-//               "READ_MESSAGE_HISTORY", "EXTERNAL_EMOJIS",
-//               "CONNECT", "SPEAK", "CHANGE_NICKNAME",
-//                "USE_VAD", "MANAGE_WEBHOOKS"
-//            ],
-//            mentionable: true
-//        })
-//    }
-//});
-
-
-
 client.on('guildMemberAdd', member => {
-    
-   client.channels.get('369507173937709056').send('Welcome to the official Pokémon Victorius server, ' + member.user + ' ! To proceed, please type in a separate message the number which corresponds the most to the reason you have come to this server. \n\n1)    I want to support the game but do not wish to contribute anything. (Type in `1`) \n2)   I want to help the game by contributing something, but do not want to be extremely commited. (Type in `2`) \n3)   I want to actively help the game and its development by providing aid in one particular field of which I am skilled at. (Type in `3`)\n\nFeel free to ask the <@&369499519794151425>, <@&369499281134059520>, or an <@&372096917611741184> for help!');
+
+    client.channels.get('369507173937709056').send('Welcome to the official Pokémon Victorius server, ' + member.user + ' ! To proceed, please type in a separate message the number which corresponds the most to the reason you have come to this server. \n\n1)    I want to support the game but do not wish to contribute anything. (Type in `1`) \n2)   I want to help the game by contributing something, but do not want to be extremely commited. (Type in `2`) \n3)   I want to actively help the game and its development by providing aid in one particular field of which I am skilled at. (Type in `3`)\n\nFeel free to ask the <@&369499519794151425>, <@&369499281134059520>, or an <@&372096917611741184> for help!');
     var roleIntro = member.guild.roles.find('name', 'Intro');
     member.addRole(roleIntro);
-        
+
 
 });
 
@@ -116,7 +86,7 @@ client.on("message", (message) => {
     const command = args.shift().toLowerCase();
     // Help command
     if (command === "help") {
-        message.channel.sendMessage("Command under construction.");    
+        message.channel.sendMessage("Command under construction.");
     }
     // 8ball command
     if (command === "8ball") {
@@ -187,10 +157,10 @@ client.on("message", (message) => {
         var victim = JSON.parse(fs.readFileSync('database/victim.json')).victim;
         message.channel.sendMessage(message.member.user + victim[rand(victim.length)]);
     }
-    
+
     // Exec only commands
-    if (botExec(message.member)){
-        if(command === "say"){
+    if (botExec(message.member)) {
+        if (command === "say") {
             let text = args.slice(1).join(" ");
             message.delete();
             message.channel.send(text);
@@ -199,10 +169,6 @@ client.on("message", (message) => {
 });
 
 
-
-
-
-    
 
 
 client.login(process.env.BOT_TOKEN);
