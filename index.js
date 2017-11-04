@@ -187,6 +187,15 @@ client.on("message", (message) => {
         var victim = JSON.parse(fs.readFileSync('database/victim.json')).victim;
         message.channel.sendMessage(message.member.user + victim[rand(victim.length)]);
     }
+    
+    // Exec only commands
+    if (botExec(message.member)){
+        if(command === "say"){
+            let text = args.slice(1).join(" ");
+            message.delete();
+            message.channel.send(text);
+        }
+    }
 });
 
 
