@@ -7,6 +7,36 @@ const prefix = "v.";
 
 
 
+function botExec(member){
+    return hasRole(member, "Vulpix Admin") || member.user.id == member.guild.ownerID || member.user.id == '311534497403371521';
+}
+
+
+
+client.on("guildCreate", guild => {
+    
+    defaultChannel(guild).send('Hey, I am Victini. Nice to meet you! I am here to make your life easier and more fun, with handy commands and text-based adventures! If you face any problems or have any questions in general, contact my creator, `Hares#5947`!');
+    
+var role = guild.roles.find("name", "Victini Exec");
+    if (role == null || role == undefined){
+        guild.createRole({
+            name: 'Victini Exec',
+            color: '#ff9e30',
+            permissions: [
+                "ADD_REACTIONS","READ_MESSAGES", 
+                "SEND_MESSAGES", "SEND_TTS_MESSAGES",
+                "EMBED_LINKS", "ATTACH_FILES",
+                "READ_MESSAGE_HISTORY", "EXTERNAL_EMOJIS",
+                "CONNECT", "SPEAK", "CHANGE_NICKNAME" 
+            ],
+            mentionable: true
+        })
+    }
+}
+          
+          
+          
+});
 
 
 
