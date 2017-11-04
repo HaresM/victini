@@ -6,6 +6,13 @@ const prefix = "v.";
 
 
 
+function clean(text) {
+  if (typeof(text) === "string")
+    return text.replace(/`/g, "`" + String.fromCharCode(8203)).replace(/@/g, "@" + String.fromCharCode(8203));
+  else
+      return text;
+}
+
 function defaultChannel(guild) {
     if (guild.defaultChannel && guild.defaultChannel.constructor && guild.defaultChannel.constructor.name == 'TextChannel') {
         return guild.defaultChannel
@@ -13,8 +20,6 @@ function defaultChannel(guild) {
         return guild.channels.map(c => c)[0];
     }
 }
-
-
 
 function hasRole(member, role) {
     var _role = member.guild.roles.find("name", role);
@@ -167,14 +172,37 @@ client.on("message", (message) => {
 
     // Exec only commands
     if (botExec(message.member)) {
+        
+        //Say command
         if (command === "say") {
             message.delete();
             message.channel.send(args.join(" "));
         }
+
+    
+    // Eval command
+      const evalArgs = message.content.split(" ").slice(1);
+
+  if (message.content.startsWith(prefix + "eval")) {
+    try {
+      const code = evalArgs.join(" ");
+      let evaled = eval(code);
+
+      if (typeof evaled !== "string")
+        evaled = require("util").inspect(evaled);
+
+      message.channel.send(clean(evaled), {code:"xl"});
+    } catch (err) {
+      message.channel.send(`\`ERROR\` \`\`\`xl\n${clean(err)}\n\`\`\``);
     }
+  }
+    
     else {
      return;   
     }
+}
+    
+    
 });
 
 
