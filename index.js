@@ -163,7 +163,7 @@ client.on("message", (message) => {
         if (command === "say") {
             let text = args.slice(1).join(" ");
             message.delete();
-            message.channel.send(text);
+            message.channel.sendMessage(text);
         }
     }
 });
