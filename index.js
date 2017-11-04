@@ -32,7 +32,6 @@ var role = guild.roles.find("name", "Victini Exec");
             mentionable: true
         })
     }
-}
           
           
           
