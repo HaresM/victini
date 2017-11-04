@@ -6,9 +6,34 @@ const prefix = "v.";
 
 
 
+function defaultChannel(guild){
+    if (guild.defaultChannel && guild.defaultChannel.constructor && guild.defaultChannel.constructor.name == 'TextChannel'){
+        return guild.defaultChannel
+    }
+    else{
+        return guild.channels.map(c => c)[0];
+    }
+}
+
+
+
+function hasRole(member, role){
+    var _role = member.guild.roles.find("name", role);
+    try{
+        return member.roles.has(_role.id);
+    }
+    catch (Error){
+        return false;
+    }
+}
+
+function rand(int){
+    return Math.floor(Math.random() * parseInt(int));
+}
+
 
 function botExec(member){
-    return hasRole(member, "Vulpix Admin") || member.user.id == member.guild.ownerID || member.user.id == '311534497403371521';
+    return hasRole(member, "Victini Exec") || member.user.id == member.guild.ownerID || member.user.id == '311534497403371521';
 }
 
 
@@ -17,7 +42,7 @@ client.on("guildCreate", guild => {
     
     defaultChannel(guild).send('Hey, I am Victini. Nice to meet you! I am here to make your life easier and more fun, with handy commands and text-based adventures! If you face any problems or have any questions in general, contact my creator, `Hares#5947`!');
     
-var role = guild.roles.find("name", "Victini Exec");
+    var role = guild.roles.find("name", "Victini Exec");
     if (role == null || role == undefined){
         guild.createRole({
             name: 'Victini Exec',
@@ -41,20 +66,6 @@ var role = guild.roles.find("name", "Victini Exec");
 
 
 
-
-function hasRole(member, role){
-    var _role = member.guild.roles.find("name", role);
-    try{
-        return member.roles.has(_role.id);
-    }
-    catch (Error){
-        return false;
-    }
-}
-
-function rand(int){
-    return Math.floor(Math.random() * parseInt(int));
-}
 
 //client.on("ready", () => {
 //    var role = guild.roles.find("name", "Victini Exec");
