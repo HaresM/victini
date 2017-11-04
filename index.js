@@ -378,10 +378,10 @@ bot.on('message', message => {
     if (message.channel.type == 'dm') return;
     function sendWarning(message){
         if (message.author.id == '270175313856561153') return;
-        if (!config) config = {}
-        if (!config.global) config.global = {}
-        if (!config.global.warnings) config.global.warnings = {}
-        if (!config.global.warnings.messages) config.global.warnings.messages = []
+        if (!config) config = {};
+        if (!config.global) config.global = {};
+        if (!config.global.warnings) config.global.warnings = {};
+        if (!config.global.warnings.messages) config.global.warnings.messages = [];
         config.global.warnings.messages.push(getDate() + ' ' + message.author.username + `: ` + message.content);
         if (!config.global.excluded_users.contains(message.author.id)) config.global.excluded_users.push(message.author.id);
         message.delete();
