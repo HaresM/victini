@@ -538,7 +538,6 @@ bot.on('message', message => {
       }
       return false;
     }
-}
 
 
 
