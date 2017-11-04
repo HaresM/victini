@@ -161,9 +161,8 @@ client.on("message", (message) => {
     // Exec only commands
     if (botExec(message.member)) {
         if (command === "say") {
-            let text = args.slice(1).join(" ");
             message.delete();
-            message.channel.sendMessage(text);
+            message.channel.send(args.join(" "));
         }
     }
 });
