@@ -86,8 +86,14 @@ client.on("message", (message) => {
     const command = args.shift().toLowerCase();
     // Help command
     if (command === "help") {
-        message.channel.sendMessage("Command under construction.");
+        message.channel.send("Command under construction.");
     }
+    
+    // Helper command
+    if (command === "helper") {
+        message.channel.send("https://cdn.discordapp.com/attachments/320716421757927436/376351118449573909/sketch1509192675057.png");
+    }
+    
     // 8ball command
     if (command === "8ball") {
         if (message.content.startsWith(prefix + "8ball")) {
@@ -119,7 +125,7 @@ client.on("message", (message) => {
                 'Very doubtful.'
             ];
             var randomReply = Math.floor(Math.random() * magicArray.length);
-            message.channel.sendMessage(`${magicArray[randomReply]}`);
+            message.channel.send(`${magicArray[randomReply]}`);
         }
     }
 
@@ -152,6 +158,7 @@ client.on("message", (message) => {
     if (command === "thinking") {
         message.channel.send("https://cdn.discordapp.com/attachments/347376772951572490/364168246628188162/the_real_thinking_emoji.gif");
     }
+    
     // Victim command
     if (command === "victim") {
         var victim = JSON.parse(fs.readFileSync('database/victim.json')).victim;
