@@ -173,7 +173,7 @@ client.on("message", (message) => {
     
   
     // Weather command
-    if (msg.startsWith(prefix + 'weather')) { 
+    if (message.content.startsWith(prefix + 'weather')) { 
 
         weather.find({search: args.join(" "), degreeType: 'C'}, function(err, result) { 
             if (err) message.channel.send(err);
