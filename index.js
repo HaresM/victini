@@ -100,6 +100,7 @@ client.on("message", (message) => {
   
     // Help command
     if (command === "help") {
+          // Commands
           if (args[0] === "8ball") {
             message.channel.send("The `v.8ball`-command sends a reply to a question that can be answered with yes or no. You use this command as follows: `v.8ball` `[your yes/no question]`.");
           }
@@ -108,7 +109,7 @@ client.on("message", (message) => {
           }
           else if (args[0] === "face") {
             if (args[1] === "lenny") {
-                    message.channel.send("The `v.lenny`-command sends a lenny-face ( ( ͡° ͜ʖ ͡°) ). Life can be that simple.");
+                    message.channel.send("The `v.lenny`-command sends a lenny-face ( ( ͡° ͜ʖ ͡°) ). What more is there to say?");
                 }
             else if (args[1] === "shrug") {
                     message.channel.send("The `v.shrug`-command sends a shrug emoticon ( ¯\\_(ツ)_/¯ ).");
@@ -126,11 +127,39 @@ client.on("message", (message) => {
                     message.channel.send("The `v.superlenny`-command sends sends a buffed up version of a lenny-face ( ( ͡o ͜ʖ ͡o) )");
                 }
             else {
-                    message.channel.send("You can get help for the following face-commands:\n```v.lenny\nv.shrug\nv.dead\nv.angry\nv.shocked\nv.superlenny```")
+                    message.channel.send("Type the following commands to get further help:\n```v.help lenny\nv.help shrug\nv.help dead\nv.help angry\nv.help shocked\nv.help superlenny```");
             }
           }
-    }
-    
+          else if (args[0] === "victim") {
+                message.channel.send("Use the `v.victim`-command to test how lucky you are... or misfortunate...");
+          }
+          else if (args[0] === "weather") {
+                message.channel.send("The `v.weather`-command sends the weather of the location you specify. You use this command as follow: `v.weather` `[a real life location]`");
+          }
+          // Exec-only
+          else if (args[0] === "exec-only" && botExec(message.member)) {
+                if (args[1] === "say") {
+                      message.channel.send("Use the `v.say`-command to let Victini mimmick what you say. Use this command as follows: `v.say` `[the sentence you want Victini to repeat]`");
+                }
+                else if (args[1] === "eval") {
+                      message.channel.send("Use the `v.eval`-command to test code out. Though, this command requires extensive knowledge of `JavaScript`");
+                }
+                else {
+                      message.channel.send("Exec-only commands require the `Victini Exec`-role to be used. Type the following commands to get further help:\n```v.help say\nv.help eval```"); 
+                }
+            }
+          // General info
+          else if (args[0] === "exec-only") {
+                  message.channel.send("Victini's prefix is: `v.`");
+          }
+          // Help text
+          else {
+            message.channel.send("Type the following commands to get help on specific stuff:\n```General info:\nv.help prefix\n\ncommands: \nv.help face\v.help 8ball\nv.help helper\nv.help victim\nv.help weather\n\n Exec-only (this help-command requires the \Victini Exec\"-role): \nv.help exec-only```");
+          }
+        }
+  
+  
+  
     // Helper command
     if (command === "helper") {
         message.channel.send("https://cdn.discordapp.com/attachments/320716421757927436/376351118449573909/sketch1509192675057.png");
