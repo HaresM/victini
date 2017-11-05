@@ -101,10 +101,33 @@ client.on("message", (message) => {
     // Help command
     if (command === "help") {
           if (args[0] === "8ball") {
-            message.channel.send("The `v.8ball`-command sends a replay to a question that can be answered with yes or no. You use this command as follows: `v.8ball` `[your yes/no question]`.");
+            message.channel.send("The `v.8ball`-command sends a reply to a question that can be answered with yes or no. You use this command as follows: `v.8ball` `[your yes/no question]`.");
           }
           else if (args[0] === "helper") {
-            message.channel.send(" ");
+            message.channel.send("The `v.helper`-command sends a image of Victini made by `#Greedere Ganciel#3872`.");
+          }
+          else if (args[0] === "face") {
+            if (args[1] === "lenny") {
+                    message.channel.send("The `v.lenny`-command sends a lenny-face ( ( ͡° ͜ʖ ͡°) ). Life can be that simple.");
+                }
+            else if (args[1] === "shrug") {
+                    message.channel.send("The `v.shrug`-command sends a shrug emoticon ( ¯\\_(ツ)_/¯ ).");
+                }
+            else if (args[1] === "dead") {
+                    message.channel.send("The `v.dead`-command sends a cute dead face ( ( ×ω× ) ).");
+                }
+            else if (args[1] === "angry") {
+                    message.channel.send("The `v.angry`-command sends an emoticon that represents an angry face ( ヽ(#`Д´)ﾉ )");
+                }
+            else if (args[1] === "shocked") {
+                    message.channel.send("The `v.shocked`-command sends an emoticon that represents an shocked face ( Σ(ﾟДﾟ；≡；ﾟдﾟ) )");
+                }
+            else if (args[1] === "superlenny") {
+                    message.channel.send("The `v.superlenny`-command sends sends a buffed up version of a lenny-face ( ( ͡o ͜ʖ ͡o) )");
+                }
+            else {
+                    message.channel.send("You can get help for the following face-commands:\n```v.lenny\nv.shrug\nv.dead\nv.angry\nv.shocked\nv.superlenny```")
+            }
           }
     }
     
