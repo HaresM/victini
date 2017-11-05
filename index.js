@@ -101,10 +101,10 @@ client.on("message", (message) => {
     // Help command
     if (command === "help") {
           if (args[0] === "8ball") {
-            message.channel.send("The `v.8ball`-command sends a replay to a question that can be answered with yes or no. You use this command as follows: `v.8ball` `[your yes/no question]`.")
+            message.channel.send("The `v.8ball`-command sends a replay to a question that can be answered with yes or no. You use this command as follows: `v.8ball` `[your yes/no question]`.");
           }
           else if (args[0] === "helper") {
-            message.channel.send("
+            message.channel.send(" ");
           }
     }
     
