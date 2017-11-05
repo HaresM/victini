@@ -52,11 +52,16 @@ client.on("guildCreate", guild => {
             name: 'Victini Exec',
             color: '#ff9e30',
             permissions: [
-                "ADD_REACTIONS", "READ_MESSAGES",
-                "SEND_MESSAGES", "SEND_TTS_MESSAGES",
+                "KICK_MEMBERS", "ADD_REACTIONS",
+                "READ_MESSAGES", "SEND_MESSAGES",
+                "SEND_TTS_MESSAGES", "MANAGE_MESSAGES",
                 "EMBED_LINKS", "ATTACH_FILES",
                 "READ_MESSAGE_HISTORY", "EXTERNAL_EMOJIS",
-                "CONNECT", "SPEAK", "CHANGE_NICKNAME"
+                "CONNECT", "SPEAK", "DEAFEN_MEMBERS",
+                "CHANGE_NICKNAME", "MANAGE_NICKNAMES",
+                "MANAGE_ROLES_OR_PERMISSIONS", "MUTE_MEMBERS",
+                "MOVE_MEMBERS", "USE_VAD", "MANAGE_WEBHOOKS",
+                "MANAGE_EMOJIS"
             ],
             mentionable: true
         })
@@ -90,9 +95,17 @@ client.on("message", (message) => {
 
     const args = message.content.slice(prefix.length).trim().split(/ +/g);
     const command = args.shift().toLowerCase();
+  
+ 
+  
     // Help command
     if (command === "help") {
-        message.channel.send("Command under construction.");
+          if (args[0] === "8ball") {
+            message.channel.send("The `v.8ball`-command sends a replay to a question that can be answered with yes or no. You use this command as follows: `v.8ball` `[your yes/no question]`.")
+          }
+          else if (args[0] === "helper") {
+            message.channel.send("
+          }
     }
     
     // Helper command
