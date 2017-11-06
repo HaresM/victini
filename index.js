@@ -7,6 +7,7 @@ const prefix = "v.";
 
 
 
+
 function clean(text) {
     if (typeof(text) === "string")
         return text.replace(/`/g, "`" + String.fromCharCode(8203)).replace(/@/g, "@" + String.fromCharCode(8203));
@@ -141,7 +142,6 @@ client.on("message", (message) => {
                 message.channel.send("Exec-only commands require the `Victini Exec`-role to be used. Type the following commands to get further help:\n```v.help exec-only say\nv.help exec-only kick\nv.help exec-only eval```");
             }
         }
-    }
         // General info
         else if (args[0] === "gen-info") {
             if (args[1] === "prefix") {
@@ -156,7 +156,7 @@ client.on("message", (message) => {
         else {
             message.channel.send("Type the following commands to get help on specific stuff:\n```v.help gen-info\nv.help commands\nv.help exec-only```");
         }
-    }
+    
    
 
 
