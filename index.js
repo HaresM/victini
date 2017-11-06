@@ -120,7 +120,7 @@ client.on("message", (message) => {
                 } 
             }
             else {
-                    message.channel.send("Type the following commands to get help on specific stuff:\n```v.help face\v.help 8ball\nv.help helper\nv.help victim\nv.help weather```");
+                    message.channel.send("Type the following commands to get help on specific stuff:\n```v.help face\nv.help 8ball\nv.help helper\nv.help victim\nv.help weather```");
                 }
         }
         // Exec-only
