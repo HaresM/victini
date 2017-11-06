@@ -141,6 +141,7 @@ client.on("message", (message) => {
                 message.channel.send("Exec-only commands require the `Victini Exec`-role to be used. Type the following commands to get further help:\n```v.help exec-only say\nv.help exec-only kick\nv.help exec-only eval```");
             }
         }
+    }
         // General info
         else if (args[0] === "gen-info") {
             if (args[1] === "prefix") {
