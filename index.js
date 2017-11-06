@@ -101,7 +101,7 @@ client.on("message", (message) => {
             } else if (args[1] === "helper") {
                 message.channel.send("The `v.helper`-command sends a image of Victini made by `#Greedere Ganciel#3872`.");
             } else if (args[1] === "face") {
-                if (args[1] === "lenny") {
+                if (args[2] === "lenny") {
                     message.channel.send("The `v.lenny`-command sends a lenny-face ( ( ͡° ͜ʖ ͡°) ). What more is there to say?");
                 } else if (args[2] === "shrug") {
                     message.channel.send("The `v.shrug`-command sends a shrug emoticon ( ¯\\_(ツ)_/¯ ).");
