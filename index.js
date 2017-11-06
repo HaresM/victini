@@ -115,7 +115,7 @@ client.on("message", (message) => {
                     message.channel.send("The `v.superlenny`-command sends sends a buffed up version of a lenny-face ( ( ͡o ͜ʖ ͡o) )");
                 }
                 else {
-                    message.channel.send("Type the following commands to get help on specific stuff:\n```v.help commands face lenny\nv.help commands face shrug\n commands face superlenny\nv.help commands face dead\nv.help commands face angry\nv.help commands face shocked```");
+                    message.channel.send("Type the following commands to get help on specific stuff:\n```v.help commands face lenny\nv.help commands face shrug\nv.help commands face superlenny\nv.help commands face dead\nv.help commands face angry\nv.help commands face shocked```");
                 }
             }
             else if (args[1] === "victim") {
