@@ -138,7 +138,7 @@ client.on("message", (message) => {
             } else if (args[1] === "kick") {
                 message.channel.send("The `v.kick`-command kicks a user. It's that straightforward. Use this command as follows: `v.kick` `[@UserYouWantToKick]` `[Reason as to why you want to kick this person]`");
             }
-            } else {
+            else {
                 message.channel.send("Exec-only commands require the `Victini Exec`-role to be used. Type the following commands to get further help:\n```v.help exec-only say\nv.help exec-only kick\nv.help exec-only eval```");
             }
         }
