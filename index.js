@@ -156,6 +156,7 @@ client.on("message", (message) => {
         else {
             message.channel.send("Type the following commands to get help on specific stuff:\n```v.help gen-info\nv.help commands\nv.help exec-only```");
         }
+		}
     
    
 
@@ -249,7 +250,7 @@ client.on("message", (message) => {
 
 
             if (result.length === 0) {
-                message.channel.send('Location not found! Please check whether you have entered a valid location.')
+                message.channel.send('Location not found! Please check whether you have entered a valid location.');
                 return;
             }
 
