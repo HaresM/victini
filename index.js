@@ -113,12 +113,17 @@ client.on("message", (message) => {
                     message.channel.send("The `v.shocked`-command sends an emoticon that represents an shocked face ( Σ(ﾟДﾟ；≡；ﾟдﾟ) )");
                 } else if (args[2] === "superlenny") {
                     message.channel.send("The `v.superlenny`-command sends sends a buffed up version of a lenny-face ( ( ͡o ͜ʖ ͡o) )");
-                } else if (args[1] === "victim") {
-                    message.channel.send("Use the `v.victim`-command to test how lucky you are... or misfortunate...");
-                } else if (args[1] === "weather") {
-                    message.channel.send("The `v.weather`-command sends the weather of the location you specify. You use this command as follow: `v.weather` `[a real life location]`");
-                } 
+                }
+                else {
+                    message.channel.send("Type the following commands to get help on specific stuff:\n```v.help commands face lenny\nv.help commands face shrug\n commands face superlenny\nv.help commands face dead\nv.help commands face angry\nv.help commands face shocked```");
+                }
             }
+            else if (args[1] === "victim") {
+                    message.channel.send("Use the `v.victim`-command to test how lucky you are... or misfortunate...");
+            } 
+            else if (args[1] === "weather") {
+                    message.channel.send("The `v.weather`-command sends the weather of the location you specify. You use this command as follow: `v.weather` `[a real life location]`");
+            } 
             else {
                     message.channel.send("Type the following commands to get help on specific stuff:\n```v.help face\nv.help 8ball\nv.help helper\nv.help victim\nv.help weather```");
                 }
