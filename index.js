@@ -114,20 +114,16 @@ client.on("message", (message) => {
                     message.channel.send("The `v.shocked`-command sends an emoticon that represents an shocked face ( Σ(ﾟДﾟ；≡；ﾟдﾟ) )");
                 } else if (args[2] === "superlenny") {
                     message.channel.send("The `v.superlenny`-command sends sends a buffed up version of a lenny-face ( ( ͡o ͜ʖ ͡o) )");
-                }
-                else {
+                } else {
                     message.channel.send("Type the following commands to get help on specific stuff:\n```v.help commands face lenny\nv.help commands face shrug\nv.help commands face superlenny\nv.help commands face dead\nv.help commands face angry\nv.help commands face shocked```");
                 }
+            } else if (args[1] === "victim") {
+                message.channel.send("Use the `v.victim`-command to test how lucky you are... or misfortunate...");
+            } else if (args[1] === "weather") {
+                message.channel.send("The `v.weather`-command sends the weather of the location you specify. You use this command as follow: `v.weather` `[a real life location]`");
+            } else {
+                message.channel.send("Type the following commands to get help on specific stuff:\n```v.help face\nv.help 8ball\nv.help helper\nv.help victim\nv.help weather```");
             }
-            else if (args[1] === "victim") {
-                    message.channel.send("Use the `v.victim`-command to test how lucky you are... or misfortunate...");
-            } 
-            else if (args[1] === "weather") {
-                    message.channel.send("The `v.weather`-command sends the weather of the location you specify. You use this command as follow: `v.weather` `[a real life location]`");
-            } 
-            else {
-                    message.channel.send("Type the following commands to get help on specific stuff:\n```v.help face\nv.help 8ball\nv.help helper\nv.help victim\nv.help weather```");
-                }
         }
         // Exec-only
         else if (args[0] === "exec-only" && botExec(message.member)) {
@@ -137,8 +133,7 @@ client.on("message", (message) => {
                 message.channel.send("Use the `v.eval`-command to test code out. Though, this command requires extensive knowledge of `JavaScript`");
             } else if (args[1] === "kick") {
                 message.channel.send("The `v.kick`-command kicks a user. It's that straightforward. Use this command as follows: `v.kick` `[@UserYouWantToKick]` `[Reason as to why you want to kick this person]`");
-            }
-            else {
+            } else {
                 message.channel.send("Exec-only commands require the `Victini Exec`-role to be used. Type the following commands to get further help:\n```v.help exec-only say\nv.help exec-only kick\nv.help exec-only eval```");
             }
         }
@@ -156,9 +151,8 @@ client.on("message", (message) => {
         else {
             message.channel.send("Type the following commands to get help on specific stuff:\n```v.help gen-info\nv.help commands\nv.help exec-only```");
         }
-		}
-    
-   
+    }
+
 
 
 
@@ -281,6 +275,15 @@ client.on("message", (message) => {
 
     // Exec only commands
     if (botExec(message.member)) {
+	    
+	    
+        // Kick command
+        if (command === "kick") {
+            let member = message.mentions.members.first();
+            let reason = args.slice(1).join(" ");
+            member.kick(reason);
+            message.channel.send("User " + member + " was kicked due to the following reason: " + reason);
+        }
 
         //Say command
         if (command === "say") {
@@ -306,13 +309,11 @@ client.on("message", (message) => {
             } catch (err) {
                 message.channel.send(`\`ERROR\` \`\`\`xl\n${clean(err)}\n\`\`\``);
             }
-            if (command === "kick") {
-                  let member = message.mentions.members.first();
-                  let reason = args.slice(1).join(" ");
-                  member.kick(reason);
-            }
+		
+		
         } 
-        else {
+	    
+	    else {
             return;
         }
     }
