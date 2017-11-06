@@ -134,8 +134,11 @@ client.on("message", (message) => {
                 message.channel.send("Use the `v.say`-command to let Victini mimmick what you say. Use this command as follows: `v.say` `[the sentence you want Victini to repeat]`");
             } else if (args[1] === "eval") {
                 message.channel.send("Use the `v.eval`-command to test code out. Though, this command requires extensive knowledge of `JavaScript`");
+            } else if (args[1] === "kick") {
+                message.channel.send("The `v.kick`-command kicks a user. It's that straightforward. Use this command as follows: `v.kick` `[@UserYouWantToKick]` `[Reason as to why you want to kick this person]`");
+            }
             } else {
-                message.channel.send("Exec-only commands require the `Victini Exec`-role to be used. Type the following commands to get further help:\n```v.help exec-only say\nv.help exec-only eval```");
+                message.channel.send("Exec-only commands require the `Victini Exec`-role to be used. Type the following commands to get further help:\n```v.help exec-only say\nv.help exec-only kick\nv.help exec-only eval```");
             }
         }
         // General info
@@ -300,7 +303,13 @@ client.on("message", (message) => {
             } catch (err) {
                 message.channel.send(`\`ERROR\` \`\`\`xl\n${clean(err)}\n\`\`\``);
             }
-        } else {
+            if (command === "kick") {
+                  let member = message.mentions.members.first();
+                  let reason = args.slice(1).join(" ");
+                  member.kick(reason);
+            }
+        } 
+        else {
             return;
         }
     }
