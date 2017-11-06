@@ -155,6 +155,7 @@ client.on("message", (message) => {
         else {
             message.channel.send("Type the following commands to get help on specific stuff:\n```v.help gen-info\nv.help commands\nv.help exec-only```");
         }
+    }
    
 
 
