@@ -287,17 +287,22 @@ client.on("message", (message) => {
 	    
 	    
         // Kick command
-        if (command === "kick") {
-            let member = message.mentions.members.first();
-            let reason = args.slice(1).join(" ");
-			if  (!member) {
-				message.channel.send("Specify a user to kick them.");
-			}
-			else {
-            		member.kick(reason);
-            		message.channel.send("User " + member + " was kicked due to the following reason: " ```+ reason```);
-			}
-        }
+  if (command === "kick") {
+      let member = message.mentions.members.first();
+      if (!member)
+          return message.channel.send("Please specify a valid user to kick them.");
+      if (!member.kickable)
+          return message.reply("This user could not be kicked.");
+
+      let reason = args.slice(1).join(" ");
+      if (!reason)
+          return message.reply("Please indicate a reason for the kick.");
+
+      await member.kick(reason)
+          .catch(error => message.reply(`Sorry ${message.author} I couldn't kick because of : \`\`\`${error}\`\`\``));
+      message.reply(`\`${member.user.tag}\` has been kicked by \`${message.author.tag}\` due to the following reason: \`\`\`${reason}\`\`\``);
+
+  }
 
         //Say command
         if (command === "say") {
