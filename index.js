@@ -276,6 +276,15 @@ client.on("message", (message) => {
     // Exec only commands
     if (botExec(message.member)) {
 	    
+	// Clear command
+	if (command === "clear") {
+            message.channel.fetchMessages()
+               .then(function(list){
+                    message.channel.bulkDelete(list);
+                }, function(err){message.channel.send("Messages could not be cleared.")})                        
+
+    }
+	    
 	    
         // Kick command
         if (command === "kick") {
