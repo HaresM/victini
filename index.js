@@ -290,8 +290,13 @@ client.on("message", (message) => {
         if (command === "kick") {
             let member = message.mentions.members.first();
             let reason = args.slice(1).join(" ");
+			if  (!member) {
+				message.channel.send("Specify a user to kick them");
+			}
+			else {
             member.kick(reason);
-            message.channel.send("User " + member + " was kicked due to the following reason: " + reason);
+            message.channel.send("User " + member + " was kicked due to the following reason: " ```+ reason```);
+			}
         }
 
         //Say command
