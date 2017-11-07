@@ -7,11 +7,12 @@ const prefix = "v.";
 
 
 
+
 function clean(text) {
-  if (typeof(text) === "string")
-    return text.replace(/`/g, "`" + String.fromCharCode(8203)).replace(/@/g, "@" + String.fromCharCode(8203));
-  else
-      return text;
+    if (typeof(text) === "string")
+        return text.replace(/`/g, "`" + String.fromCharCode(8203)).replace(/@/g, "@" + String.fromCharCode(8203));
+    else
+        return text;
 }
 
 function defaultChannel(guild) {
@@ -44,7 +45,7 @@ function botExec(member) {
 
 client.on("guildCreate", guild => {
 
-    defaultChannel(guild).send('Hey, I am Victini. Nice to meet you! I am here to make your life easier and more fun, with handy commands and text-based adventures! If you face any problems or have any questions in general, contact my creator, `Hares#5947`!');
+    defaultChannel(guild).send('Hey, I am Victini. Nice to meet you! I am here to make your life easier and more fun, with handy commands and text-based adventures! Use the `v.help`-command to get information of my commands, prefix, and much more, and if you face any problems or have any questions in general, contact my creator, `Hares#5947`!');
 
     var role = guild.roles.find("name", "Victini Exec");
     if (role == null || role == undefined) {
@@ -52,11 +53,10 @@ client.on("guildCreate", guild => {
             name: 'Victini Exec',
             color: '#ff9e30',
             permissions: [
-                "ADD_REACTIONS", "READ_MESSAGES",
-                "SEND_MESSAGES", "SEND_TTS_MESSAGES",
-                "EMBED_LINKS", "ATTACH_FILES",
-                "READ_MESSAGE_HISTORY", "EXTERNAL_EMOJIS",
-                "CONNECT", "SPEAK", "CHANGE_NICKNAME"
+                "ADD_REACTIONS", "READ_MESSAGES", "SEND_MESSAGES",
+                "SEND_TTS_MESSAGES", "EMBED_LINKS", "ATTACH_FILES",
+                "READ_MESSAGE_HISTORY", "EXTERNAL_EMOJIS", "CONNECT",
+                "SPEAK", "CHANGE_NICKNAME"
             ],
             mentionable: true
         })
@@ -90,16 +90,77 @@ client.on("message", (message) => {
 
     const args = message.content.slice(prefix.length).trim().split(/ +/g);
     const command = args.shift().toLowerCase();
+
+
+
     // Help command
     if (command === "help") {
-        message.channel.send("Command under construction.");
+        // Commands
+        if (args[0] === "commands") {
+            if (args[1] === "8ball") {
+                message.channel.send("The `v.8ball`-command sends a reply to a question that can be answered with yes or no. You use this command as follows: `v.8ball` `[your yes/no question]`.");
+            } else if (args[1] === "helper") {
+                message.channel.send("The `v.helper`-command sends a image of Victini made by `#Greedere Ganciel#3872`.");
+            } else if (args[1] === "face") {
+                if (args[2] === "lenny") {
+                    message.channel.send("The `v.lenny`-command sends a lenny-face ( ( ͡° ͜ʖ ͡°) ). What more is there to say?");
+                } else if (args[2] === "shrug") {
+                    message.channel.send("The `v.shrug`-command sends a shrug emoticon ( ¯\\_(ツ)_/¯ ).");
+                } else if (args[2] === "dead") {
+                    message.channel.send("The `v.dead`-command sends a cute dead face ( ( ×ω× ) ).");
+                } else if (args[2] === "angry") {
+                    message.channel.send("The `v.angry`-command sends an emoticon that represents an angry face ( ヽ(#`Д´)ﾉ )");
+                } else if (args[2] === "shocked") {
+                    message.channel.send("The `v.shocked`-command sends an emoticon that represents an shocked face ( Σ(ﾟДﾟ；≡；ﾟдﾟ) )");
+                } else if (args[2] === "superlenny") {
+                    message.channel.send("The `v.superlenny`-command sends sends a buffed up version of a lenny-face ( ( ͡o ͜ʖ ͡o) )");
+                } else {
+                    message.channel.send("Type the following commands to get help on specific stuff:\n```v.help commands face lenny\nv.help commands face shrug\nv.help commands face superlenny\nv.help commands face dead\nv.help commands face angry\nv.help commands face shocked```");
+                }
+            } else if (args[1] === "victim") {
+                message.channel.send("Use the `v.victim`-command to test how lucky you are... or misfortunate...");
+            } else if (args[1] === "weather") {
+                message.channel.send("The `v.weather`-command sends the weather of the location you specify. You use this command as follow: `v.weather` `[a real life location]`");
+            } else {
+                message.channel.send("Type the following commands to get help on specific stuff:\n```v.help face\nv.help 8ball\nv.help helper\nv.help victim\nv.help weather```");
+            }
+        }
+        // Exec-only
+        else if (args[0] === "exec-only" && botExec(message.member)) {
+            if (args[1] === "say") {
+                message.channel.send("Use the `v.say`-command to let Victini mimmick what you say. Use this command as follows: `v.say` `[the sentence you want Victini to repeat]`");
+            } else if (args[1] === "eval") {
+                message.channel.send("Use the `v.eval`-command to test code out. Though, this command requires extensive knowledge of `JavaScript`");
+            } else if (args[1] === "kick") {
+                message.channel.send("The `v.kick`-command kicks a user. It's that straightforward. Use this command as follows: `v.kick` `[@UserYouWantToKick]` `[Reason as to why you want to kick this person]`");
+            } else {
+                message.channel.send("Exec-only commands require the `Victini Exec`-role to be used. Type the following commands to get further help:\n```v.help exec-only say\nv.help exec-only kick\nv.help exec-only eval```");
+            }
+        }
+        // General info
+        else if (args[0] === "gen-info") {
+            if (args[1] === "prefix") {
+                message.channel.send("Victini's prefix is `v.`. Note that this is a *lower-case* \"v\"!");
+            } else if (args[1] === "invite") {
+                message.channel.send("You can invite Victini to you server by clicking on the following link. Please note that Victini is still *in Beta*, and is buggy at the moment. For further inquiries, please contact user `Hares#5947`.\nhttps://discordapp.com/oauth2/authorize?client_id=372037843574456342&scope=bot&permissions=2146958591");
+            } else {
+                message.channel.send("Type the following commands to get help on specific stuff:\n```v.help gen-info prefix\nv.help gen-info invite```");
+            }
+        }
+        // Help text
+        else {
+            message.channel.send("Type the following commands to get help on specific stuff:\n```v.help gen-info\nv.help commands\nv.help exec-only```");
+        }
     }
-    
+
+
+
+
     // Helper command
     if (command === "helper") {
         message.channel.send("https://cdn.discordapp.com/attachments/320716421757927436/376351118449573909/sketch1509192675057.png");
     }
-    
+
     // 8ball command
     if (command === "8ball") {
         if (message.content.startsWith(prefix + "8ball")) {
@@ -164,83 +225,114 @@ client.on("message", (message) => {
     if (command === "thinking") {
         message.channel.send("https://cdn.discordapp.com/attachments/347376772951572490/364168246628188162/the_real_thinking_emoji.gif");
     }
-    
+
     // Victim command
     if (command === "victim") {
         var victim = JSON.parse(fs.readFileSync('database/victim.json')).victim;
         message.channel.sendMessage(message.member.user + victim[rand(victim.length)]);
     }
-    
-  
-    // Weather command
-    if (message.content.startsWith(prefix + 'weather')) { 
 
-        weather.find({search: args.join(" "), degreeType: 'C'}, function(err, result) { 
+
+    // Weather command
+    if (message.content.startsWith(prefix + 'weather')) {
+
+        weather.find({
+            search: args.join(" "),
+            degreeType: 'C'
+        }, function(err, result) {
             if (err) message.channel.send(err);
 
-            
+
             if (result.length === 0) {
-                message.channel.send('Location not found! Please check whether you have entered a valid location.')
-                return; 
+                message.channel.send('Location not found! Please check whether you have entered a valid location.');
+                return;
             }
 
-           
+
             var current = result[0].current;
             var location = result[0].location;
 
             const embed = new Discord.RichEmbed()
-                .setDescription(`**${current.skytext}**`) 
-                .setAuthor(`Weather for ${current.observationpoint}`) 
-                .setThumbnail(current.imageUrl) 
+                .setDescription(`**${current.skytext}**`)
+                .setAuthor(`Weather for ${current.observationpoint}`)
+                .setThumbnail(current.imageUrl)
                 .setColor(0xFF9E30)
-                .addField('Timezone',`UTC${location.timezone}`, true) 
-                .addField('Degree Type',location.degreetype, true)
-                .addField('Temperature',`${current.temperature} Degrees`, true)
+                .addField('Timezone', `UTC${location.timezone}`, true)
+                .addField('Degree Type', location.degreetype, true)
+                .addField('Temperature', `${current.temperature} Degrees`, true)
                 .addField('Feels Like', `${current.feelslike} Degrees`, true)
-                .addField('Winds',current.winddisplay, true)
+                .addField('Winds', current.winddisplay, true)
                 .addField('Humidity', `${current.humidity}%`, true)
 
-                message.channel.send({embed});
+            message.channel.send({
+                embed
+            });
         });
     }
 
-  
-  
-  
+
+
 
     // Exec only commands
     if (botExec(message.member)) {
-        
+	    
+	// Clear command
+	if (command === "clear") {
+            message.channel.fetchMessages()
+               .then(function(list){
+                    message.channel.bulkDelete(list);
+                }, function(err){message.channel.send("Messages could not be cleared.")})                        
+
+    }
+	    
+	    
+        // Kick command
+        if (command === "kick") {
+            let member = message.mentions.members.first();
+            let reason = args.slice(1).join(" ");
+			if  (!member) {
+				message.channel.send("Specify a user to kick them");
+			}
+			else {
+            member.kick(reason);
+            message.channel.send("User " + member + " was kicked due to the following reason: " ```+ reason```);
+			}
+        }
+
         //Say command
         if (command === "say") {
             message.delete();
             message.channel.send(args.join(" "));
         }
 
-    
-    // Eval command
-      const evalArgs = message.content.split(" ").slice(1);
 
-  if (message.content.startsWith(prefix + "eval")) {
-    try {
-      const code = evalArgs.join(" ");
-      let evaled = eval(code);
+        // Eval command
+        const evalArgs = message.content.split(" ").slice(1);
 
-      if (typeof evaled !== "string")
-        evaled = require("util").inspect(evaled);
+        if (message.content.startsWith(prefix + "eval")) {
+            try {
+                const code = evalArgs.join(" ");
+                let evaled = eval(code);
 
-      message.channel.send(clean(evaled), {code:"xl"});
-    } catch (err) {
-      message.channel.send(`\`ERROR\` \`\`\`xl\n${clean(err)}\n\`\`\``);
+                if (typeof evaled !== "string")
+                    evaled = require("util").inspect(evaled);
+
+                message.channel.send(clean(evaled), {
+                    code: "xl"
+                });
+            } catch (err) {
+                message.channel.send(`\`ERROR\` \`\`\`xl\n${clean(err)}\n\`\`\``);
+            }
+		
+		
+        } 
+	    
+	    else {
+            return;
+        }
     }
-  }
-    
-    else {
-     return;   
-    }
-}
-    
-    
+
+
 });
 
 
