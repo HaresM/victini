@@ -275,34 +275,27 @@ client.on("message", (message) => {
 
     // Exec only commands
     if (botExec(message.member)) {
-	    
-	// Clear command
-	if (command === "clear") {
+
+        // Clear command
+        if (command === "clear") {
             message.channel.fetchMessages()
-               .then(function(list){
+                .then(function(list) {
                     message.channel.bulkDelete(list);
-                }, function(err){message.channel.send("Messages could not be cleared.")})                        
+                }, function(err) {
+                    message.channel.send("Messages could not be cleared.")
+                })
 
-    }
-	    
-	    
+        }
+
+
         // Kick command
-  if (command === "kick") {
-      let member = message.mentions.members.first();
-      if (!member)
-          return message.channel.send("Please specify a valid user to kick them.");
-      if (!member.kickable)
-          return message.reply("This user could not be kicked.");
+        if (command === "kick") {
+            let member = message.mentions.members.first();
+            let reason = args.slice(1).join(" ");
+            member.kick(reason);
+            message.channel.send(member + " was successfully kicked, due to the following reason:\n```" + reason + "```");
 
-      let reason = args.slice(1).join(" ");
-      if (!reason)
-          return message.reply("Please indicate a reason for the kick.");
-
-      await member.kick(reason)
-          .catch(error => message.reply(`Sorry ${message.author} I couldn't kick because of : \`\`\`${error}\`\`\``));
-      message.reply(`\`${member.user.tag}\` has been kicked by \`${message.author.tag}\` due to the following reason: \`\`\`${reason}\`\`\``);
-
-  }
+        }
 
         //Say command
         if (command === "say") {
@@ -328,11 +321,9 @@ client.on("message", (message) => {
             } catch (err) {
                 message.channel.send(`\`ERROR\` \`\`\`xl\n${clean(err)}\n\`\`\``);
             }
-		
-		
-        } 
-	    
-	    else {
+
+
+        } else {
             return;
         }
     }
