@@ -328,20 +328,7 @@ client.on("message", (message) => {
         }
     }
     
-    
-    
-    // Only I can use these commands
-    if (member.user.id == '311534497403371521') {
-        
-        // Set game command
-        
-        if (command === "setgame") {
-            let game = args.join(" ");
-            client.setPlayingGame(game);
-            message.channel.send("Victini's game successfully set to: ```" + game + "```");
-        }
-        
-    }
+   
 
 
 });
