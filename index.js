@@ -281,12 +281,11 @@ client.on("message", (message) => {
         // Clear command
         if (command === "clear") {
             index = args.join(" ");
-                    message.channel.bulkDelete(index);
+            message.channel.bulkDelete(index);
             if (message.channel.bulkDelete(index)) {
-                    return;
-            }
-            else {
-                    message.channel.send("Messages could not be cleared.")
+                return;
+            } else {
+                message.channel.send("Messages could not be cleared.")
             }
 
         }
@@ -330,8 +329,8 @@ client.on("message", (message) => {
             return;
         }
     }
-    
-   
+
+
 
 
 });
