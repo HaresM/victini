@@ -278,12 +278,14 @@ client.on("message", (message) => {
 
         // Clear command
         if (command === "clear") {
-            message.channel.fetchMessages()
-                .then(function(list) {
-                    message.channel.bulkDelete(list);
-                }, function(err) {
+            index = args.join(" ");
+                    message.channel.bulkDelete(index);
+            if (message.channel.bulkDelete(index)) {
+                    return;
+            }
+            else {
                     message.channel.send("Messages could not be cleared.")
-                })
+            }
 
         }
 
@@ -294,7 +296,6 @@ client.on("message", (message) => {
             let reason = args.slice(1).join(" ");
             member.kick(reason);
             message.channel.send(member + " was successfully kicked, due to the following reason:\n```" + reason + "```");
-
         }
 
         //Say command
