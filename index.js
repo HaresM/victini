@@ -132,9 +132,11 @@ client.on("message", (message) => {
             } else if (args[1] === "eval") {
                 message.channel.send("Use the `v.eval`-command to test code out. Though, this command requires extensive knowledge of `JavaScript`");
             } else if (args[1] === "kick") {
-                message.channel.send("The `v.kick`-command kicks a user. It's that straightforward. Use this command as follows: `v.kick` `[@UserYouWantToKick]` `[Reason as to why you want to kick this person]`");
+                message.channel.send("The `v.kick`-command kicks a user. It's that straightforward. Use this command as follows: `v.kick` `@[user you want to kick]` `[eason as to why you want to kick this person]`");
+            } else if (args[1] === "clear") {
+                message.channel.send("The `v.kick`-command deletes the ammount of specified messages. Note that the command itself counts as a message as well. Use this command as follows: `v.clear` `[ammount of messages you want to clear]`");
             } else {
-                message.channel.send("Exec-only commands require the `Victini Exec`-role to be used. Type the following commands to get further help:\n```v.help exec-only say\nv.help exec-only kick\nv.help exec-only eval```");
+                message.channel.send("Exec-only commands require the `Victini Exec`-role to be used. Type the following commands to get further help:\n```v.help exec-only say\nv.help exec-only kick\nv.help exec-only clear\nv.help exec-only eval```");
             }
         }
         // General info
