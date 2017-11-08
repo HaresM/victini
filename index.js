@@ -278,7 +278,7 @@ client.on("message", (message) => {
 
         // Clear command
         if (command === "clear") {
-            index = args.join(" ") + 1;
+            index = args.join(" ");
                     message.channel.bulkDelete(index);
             if (message.channel.bulkDelete(index)) {
                     return;
