@@ -78,7 +78,7 @@ client.on('guildMemberAdd', member => {
     member.addRole(roleIntro);
     }
     else {
-        defaultChannel(guild).send('member.user + ' has joined the server. Welcome!');
+        defaultChannel(guild).send(member + ' has joined the server. Welcome!');
     }
 
 
