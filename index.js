@@ -287,7 +287,7 @@ client.on("message", (message) => {
 
      
         
-        
+        if (botExec(message.member)) {
         
         // Clear command
         if (command === "clear") {
