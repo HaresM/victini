@@ -341,34 +341,6 @@ client.on("message", (message) => {
         }
     }
 
-
-
-    
-    
-    
-    // Config command
-    if (command === "config") {
-    if (args[0] === "messages") {
-            if (args[1] === "welcome"){
-                if (args[2] == "msg"){
-                    var msg = message.content.split('v.config messages welcome msg ')[1];
-                    if (!msg){
-                        message.channel.send(`The current welcoming message is: \`\`\`\r\n${config[id]["messages"]["welcome"]["msg"]}\`\`\`\nUse this command to change the message:\`\`\`v-config messages welcome msg [message]\`\`\`Inside the message, \`(user)\` will be replaced with the joining user's username, whereas \`(@user)\` will tag the joining user.`);
-                    }
-                    else{
-                        config[id].messages.welcome.msg = msg;
-                        saveConfig();
-                        message.channel.send(`Successfully set welcome message to: \`\`\`\r\n${config[id].messages.welcome.msg}\`\`\``);
-                    }
-                }
-            }
-                
-            }
-    
-    
-    
-    
-
 });
 
 
