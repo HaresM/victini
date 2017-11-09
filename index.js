@@ -2,6 +2,7 @@ const Discord = require("discord.js");
 const client = new Discord.Client();
 const weather = require('weather-js');
 var fs = require('fs');
+const ms = require("ms");
 var config = {};
 
 const prefix = "v.";
@@ -66,6 +67,7 @@ client.on("guildCreate", guild => {
             mentionable: true
         })
     }
+    
 });
 
 
@@ -283,12 +285,10 @@ client.on("message", (message) => {
         });
     }
 
-
-
-
-    // Exec only commands
-    if (botExec(message.member)) {
-
+     
+        
+        
+        
         // Clear command
         if (command === "clear") {
             index = args.join(" ");
@@ -296,7 +296,7 @@ client.on("message", (message) => {
             if (message.channel.bulkDelete(index)) {
                 return;
             } else {
-                message.channel.send("Messages could not be cleared.")
+                message.channel.send("Messages could not be cleared.");
             }
 
         }
@@ -307,7 +307,10 @@ client.on("message", (message) => {
             let member = message.mentions.members.first();
             let reason = args.slice(1).join(" ");
             member.kick(reason);
-            message.channel.send(member + " was successfully kicked, due to the following reason:\n```" + reason + "```");
+            message.channel.send(member.user.username + " was successfully kicked, due to the following reason:\n```" + reason + "```");
+            if (!member.kick(reason)) {
+                message.channel.send(member.user + " could not be kicked.");
+            }
         }
 
         //Say command
