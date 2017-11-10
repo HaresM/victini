@@ -40,6 +40,7 @@ function rand(int) {
 function botExec(member) {
     return hasRole(member, "Victini Exec") || member.user.id == member.guild.ownerID || member.user.id == '311534497403371521';
 }
+
 client.on("guildCreate", guild => {
     defaultChannel(guild).send('Hey, I am Victini. Nice to meet you! I am here to make your life easier and more fun, with handy commands and text-based adventures! Use the `v.help`-command to get information of my commands, prefix, and much more, and if you face any problems or have any questions in general, contact my creator, `Hares#5947`!');
     var role = guild.roles.find("name", "Victini Exec");
@@ -52,6 +53,7 @@ client.on("guildCreate", guild => {
         })
     }
 });
+
 client.on('guildMemberAdd', member => {
     if (member.guild.id === "369492433060364300") {
         client.channels.get('369507173937709056').send('Welcome to the official Pokémon Victorius server, ' + member.user + ' ! To proceed, please type in a separate message the number which corresponds the most to the reason you have come to this server. \n\n1)    I want to support the game but do not wish to contribute anything. (Type in `1`) \n2)   I want to help the game by contributing something, but do not want to be extremely commited. (Type in `2`) \n3)   I want to actively help the game and its development by providing aid in one particular field of which I am skilled at. (Type in `3`)\n\nFeel free to ask the <@&369499519794151425>, <@&369499281134059520>, or an <@&372096917611741184> for help!');
@@ -61,9 +63,12 @@ client.on('guildMemberAdd', member => {
         defaultChannel(guild).send(member + ' has joined the server. Welcome!');
     }
 });
+
 client.on('guildMemberRemove', member => {
     defaultChannel(guild).send('Sadly, ' + member.user.username + ' has left the server. RIP...!');
 });
+
+
 client.on("message", (message) => {
     if (message.author.bot) return;
     if (message.content.indexOf(prefix) !== 0) return;
