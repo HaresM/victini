@@ -3,13 +3,9 @@ const client = new Discord.Client();
 const weather = require('weather-js');
 var fs = require('fs');
 var config = {};
-
 const prefix = "v.";
 
-
-
-
-function saveConfig(){
+function saveConfig() {
     ref.update(config);
 }
 
@@ -41,73 +37,39 @@ function rand(int) {
     return Math.floor(Math.random() * parseInt(int));
 }
 
-
 function botExec(member) {
     return hasRole(member, "Victini Exec") || member.user.id == member.guild.ownerID || member.user.id == '311534497403371521';
 }
-
-
-
 client.on("guildCreate", guild => {
-
     defaultChannel(guild).send('Hey, I am Victini. Nice to meet you! I am here to make your life easier and more fun, with handy commands and text-based adventures! Use the `v.help`-command to get information of my commands, prefix, and much more, and if you face any problems or have any questions in general, contact my creator, `Hares#5947`!');
-
     var role = guild.roles.find("name", "Victini Exec");
     if (role == null || role == undefined) {
         guild.createRole({
             name: 'Victini Exec',
             color: '#ff9e30',
-            permissions: [
-                "ADD_REACTIONS", "READ_MESSAGES", "SEND_MESSAGES",
-                "SEND_TTS_MESSAGES", "EMBED_LINKS", "ATTACH_FILES",
-                "READ_MESSAGE_HISTORY", "EXTERNAL_EMOJIS", "CONNECT",
-                "SPEAK", "CHANGE_NICKNAME"
-            ],
+            permissions: ["ADD_REACTIONS", "READ_MESSAGES", "SEND_MESSAGES", "SEND_TTS_MESSAGES", "EMBED_LINKS", "ATTACH_FILES", "READ_MESSAGE_HISTORY", "EXTERNAL_EMOJIS", "CONNECT", "SPEAK", "CHANGE_NICKNAME"],
             mentionable: true
         })
     }
-    
 });
-
-
 client.on('guildMemberAdd', member => {
-
-    
     if (member.guild.id === "369492433060364300") {
-    client.channels.get('369507173937709056').send('Welcome to the official Pokémon Victorius server, ' + member.user + ' ! To proceed, please type in a separate message the number which corresponds the most to the reason you have come to this server. \n\n1)    I want to support the game but do not wish to contribute anything. (Type in `1`) \n2)   I want to help the game by contributing something, but do not want to be extremely commited. (Type in `2`) \n3)   I want to actively help the game and its development by providing aid in one particular field of which I am skilled at. (Type in `3`)\n\nFeel free to ask the <@&369499519794151425>, <@&369499281134059520>, or an <@&372096917611741184> for help!');
-    var roleIntro = member.guild.roles.find('name', 'Intro');
-    member.addRole(roleIntro);
-    }
-    else {
+        client.channels.get('369507173937709056').send('Welcome to the official Pokémon Victorius server, ' + member.user + ' ! To proceed, please type in a separate message the number which corresponds the most to the reason you have come to this server. \n\n1)    I want to support the game but do not wish to contribute anything. (Type in `1`) \n2)   I want to help the game by contributing something, but do not want to be extremely commited. (Type in `2`) \n3)   I want to actively help the game and its development by providing aid in one particular field of which I am skilled at. (Type in `3`)\n\nFeel free to ask the <@&369499519794151425>, <@&369499281134059520>, or an <@&372096917611741184> for help!');
+        var roleIntro = member.guild.roles.find('name', 'Intro');
+        member.addRole(roleIntro);
+    } else {
         defaultChannel(guild).send(member + ' has joined the server. Welcome!');
     }
-
-
 });
-
-
 client.on('guildMemberRemove', member => {
-
     defaultChannel(guild).send('Sadly, ' + member.user.username + ' has left the server. RIP...!');
-
 });
-
-
 client.on("message", (message) => {
-
     if (message.author.bot) return;
-
     if (message.content.indexOf(prefix) !== 0) return;
-
-
     const args = message.content.slice(prefix.length).trim().split(/ +/g);
     const command = args.shift().toLowerCase();
-
-
-
-    // Help command
     if (command === "help") {
-        // Commands
         if (args[0] === "commands") {
             if (args[1] === "8ball") {
                 message.channel.send("The `v.8ball`-command sends a reply to a question that can be answered with yes or no. You use this command as follows: `v.8ball` `[your yes/no question]`.");
@@ -136,9 +98,7 @@ client.on("message", (message) => {
             } else {
                 message.channel.send("Type the following commands to get help on specific stuff:\n```v.help face\nv.help 8ball\nv.help helper\nv.help victim\nv.help weather```");
             }
-        }
-        // Exec-only
-        else if (args[0] === "exec-only" && botExec(message.member)) {
+        } else if (args[0] === "exec-only" && botExec(message.member)) {
             if (args[1] === "say") {
                 message.channel.send("Use the `v.say`-command to let Victini mimmick what you say. Use this command as follows: `v.say` `[the sentence you want Victini to repeat]`");
             } else if (args[1] === "eval") {
@@ -150,9 +110,7 @@ client.on("message", (message) => {
             } else {
                 message.channel.send("Exec-only commands require the `Victini Exec`-role to be used. Type the following commands to get further help:\n```v.help exec-only say\nv.help exec-only kick\nv.help exec-only clear\nv.help exec-only eval```");
             }
-        }
-        // General info
-        else if (args[0] === "gen-info") {
+        } else if (args[0] === "gen-info") {
             if (args[1] === "prefix") {
                 message.channel.send("Victini's prefix is `v.`. Note that this is a *lower-case* \"v\"!");
             } else if (args[1] === "invite") {
@@ -160,57 +118,20 @@ client.on("message", (message) => {
             } else {
                 message.channel.send("Type the following commands to get help on specific stuff:\n```v.help gen-info prefix\nv.help gen-info invite```");
             }
-        }
-        // Help text
-        else {
+        } else {
             message.channel.send("Type the following commands to get help on specific stuff:\n```v.help gen-info\nv.help commands\nv.help exec-only```");
         }
     }
-
-
-
-
-    // Helper command
     if (command === "helper") {
         message.channel.send("https://cdn.discordapp.com/attachments/320716421757927436/376351118449573909/sketch1509192675057.png");
     }
-
-    // 8ball command
     if (command === "8ball") {
         if (message.content.startsWith(prefix + "8ball")) {
-            var magicArray = [
-                'It is certain.',
-                'It is decidedly so.',
-                'Without a doubt.',
-                'Yes - definitely.',
-                'You may rely on it.',
-                'As I see it, yes.',
-                'Most likely.',
-                'Outlook good.',
-                'Yes.',
-                'Signs point to yes.',
-                'Reply hazy, try again.',
-                'Ask again later.',
-                'Better not tell you now.',
-                'Cannot predict now.',
-                'Concentrate and ask again.',
-                'I would not count on it.',
-                'My reply is no.',
-                'My sources say no.',
-                'Outlook not so good.',
-                'Are you done asking questions yet?',
-                'Why the fuck should I even know this?',
-                'The answer lies within yourself.',
-                'Why are you asking me?',
-                'Follow the seahorse.',
-                'Very doubtful.'
-            ];
+            var magicArray = ['It is certain.', 'It is decidedly so.', 'Without a doubt.', 'Yes - definitely.', 'You may rely on it.', 'As I see it, yes.', 'Most likely.', 'Outlook good.', 'Yes.', 'Signs point to yes.', 'Reply hazy, try again.', 'Ask again later.', 'Better not tell you now.', 'Cannot predict now.', 'Concentrate and ask again.', 'I would not count on it.', 'My reply is no.', 'My sources say no.', 'Outlook not so good.', 'Are you done asking questions yet?', 'Why the fuck should I even know this?', 'The answer lies within yourself.', 'Why are you asking me?', 'Follow the seahorse.', 'Very doubtful.'];
             var randomReply = Math.floor(Math.random() * magicArray.length);
             message.channel.send(`${magicArray[randomReply]}`);
         }
     }
-
-    // Face command
     if (command === "lenny") {
         message.delete();
         message.channel.send("( ͡° ͜ʖ ͡°)");
@@ -235,84 +156,56 @@ client.on("message", (message) => {
         message.delete();
         message.channel.send("( ͡o ͜ʖ ͡o)");
     }
-    // Thinking command
     if (command === "thinking") {
         message.channel.send("https://cdn.discordapp.com/attachments/347376772951572490/364168246628188162/the_real_thinking_emoji.gif");
     }
-
-    // Victim command
     if (command === "victim") {
         var victim = JSON.parse(fs.readFileSync('database/victim.json')).victim;
         message.channel.sendMessage(message.member.user + victim[rand(victim.length)]);
     }
-
-
-    // Weather command
     if (message.content.startsWith(prefix + 'weather')) {
-
         weather.find({
             search: args.join(" "),
             degreeType: 'C'
         }, function(err, result) {
             if (err) message.channel.send(err);
-
-
             if (result.length === 0) {
                 message.channel.send('Location not found! Please check whether you have entered a valid location.');
                 return;
             }
-
-
             var current = result[0].current;
             var location = result[0].location;
-
-            const embed = new Discord.RichEmbed()
-                .setDescription(`**${current.skytext}**`)
-                .setAuthor(`Weather for ${current.observationpoint}`)
-                .setThumbnail(current.imageUrl)
-                .setColor(0xFF9E30)
-                .addField('Timezone', `UTC${location.timezone}`, true)
-                .addField('Degree Type', location.degreetype, true)
-                .addField('Temperature', `${current.temperature} Degrees`, true)
-                .addField('Feels Like', `${current.feelslike} Degrees`, true)
-                .addField('Winds', current.winddisplay, true)
-                .addField('Humidity', `${current.humidity}%`, true)
-
+            const embed = new Discord.RichEmbed().setDescription(`**${current.skytext}**`).setAuthor(`Weather for ${current.observationpoint}`).setThumbnail(current.imageUrl).setColor(0xFF9E30).addField('Timezone', `UTC${location.timezone}`, true).addField('Degree Type', location.degreetype, true).addField('Temperature', `${current.temperature}Degrees`, true).addField('Feels Like', `${current.feelslike}Degrees`, true).addField('Winds', current.winddisplay, true).addField('Humidity', `${current.humidity}%`, true)
             message.channel.send({
                 embed
             });
         });
     }
-    
-    // Convert command 
     if (command === "convert") {
         var temperature = args[1];
-        var celsius = (temperature * (9/5)) + 32;
-        var fahrenheit = (temperature − 32) * (5/9);
-        
-        if (!args[0]) { message.channel.send("Please provide the type of conversion."); return; }
-        if (!args[1]) { message.channel.send("Please enter the ammount that you want to convert."); return; }    
-        if (Number.isInteger(args[1]) = false) { message.channel.send("Please enter a valid ammount."); return; }
-        
+        var celsius = (temperature * (9 / 5)) + 32;
+        var fahrenheit = (temperature - 32) * (5 / 9);
+        if (!args[0]) {
+            message.channel.send("Please provide the type of conversion.");
+            return;
+        }
+        if (!args[1]) {
+            message.channel.send("Please enter the ammount that you want to convert.");
+            return;
+        }
+        if (Number.isInteger(args[1]) === false) {
+            message.channel.send("Please enter a valid ammount.");
+            return;
+        }
         if (args[0] === "c") {
-            message.channel.send(`*${temperature}* Degrees Fahrenheit is *${celsius}* Degrees Celsius.`);
-        }
-        
-               else if (args[0] === "f") {
-            message.channel.send(`*${temperature}* Degrees Celsius is *${fahrenheit}* Degrees Fahreinheit.`);
-        }
-        
-        else {
+            message.channel.send(`*${temperature}*Degrees Fahrenheit is*${celsius}*Degrees Celsius.`);
+        } else if (args[0] === "f") {
+            message.channel.send(`*${temperature}*Degrees Celsius is*${fahrenheit}*Degrees Fahreinheit.`);
+        } else {
             message.channel.send("Temperature could not be converted.");
         }
-        
     }
-
-     
-        
-        if (botExec(message.member)) {
-        
-        // Clear command
+    if (botExec(message.member)) {
         if (command === "clear") {
             index = args.join(" ");
             message.channel.bulkDelete(index);
@@ -321,11 +214,7 @@ client.on("message", (message) => {
             } else {
                 message.channel.send("Messages could not be cleared.");
             }
-
         }
-
-
-        // Kick command
         if (command === "kick") {
             let member = message.mentions.members.first();
             let reason = args.slice(1).join(" ");
@@ -335,41 +224,26 @@ client.on("message", (message) => {
                 message.channel.send(member.user + " could not be kicked.");
             }
         }
-
-        //Say command
         if (command === "say") {
             message.delete();
             message.channel.send(args.join(" "));
         }
-
-
-        // Eval command
         const evalArgs = message.content.split(" ").slice(1);
-
         if (message.content.startsWith(prefix + "eval")) {
             try {
                 const code = evalArgs.join(" ");
                 let evaled = eval(code);
-
                 if (typeof evaled !== "string")
                     evaled = require("util").inspect(evaled);
-
                 message.channel.send(clean(evaled), {
                     code: "xl"
                 });
             } catch (err) {
-                message.channel.send(`\`ERROR\` \`\`\`xl\n${clean(err)}\n\`\`\``);
+                message.channel.send(`\`ERROR\`\`\`\`xl\n${clean(err)}\n\`\`\``);
             }
-
-
         } else {
             return;
         }
     }
-
 });
-
-
-
-
 client.login(process.env.BOT_TOKEN);
