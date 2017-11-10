@@ -198,9 +198,9 @@ client.on("message", (message) => {
         //    return;
         //}
         if (args[0] === "c") {
-            message.channel.send(`*${temperature}* Degrees Fahrenheit is *${celsius}* Degrees Celsius.`);
+            message.channel.send(`\`${temperature}\` Degrees Fahrenheit is \`${celsius}\` Degrees Celsius.`);
         } else if (args[0] === "f") {
-            message.channel.send(`*${temperature}* Degrees Celsius is *${fahrenheit}* Degrees Fahreinheit.`);
+            message.channel.send(`\`${temperature}\` Degrees Celsius is \`${fahrenheit}\` Degrees Fahreinheit.`);
         } else {
             message.channel.send("Temperature could not be converted.");
         }
