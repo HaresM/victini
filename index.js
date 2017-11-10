@@ -183,8 +183,8 @@ client.on("message", (message) => {
     }
     if (command === "convert") {
         var temperature = args[1];
-        var celsius = (temperature * (9 / 5)) + 32;
-        var fahrenheit = (temperature - 32) * (5 / 9);
+        var celsius = (temperature - 32) * (5 / 9); 
+        var fahrenheit = (temperature * (9 / 5)) + 32;
         if (!args[0]) {
             message.channel.send("Please provide the type of conversion.");
             return;
@@ -198,9 +198,9 @@ client.on("message", (message) => {
         //    return;
         //}
         if (args[0] === "c") {
-            message.channel.send(`*${temperature}*Degrees Fahrenheit is*${celsius}*Degrees Celsius.`);
+            message.channel.send(`*${temperature}* Degrees Fahrenheit is *${celsius}* Degrees Celsius.`);
         } else if (args[0] === "f") {
-            message.channel.send(`*${temperature}*Degrees Celsius is*${fahrenheit}*Degrees Fahreinheit.`);
+            message.channel.send(`*${temperature}* Degrees Celsius is *${fahrenheit}* Degrees Fahreinheit.`);
         } else {
             message.channel.send("Temperature could not be converted.");
         }
