@@ -283,6 +283,30 @@ client.on("message", (message) => {
             });
         });
     }
+    
+    // Convert command 
+    if (command === "convert") {
+        var temperature = args[1];
+        var celsius = (temperature * (9/5)) + 32;
+        var fahrenheit = (temperature − 32) * (5/9);
+        
+        if (!args[0]) { message.channel.send("Please provide the type of conversion."); return; }
+        if (!args[1]) { message.channel.send("Please enter the ammount that you want to convert."); return; }    
+        if (Number.isInteger(args[1]) = false) { message.channel.send("Please enter a valid ammount."); return; }
+        
+        if (args[0] === "c") {
+            message.channel.send(`*${temperature}* Degrees Fahrenheit is *${celsius}* Degrees Celsius.`);
+        }
+        
+               else if (args[0] === "f") {
+            message.channel.send(`*${temperature}* Degrees Celsius is *${fahrenheit}* Degrees Fahreinheit.`);
+        }
+        
+        else {
+            message.channel.send("Temperature could not be converted.");
+        }
+        
+    }
 
      
         
