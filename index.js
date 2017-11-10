@@ -193,10 +193,10 @@ client.on("message", (message) => {
             message.channel.send("Please enter the ammount that you want to convert.");
             return;
         }
-        if (Number.isInteger(args[1]) === false) {
-            message.channel.send("Please enter a valid ammount.");
-            return;
-        }
+        //if (Number.isInteger(args[1]) === false) {
+        //    message.channel.send("Please enter a valid ammount.");
+        //    return;
+        //}
         if (args[0] === "c") {
             message.channel.send(`*${temperature}*Degrees Fahrenheit is*${celsius}*Degrees Celsius.`);
         } else if (args[0] === "f") {
