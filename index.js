@@ -72,6 +72,9 @@ function getQuotes(member){
 	return config[member.guild.id].quotes[member.user.id];
 }
 
+function saveConfig(){
+    ref.update(config);
+}
 
 
 client.on("guildCreate", guild => {
