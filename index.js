@@ -5,9 +5,7 @@ var fs = require('fs');
 var config = {};
 const prefix = "v.";
 
-function saveConfig() {
-    ref.update(config);
-}
+
 
 function clean(text) {
     if (typeof(text) === "string")
