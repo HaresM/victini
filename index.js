@@ -16,32 +16,6 @@ function clean(text) {
         return text;
 }
 
-    function getUser(args){
-        if (args && args.constructor && args.constructor.name == 'User') return args;
-        if (args && args.constructor && args.constructor.name == 'GuildMember') return args.user;
-        var user = guild.members.find(m => m.user.username == args);
-        if (!user){
-            user = guild.members.get(args);
-        }
-        if (!user){
-            try{ user = guild.members.find(m => m.user.username.toLowerCase() == args.toLowerCase()); } catch (e){}
-        }
-        if (!user){
-            if (args.toString().contains('<@') && args.toString().contains('>')){
-                args = args.split('<@')[1].split('>')[0];
-                user = guild.members.get(args);
-            }
-        }
-        if (!user){
-            user = guild.members.find(m => m.nickname == args);
-        }
-        if (!user){
-            user = guild.members.find(m => m.nickname && m.nickname.toLowerCase() == args.toLowerCase());
-        }
-        if (user && user.constructor && user.constructor.name == 'GuildMember') return user.user;
-        return null;
-    }
-
 function defaultChannel(guild) {
     if (guild.defaultChannel && guild.defaultChannel.constructor && guild.defaultChannel.constructor.name == 'TextChannel') {
         return guild.defaultChannel
@@ -67,14 +41,6 @@ function botExec(member) {
     return hasRole(member, "Victini Exec") || member.user.id == member.guild.ownerID || member.user.id == '311534497403371521';
 }
 
-function getQuotes(member){
-	if (!config[member.guild.id].quotes || !config[member.guild.id].quotes[member.user.id]) return [];
-	return config[member.guild.id].quotes[member.user.id];
-}
-
-function saveConfig(){
-    ref.update(config);
-}
 
 
 client.on("guildCreate", guild => {
@@ -255,112 +221,6 @@ client.on("message", (message) => {
                 return;
             } else {
                 message.channel.send("Messages could not be cleared.");
-            }
-        }
-        if (command === "quotes"){
-            var user;
-            if (args[0]){
-                user = message.mentions.users.first();
-                if (!user) user = getUser(args.join(" "));
-                if (!user){
-                    message.channel.send(`User not found.`);
-                    return;
-                }
-            }
-            else{
-                user = message.member.user;
-            }
-            if (args[1] === "list") {
-            var member = message.member;
-            member = guild.members.get(user.id);
-            if (getQuotes(member).length == 0){
-                message.channel.send(`${user == message.author ? `You don't` : `This user doesn't`} have any quotes saved!`);
-                return;
-            }
-        	var embed = { embed: {
-                color: main_color,
-        		author: {
-        			name: member.user.tag,
-        			icon_url: member.user.avatarURL
-        		},
-        		fields: []
-        	}};
-        	for (i = 0; i < getQuotes(member).length; i++){
-        		embed["embed"].fields.push({
-        			name: `**Quote #${i + 1}**`,
-        			value: getQuotes(member)[i]
-        		})
-        	}
-        	message.channel.send(embed);
-            }
-        }
-        else if (args[1] === "add"){
-            
-                var user = message.mentions.users.first();
-                if (!user) user = getUser(args[0]);
-                if (!user){
-                    message.channel.send("The user you are referring to does'nt exist.");
-                    return;
-                }
-                var msg = message.content.split(`${config[id].prefix}add quote `)[1].split(" ");
-                msg.splice(0, 1);
-                msg = msg.join(" ");
-                if (msg){
-                    if (config[id].quotes[user.id] == undefined){
-                        config[id].quotes[user.id] = [
-                            msg
-                        ];
-                        saveConfig();
-                        message.channel.send(`Quote saved!`);
-                    }
-                    else{
-                        config[id].quotes[user.id].push(msg);
-                        saveConfig();
-                        message.channel.send(`Quote saved!`);
-                    }
-                }
-                else if (!config[id].quotes[user.id] || config[id].quotes[user.id].length == 0){
-                    message.channel.send(`This user doesn't have any quotes saved!`);
-                }
-            }
-        }
-        else if (args[1] === "delete"){
-            var member = message.member;
-            if (args[0] == "quote"){
-                if (args[1] == undefined){
-                    message.channel.send(`Please enter the index of the quote you'd like to remove.`);
-                    return;
-                }
-                var index;
-                index = parseInt(args[1]) - 1;
-                if (isNaN(index)){
-                    message.channel.send(`Please enter the index of the quote you'd like to remove.`);
-                    return;
-                }
-                if (isBotAdmin(message.member)){
-                    args.splice(0, 2);
-                    var user = message.mentions.users.first();
-                    if (!user) user = getUser(args.join(' '));
-                    if (user) member = guild.members.get(user.id);
-                }
-                if (getQuotes(member).length == 0){
-                    message.channel.send(`${member.user == message.author ? `You don't` : `This user doesn't`} have any quotes saved.`);
-                    return;
-                }
-                if (index >= getQuotes(member).length){
-                    var length = getQuotes(member).length;
-                    message.channel.send(`You have only ${length} quote${length == 1 ? `` : `s`}, so please pick a smaller number.`);
-                    return;
-                }
-                else if (index < 0){
-                    message.channel.send("You can't pick a number smaller than 1.");
-                    return;
-                }
-                else{
-                    config[id].quotes[member.user.id].splice(index, 1);
-                    saveConfig();
-                    message.channel.send(`Successfully removed quote #${index + 1}${member.user != message.author ? ` of ${member.user.username}` : ``}.`);
-                }
             }
         }
         if (command === "kick") {
