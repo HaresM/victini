@@ -1,6 +1,6 @@
 const Discord = require("discord.js");
 const client = new Discord.Client();
-var fs = require("fs");
+var fs = require('fs');
 var config = {};
 const prefix = "v.";
 
