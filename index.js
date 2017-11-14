@@ -171,7 +171,27 @@ client.on("message", (message) => {
     }
     if (command === "victim") {
         var victim = JSON.parse(fs.readFileSync('database/victim.json')).victim;
-        message.channel.sendMessage(message.member.user + victim[rand(victim.length)]);
+        var notAllowed = [];
+        
+        function countInArray(array, what) {
+            return array.filter(item => item == what).length;
+        }
+        
+        function cooldownCheck(array, user) {
+          if(countInArray(notAllowed, message.user.id) === 3) {
+                
+                setTimeout(cooldownCheck(notAllowed, user), 3000);
+                for (var i = notAllowed.length - 1; i >= 0; i--) {
+                    if(notAllowed[i] == message.user.id) {
+                        notAllowed.splice(i, 1);
+                        message.channel.send("You can't use this command. Try again later.");
+                    }
+                }
+            } else if (countInArray(notAllowed, message.user.id) < 3) {
+                    message.channel.sendMessage(message.member.user + victim[rand(victim.length)]);
+                    notAllowed.push(message.user.id);
+            }
+        }
     }
     if (message.content.startsWith(prefix + 'weather')) {
         weather.find({
