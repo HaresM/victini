@@ -202,7 +202,7 @@ client.on("message", (message) => {
               message.channel.send("You can't use this command. Try again later.");
               
                 setTimeout(cooldownCheck(notAllowed, user), 3000);
-                for (var i = notAllowed.length - 1; i >= 0; i--) {
+                for (var i = notAllowed.length - 1; i <= 0; i--) {
                     if(notAllowed[i] == message.user.id) {
                         notAllowed.splice(i, 1);
                     }
