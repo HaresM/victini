@@ -208,7 +208,6 @@ client.on("message", (message) => {
                     }
                 }
             } else if (countInArray(notAllowed, message.user.id) < 3) {
-                    message.channel.sendMessage(message.member.user + victim[rand(victim.length)]);
                     notAllowed.push(message.user.id);
             }
         }
