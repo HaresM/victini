@@ -1,7 +1,9 @@
 const Discord = require("discord.js");
 const client = new Discord.Client();
 var fs = require('fs');
+const talkedRecently = new Set();
 var config = {};
+
 const prefix = "v.";
 
 function clean(text) {
@@ -67,6 +69,7 @@ client.on('guildMemberRemove', member => {
 client.on("message", (message) => {
     if (message.author.bot) return;
     if (message.content.indexOf(prefix) !== 0) return;
+    if (talkedRecently.has(message.author.id)) return;
     const args = message.content.slice(prefix.length).trim().split(/ +/g);
     const command = args.shift().toLowerCase();
     if (command === "help") {
@@ -163,7 +166,13 @@ client.on("message", (message) => {
     }
     if (command === "victim") {
         var victim = JSON.parse(fs.readFileSync('database/victim.json')).victim;
+        
         message.channel.sendMessage(message.member.user + victim[rand(victim.length)])
+        talkedRecently.add(message.author.id);
+        
+        setTimeout(() => {
+            talkedRecently.delete(message.author.id);
+        }, 3000);
     }
     if (command === "convert") {
         var temperature = args[1];
