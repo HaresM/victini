@@ -1,5 +1,6 @@
 const Discord = require("discord.js");
 const client = new Discord.Client();
+const weather = require('weather-js');
 var fs = require('fs');
 var config = {};
 const prefix = "v.";
@@ -172,6 +173,24 @@ client.on("message", (message) => {
         var victim = JSON.parse(fs.readFileSync('database/victim.json')).victim;
         message.channel.sendMessage(message.member.user + victim[rand(victim.length)]);
     }
+    if (message.content.startsWith(prefix + 'weather')) {
+        weather.find({
+            search: args.join(" "),
+            degreeType: 'C'
+        }, function(err, result) {
+            if (err) message.channel.send(err);
+            if (result.length === 0) {
+                message.channel.send('Location not found! Please check whether you have entered a valid location.');
+                return;
+            }
+            var current = result[0].current;
+            var location = result[0].location;
+            const embed = new Discord.RichEmbed().setDescription(`**${current.skytext}**`).setAuthor(`Weather for ${current.observationpoint}`).setThumbnail(current.imageUrl).setColor(0xFF9E30).addField('Timezone', `UTC${location.timezone}`, true).addField('Degree Type', location.degreetype, true).addField('Temperature', `${current.temperature}Degrees`, true).addField('Feels Like', `${current.feelslike}Degrees`, true).addField('Winds', current.winddisplay, true).addField('Humidity', `${current.humidity}%`, true)
+            message.channel.send({
+                embed
+            });
+        });
+    }
     if (command === "convert") {
         var temperature = args[1];
         var celsius = (temperature - 32) * (5 / 9); 
@@ -233,4 +252,4 @@ client.on("message", (message) => {
         }
     }
 });
-client.login(process.env.BOT_TOKEN);
+client.login("MzcyMDM3ODQzNTc0NDU2MzQy.DM-WxQ.XrRQRbNdbV9VPD9DYgSHQIfMqdQ");
