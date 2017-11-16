@@ -234,4 +234,4 @@ client.on("message", (message) => {
 		}
 	}
 });
-client.login("MzcyMDM3ODQzNTc0NDU2MzQy.DM-WxQ.XrRQRbNdbV9VPD9DYgSHQIfMqdQ");
+client.login(process.env.BOT_TOKEN);
