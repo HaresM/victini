@@ -216,7 +216,7 @@ if (botExec(message.member)) {
         message.delete();
         message.channel.send(args.join(" "));
     }
-    if (message.content.startsWith(prefix + 'weather')) {
+    if (command === 'weather') {
         weather.find({
             search: args.join(" "),
             degreeType: 'C'
