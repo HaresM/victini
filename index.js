@@ -194,17 +194,13 @@ if (command === "convert") {
     }
 }
 if (command === 'weather') {
+        if (args.length === 0)
+        return message.reply('Please specify an actual location');
     weather.find({
         search: args.join(" "),
         degreeType: 'C'
     }, function (err, result) {
         if (err) message.channel.send(err);
-
-
-        if (result.length === 0) {
-            return message.channel.send('Location not found! Please check whether you have entered a valid location.');
-        }
-
 
         var current = result[0].current;
         var location = result[0].location;
