@@ -68,7 +68,6 @@ client.on("message", (message) => {
     if (message.content.indexOf(prefix) !== 0) return;
     const args = message.content.slice(prefix.length).trim().split(/ +/g);
     const command = args.shift().toLowerCase();
-    let msg = message.content.toLowerCase();
     if (command === "help") {
         if (args[0] === "commands") {
             if (args[1] === "8ball") {
@@ -165,27 +164,23 @@ client.on("message", (message) => {
         var victim = JSON.parse(fs.readFileSync('database/victim.json')).victim;
         message.channel.sendMessage(message.member.user + victim[rand(victim.length)]);
     }
-    if (msg.startsWith(prefix + 'weather')) {
-
+    if (message.content.startsWith(prefix + 'weather')) {
         weather.find({
             search: args.join(" "),
             degreeType: 'C'
         }, function(err, result) {
             if (err) message.channel.send(err);
-
             if (result.length === 0) {
-                message.channel.send('**Please enter a valid location.**')
+                message.channel.send('Location not found! Please check whether you have entered a valid location.');
                 return;
             }
-
             var current = result[0].current;
             var location = result[0].location;
-
             const embed = new Discord.RichEmbed()
                 .setDescription(`**${current.skytext}**`)
                 .setAuthor(`Weather for ${current.observationpoint}`)
                 .setThumbnail(current.imageUrl)
-                .setColor(0xff9e30)
+                .setColor(0x00AE86)
                 .addField('Timezone', `UTC${location.timezone}`, true)
                 .addField('Degree Type', location.degreetype, true)
                 .addField('Temperature', `${current.temperature} Degrees`, true)
