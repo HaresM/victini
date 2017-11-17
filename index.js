@@ -3,7 +3,6 @@ const client = new Discord.Client();
 const weather = require('weather-js');
 var fs = require('fs');
 var config = {};
-var defaultColour = 0xff9e30;
 
 const prefix = "v.";
 
