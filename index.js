@@ -203,8 +203,7 @@ if (command === 'weather') {
 
 
         if (result.length === 0) {
-            message.channel.send('Location not found! Please check whether you have entered a valid location.');
-            return;
+            return message.channel.send('Location not found! Please check whether you have entered a valid location.');
         }
 
 
