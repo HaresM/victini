@@ -166,7 +166,7 @@ client.on("message", (message) => {
         if (args.length === 0) return message.channel.send('Please specify a location.');
         weather.find({
             search: args.join(" "),
-            degreeType: 'F'
+            degreeType: 'C'
         }, function(err, result) {
             if (err) message.channel.send(err);
 
