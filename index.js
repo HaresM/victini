@@ -168,31 +168,32 @@ client.on("message", (message) => {
             degreeType: 'C'
         }, function(err, result) {
             if (err) message.channel.send(err);
-            if (result.length === 0) {
-                message.channel.send('Location not found! Please check whether you have entered a valid location.');
-                return;
-            }
-            else if (args[0] === 0) {
-                 message.channel.send("Please specify a location.");
-                return;
-            }
-            var current = result[0].current;
-            var location = result[0].location;
-            const embed = new Discord.RichEmbed()
-                .setDescription(`**${current.skytext}**`)
-                .setAuthor(`Weather for ${current.observationpoint}`)
-                .setThumbnail(current.imageUrl)
-                .setColor(0xff9e30)
-                .addField('Timezone', `UTC${location.timezone}`, true)
-                .addField('Degree Type', location.degreetype, true)
-                .addField('Temperature', `${current.temperature} Degrees`, true)
-                .addField('Feels Like', `${current.feelslike} Degrees`, true)
-                .addField('Winds', current.winddisplay, true)
-                .addField('Humidity', `${current.humidity}%`, true)
 
-            message.channel.send({
-                embed
-            });
+            if (result.length === 0) {
+                message.channel.send('Location not found! Specify a valid location')
+                return;
+            } else if (!args[0]) {
+                message.channel.send("Please specify a location.");
+            } else {
+                var current = result[0].current;
+                var location = result[0].location;
+
+                const embed = new Discord.RichEmbed()
+                    .setDescription(`**${current.skytext}**`)
+                    .setAuthor(`Weather for ${current.observationpoint}`)
+                    .setThumbnail(current.imageUrl)
+                    .setColor(0x00AE86)
+                    .addField('Timezone', `UTC${location.timezone}`, true)
+                    .addField('Degree Type', location.degreetype, true)
+                    .addField('Temperature', `${current.temperature} Degrees`, true)
+                    .addField('Feels Like', `${current.feelslike} Degrees`, true)
+                    .addField('Winds', current.winddisplay, true)
+                    .addField('Humidity', `${current.humidity}%`, true)
+
+                message.channel.send({
+                    embed
+                });
+            }
         });
     }
     if (command === "convert") {
