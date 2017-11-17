@@ -16,7 +16,7 @@ function clean(text) {
 
 function defaultChannel(guild) {
     if (guild.defaultChannel && guild.defaultChannel.constructor && guild.defaultChannel.constructor.name == 'TextChannel') {
-        return guild.defaultChannel
+        return guild.defaultChannel;
     } else {
         return guild.channels.map(c => c)[0];
     }
@@ -50,7 +50,7 @@ if (role == null || role == undefined) {
         color: '#ff9e30',
         permissions: ["ADD_REACTIONS", "READ_MESSAGES", "SEND_MESSAGES", "SEND_TTS_MESSAGES", "EMBED_LINKS", "ATTACH_FILES", "READ_MESSAGE_HISTORY", "EXTERNAL_EMOJIS", "CONNECT", "SPEAK", "CHANGE_NICKNAME"],
         mentionable: true
-    })
+    });
 }
 });
 
@@ -220,7 +220,7 @@ if (command === 'weather') {
             .addField('Temperature', `${current.temperature} Degrees`, true)
             .addField('Feels Like', `${current.feelslike} Degrees`, true)
             .addField('Winds', current.winddisplay, true)
-            .addField('Humidity', `${current.humidity}%`, true)
+            .addField('Humidity', `${current.humidity}%`, true);
 
         message.channel.send({
             embed
@@ -268,5 +268,5 @@ if (botExec(message.member)) {
         return;
     }
 }
-})
+});
 client.login(process.env.BOT_TOKEN);
