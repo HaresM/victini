@@ -16,12 +16,19 @@ function clean(text) {
         return text;
 }
 
-function defaultChannel(guild) {
-    if (guild.defaultChannel && guild.defaultChannel.constructor && guild.defaultChannel.constructor.name == 'TextChannel') {
-        return guild.defaultChannel;
-    } else {
-        return guild.channels.map(c => c)[0];
-    }
+const getDefaultChannel = async(guild) => {
+    if (guild.channel.has(guild.id))
+        return guild.channels.get(guild.id)
+
+    if (guild.channels.exists("name", "general"))
+        return guild.channels.find("name", "general");
+
+    return guild.channels
+        .filter(c => c.type === "text" &&
+            c.permissionsFor(guild.client.user).has("SEND_MESSAGES"))
+        .sort((a, b) => a.position - b.position ||
+            Long.fromString(a.id).sub(Long.fromString(b.id)).toNumber())
+        .first();
 }
 
 function hasRole(member, role) {
@@ -62,16 +69,16 @@ client.on('guildMemberAdd', member => {
         var roleIntro = member.guild.roles.find('name', 'Intro');
         member.addRole(roleIntro);
     } else {
-        defaultChannel(guild).send(member + ' has joined the server. Welcome!');
+        const channel = getDefaultChannel(member.guild);
+        channel.send(member + ' has joined the server. Welcome!');
     }
 });
 
-client.on('guildMemberRemove', member => {
-    if (config[id] && config[id].quotes && config[id].quotes[userid]) {
-        delete config[id].quotes[userid];
-    }
-    defaultChannel(guild).send('Sadly, ' + member.user.username + ' has left the server. RIP...!');
+client.on("guildMemberAdd", member => {
+    const channel = getDefaultChannel(member.guild);
+    channel.send('Sadly, ' + member.user.username + ' has left the server. RIP...!');
 });
+
 
 
 client.on("message", (message) => {
