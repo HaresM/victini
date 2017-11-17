@@ -259,6 +259,8 @@ if (botExec(message.member)) {
         }
     }
     if (command === "say") {
+        if (args.length === 0)
+        return message.reply('Sorry but please specify a thing for the bot to say');
         message.delete();
         message.channel.send(args.join(" "));
     }
