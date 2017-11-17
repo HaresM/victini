@@ -16,21 +16,6 @@ function clean(text) {
         return text;
 }
 
-const getDefaultChannel = async(guild) => {
-    if (guild.channel.has(guild.id))
-        return guild.channels.get(guild.id)
-
-    if (guild.channels.exists("name", "general"))
-        return guild.channels.find("name", "general");
-
-    return guild.channels
-        .filter(c => c.type === "text" &&
-            c.permissionsFor(guild.client.user).has("SEND_MESSAGES"))
-        .sort((a, b) => a.position - b.position ||
-            Long.fromString(a.id).sub(Long.fromString(b.id)).toNumber())
-        .first();
-}
-
 function hasRole(member, role) {
     var _role = member.guild.roles.find("name", role);
     try {
@@ -56,7 +41,7 @@ client.on("guildCreate", guild => {
     if (role == null || role == undefined) {
         guild.createRole({
             name: 'Victini Exec',
-            color: defaultColour,
+            color: '#ff9e30',
             permissions: ["ADD_REACTIONS", "READ_MESSAGES", "SEND_MESSAGES", "SEND_TTS_MESSAGES", "EMBED_LINKS", "ATTACH_FILES", "READ_MESSAGE_HISTORY", "EXTERNAL_EMOJIS", "CONNECT", "SPEAK", "CHANGE_NICKNAME"],
             mentionable: true
         });
@@ -69,14 +54,12 @@ client.on('guildMemberAdd', member => {
         var roleIntro = member.guild.roles.find('name', 'Intro');
         member.addRole(roleIntro);
     } else {
-        const channel = getDefaultChannel(member.guild);
-        channel.send(member + ' has joined the server. Welcome!');
+        message.channel.send(member + ' has joined the server. Welcome!');
     }
 });
 
 client.on("guildMemberAdd", member => {
-    const channel = getDefaultChannel(member.guild);
-    channel.send('Sadly, ' + member.user.username + ' has left the server. RIP...!');
+    message.channel.send('Sadly, ' + member.user.username + ' has left the server. RIP...!');
 });
 
 
@@ -202,7 +185,7 @@ client.on("message", (message) => {
                 .setDescription(`**${current.skytext}**`)
                 .setAuthor(`Weather for ${current.observationpoint}`)
                 .setThumbnail(current.imageUrl)
-                .setColor(defaultColour)
+                .setColor(0xff9e30)
                 .addField('Timezone', `UTC${location.timezone}`, true)
                 .addField('Degree Type', location.degreetype, true)
                 .addField('Temperature', `${current.temperature} Degrees`, true)
