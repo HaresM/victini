@@ -182,7 +182,7 @@ client.on("message", (message) => {
         var victim = JSON.parse(fs.readFileSync('database/victim.json')).victim;
         message.channel.sendMessage(message.member.user + victim[rand(victim.length)]);
     }
-    if (msg.startsWith(prefix + 'weather')) {
+    if (message.startsWith(prefix + 'weather')) {
 
         weather.find({
             search: args.join(" "),
