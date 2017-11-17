@@ -174,6 +174,10 @@ client.on("message", (message) => {
                 message.channel.send('Location not found! Please check whether you have entered a valid location.');
                 return;
             }
+            else if (args[0] === 0) {
+                 message.channel.send("Please specify a location.");
+                return;
+            }
             var current = result[0].current;
             var location = result[0].location;
             const embed = new Discord.RichEmbed()
