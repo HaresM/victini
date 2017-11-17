@@ -182,7 +182,7 @@ client.on("message", (message) => {
                 .setDescription(`**${current.skytext}**`)
                 .setAuthor(`Weather for ${current.observationpoint}`)
                 .setThumbnail(current.imageUrl)
-                .setColor(0x0 xff9e30)
+                .setColor(0xff9e30)
                 .addField('Timezone', `UTC${location.timezone}`, true)
                 .addField('Degree Type', location.degreetype, true)
                 .addField('Temperature', `${current.temperature} Degrees`, true)
