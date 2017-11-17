@@ -68,6 +68,7 @@ client.on("message", (message) => {
     if (message.content.indexOf(prefix) !== 0) return;
     const args = message.content.slice(prefix.length).trim().split(/ +/g);
     const command = args.shift().toLowerCase();
+    let msg = message.content.toLowerCase();
     if (command === "help") {
         if (args[0] === "commands") {
             if (args[1] === "8ball") {
@@ -164,7 +165,7 @@ client.on("message", (message) => {
         var victim = JSON.parse(fs.readFileSync('database/victim.json')).victim;
         message.channel.sendMessage(message.member.user + victim[rand(victim.length)]);
     }
-    if (message.startsWith(prefix + 'weather')) {
+    if (msg.startsWith(prefix + 'weather')) {
 
         weather.find({
             search: args.join(" "),
