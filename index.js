@@ -194,31 +194,54 @@ if (command === "convert") {
     }
 }
 if (command === 'weather') {
-
     weather.find({
         search: args.join(" "),
         degreeType: 'C'
-    }, function(err, result) {
+    }, function (err, result) {
         if (err) message.channel.send(err);
+
+
+        if (result.length === 0) {
+            message.channel.send('Location not found! Please check whether you have entered a valid location.');
+            return;
+        }
+
 
         var current = result[0].current;
         var location = result[0].location;
 
-        const embed = new Discord.RichEmbed()
-            .setDescription(`**${current.skytext}**`)
-            .setAuthor(`Weather for ${current.observationpoint}`)
-            .setThumbnail(current.imageUrl)
-            .setColor(0xFF9E30)
-            .addField('Timezone', `UTC${location.timezone}`, true)
-            .addField('Degree Type', location.degreetype, true)
-            .addField('Temperature', `${current.temperature} Degrees`, true)
-            .addField('Feels Like', `${current.feelslike} Degrees`, true)
-            .addField('Winds', current.winddisplay, true)
-            .addField('Humidity', `${current.humidity}`, true);
-
         message.channel.send({
-            embed
-        });
+            embed: {
+                color: 3447003,
+                thumbnail: {
+                    url:    current.imageUrl
+                },
+                author: {
+                    name: `Weather for ${current.observationpoint}`
+                },
+                description: `**${current.skytext}**`,
+                fields: [
+                    {
+                        name: "Time Zone", value: `UTC ${location.timezone}`
+                    },
+                    {
+                        name: "Temperature", value: `${current.temperature}°C`
+                    },
+                    {
+                        name: "Feels Like", value: `${current.feelslike}°C`
+                    },
+                    {
+                        name: 'Wind Speeds', value: current.winddisplay
+                    },
+                    {
+                        name: 'Humidity', value: `${current.humidity}%`
+                    }
+                ],
+                timestamp: new Date()
+            }
+        })
+
+
     });
 }
 if (botExec(message.member)) {
