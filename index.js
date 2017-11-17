@@ -216,24 +216,42 @@ if (botExec(message.member)) {
         message.delete();
         message.channel.send(args.join(" "));
     }
-    if (command === 'weather') {
+    if (command === 'weather')) {
+
         weather.find({
             search: args.join(" "),
             degreeType: 'C'
-        }, function (err, result) {
+        }, function(err, result) {
             if (err) message.channel.send(err);
+
+
             if (result.length === 0) {
                 message.channel.send('Location not found! Please check whether you have entered a valid location.');
                 return;
             }
+
+
             var current = result[0].current;
             var location = result[0].location;
-            const embed = new Discord.RichEmbed().setDescription(`**${current.skytext}**`).setAuthor(`Weather for ${current.observationpoint}`).setThumbnail(current.imageUrl).setColor(0xFF9E30).addField('Timezone', `UTC${location.timezone}`, true).addField('Degree Type', location.degreetype, true).addField('Temperature', `${current.temperature}Degrees`, true).addField('Feels Like', `${current.feelslike}Degrees`, true).addField('Winds', current.winddisplay, true).addField('Humidity', `${current.humidity}%`, true)
+
+            const embed = new Discord.RichEmbed()
+                .setDescription(`**${current.skytext}**`)
+                .setAuthor(`Weather for ${current.observationpoint}`)
+                .setThumbnail(current.imageUrl)
+                .setColor(0xFF9E30)
+                .addField('Timezone', `UTC${location.timezone}`, true)
+                .addField('Degree Type', location.degreetype, true)
+                .addField('Temperature', `${current.temperature} Degrees`, true)
+                .addField('Feels Like', `${current.feelslike} Degrees`, true)
+                .addField('Winds', current.winddisplay, true)
+                .addField('Humidity', `${current.humidity}%`, true)
+
             message.channel.send({
                 embed
             });
         });
     }
+
     const evalArgs = message.content.split(" ").slice(1);
     if (message.content.startsWith(prefix + "eval")) {
         try {
