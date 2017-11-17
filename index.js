@@ -201,12 +201,6 @@ if (command === 'weather') {
     }, function(err, result) {
         if (err) message.channel.send(err);
 
-
-        if (result.length === 0) {
-            return message.channel.send('Location not found! Please check whether you have entered a valid location.');
-        }
-
-
         var current = result[0].current;
         var location = result[0].location;
 
@@ -220,7 +214,7 @@ if (command === 'weather') {
             .addField('Temperature', `${current.temperature} Degrees`, true)
             .addField('Feels Like', `${current.feelslike} Degrees`, true)
             .addField('Winds', current.winddisplay, true)
-            .addField('Humidity', `${current.humidity}%`, true);
+            .addField('Humidity', `${current.humidity}`, true);
 
         message.channel.send({
             embed
