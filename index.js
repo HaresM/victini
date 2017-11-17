@@ -193,7 +193,7 @@ if (command === "convert") {
         message.channel.send("Temperature could not be converted.");
     }
 }
-if (command === 'weather')) {
+if (command === 'weather') {
 
     weather.find({
         search: args.join(" "),
