@@ -163,102 +163,100 @@ client.on("message", (message) => {
         message.channel.sendMessage(message.member.user + victim[rand(victim.length)]);
     }
     if (message.content.startsWith(prefix + 'weather')) {
-        if (args.length === 0)
-            return message.channel.send('Please specify a location.');
+        if (args.length === 0) return message.channel.send('Please specify a location.');
         weather.find({
-                search: args.join(" "),
-                degreeType: 'C'
-            }, function(err, result) {
-                if (err) message.channel.send(err);
+            search: args.join(" "),
+            degreeType: 'F'
+        }, function(err, result) {
+            if (err) message.channel.send(err);
 
-                if (result.length === 0) {
-                    message.channel.send('Location not found! Specify a valid location')
-                    return;
-                }
-
-                var current = result[0].current;
-                var location = result[0].location;
-
-                const embed = new Discord.RichEmbed()
-                    .setDescription(`**${current.skytext}**`)
-                    .setAuthor(`Weather for ${current.observationpoint}`)
-                    .setThumbnail(current.imageUrl)
-                    .setColor(0xff9e30)
-                    .addField('Timezone', `UTC${location.timezone}`, true)
-                    .addField('Degree Type', location.degreetype, true)
-                    .addField('Temperature', `${current.temperature} Degrees`, true)
-                    .addField('Feels Like', `${current.feelslike} Degrees`, true)
-                    .addField('Winds', current.winddisplay, true)
-                    .addField('Humidity', `${current.humidity}%`, true)
-
-                message.channel.send({
-                    embed
-                });
+            if (result.length === 0) {
+                message.channel.send('Location not found! Specify a valid location');
+                return;
             }
-        });
-}
-if (command === "convert") {
-    var temperature = args[1];
-    var celsius = (temperature - 32) * (5 / 9);
-    var fahrenheit = (temperature * (9 / 5)) + 32;
-    if (!args[0]) {
-        message.channel.send("Please provide the type of conversion.");
-        return;
-    }
-    if (!args[1]) {
-        message.channel.send("Please enter the ammount that you want to convert.");
-        return;
-    }
-    if (args[0] === "c") {
-        message.channel.send(`\`${temperature}\` Degrees Fahrenheit is \`${celsius}\` Degrees Celsius.`);
-    } else if (args[0] === "f") {
-        message.channel.send(`\`${temperature}\` Degrees Celsius is \`${fahrenheit}\` Degrees Fahreinheit.`);
-    } else {
-        message.channel.send("Temperature could not be converted.");
-    }
-}
-if (botExec(message.member)) {
-    if (command === "clear") {
-        index = args.join(" ");
-        message.channel.bulkDelete(index);
-        if (message.channel.bulkDelete(index)) {
-            return;
-        } else {
-            message.channel.send("Messages could not be cleared.");
-        }
-    }
-    if (command === "kick") {
-        let member = message.mentions.members.first();
-        let reason = args.slice(1).join(" ");
-        member.kick(reason);
-        message.channel.send(member.user.username + " was successfully kicked, due to the following reason:\n```" + reason + "```");
-        if (!member.kick(reason)) {
-            message.channel.send(member.user + " could not be kicked.");
-        }
-    }
-    if (command === "say") {
-        if (args.length === 0)
-            return message.channel.send('Specify something you want me to say.');
-        message.delete();
-        message.channel.send(args.join(" "));
-    }
 
-    const evalArgs = message.content.split(" ").slice(1);
-    if (message.content.startsWith(prefix + "eval")) {
-        try {
-            const code = evalArgs.join(" ");
-            let evaled = eval(code);
-            if (typeof evaled !== "string")
-                evaled = require("util").inspect(evaled);
-            message.channel.send(clean(evaled), {
-                code: "xl"
+            var current = result[0].current;
+            var location = result[0].location;
+
+            const embed = new Discord.RichEmbed()
+                .setDescription(`**${current.skytext}**`)
+                .setAuthor(`Weather for ${current.observationpoint}`)
+                .setThumbnail(current.imageUrl)
+                .setColor(0x0 xff9e30)
+                .addField('Timezone', `UTC${location.timezone}`, true)
+                .addField('Degree Type', location.degreetype, true)
+                .addField('Temperature', `${current.temperature} Degrees`, true)
+                .addField('Feels Like', `${current.feelslike} Degrees`, true)
+                .addField('Winds', current.winddisplay, true)
+                .addField('Humidity', `${current.humidity}%`, true);
+
+            message.channel.send({
+                embed
             });
-        } catch (err) {
-            message.channel.send(`\`ERROR\`\`\`\`xl\n${clean(err)}\n\`\`\``);
-        }
-    } else {
-        return;
+        });
     }
-}
+    if (command === "convert") {
+        var temperature = args[1];
+        var celsius = (temperature - 32) * (5 / 9);
+        var fahrenheit = (temperature * (9 / 5)) + 32;
+        if (!args[0]) {
+            message.channel.send("Please provide the type of conversion.");
+            return;
+        }
+        if (!args[1]) {
+            message.channel.send("Please enter the ammount that you want to convert.");
+            return;
+        }
+        if (args[0] === "c") {
+            message.channel.send(`\`${temperature}\` Degrees Fahrenheit is \`${celsius}\` Degrees Celsius.`);
+        } else if (args[0] === "f") {
+            message.channel.send(`\`${temperature}\` Degrees Celsius is \`${fahrenheit}\` Degrees Fahreinheit.`);
+        } else {
+            message.channel.send("Temperature could not be converted.");
+        }
+    }
+    if (botExec(message.member)) {
+        if (command === "clear") {
+            index = args.join(" ");
+            message.channel.bulkDelete(index);
+            if (message.channel.bulkDelete(index)) {
+                return;
+            } else {
+                message.channel.send("Messages could not be cleared.");
+            }
+        }
+        if (command === "kick") {
+            let member = message.mentions.members.first();
+            let reason = args.slice(1).join(" ");
+            member.kick(reason);
+            message.channel.send(member.user.username + " was successfully kicked, due to the following reason:\n```" + reason + "```");
+            if (!member.kick(reason)) {
+                message.channel.send(member.user + " could not be kicked.");
+            }
+        }
+        if (command === "say") {
+            if (args.length === 0)
+                return message.channel.send('Specify something you want me to say.');
+            message.delete();
+            message.channel.send(args.join(" "));
+        }
+
+        const evalArgs = message.content.split(" ").slice(1);
+        if (message.content.startsWith(prefix + "eval")) {
+            try {
+                const code = evalArgs.join(" ");
+                let evaled = eval(code);
+                if (typeof evaled !== "string")
+                    evaled = require("util").inspect(evaled);
+                message.channel.send(clean(evaled), {
+                    code: "xl"
+                });
+            } catch (err) {
+                message.channel.send(`\`ERROR\`\`\`\`xl\n${clean(err)}\n\`\`\``);
+            }
+        } else {
+            return;
+        }
+    }
 });
 client.login(process.env.BOT_TOKEN);
