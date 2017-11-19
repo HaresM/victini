@@ -228,11 +228,11 @@ client.on("message", (message) => {
         if (command === "kick") {
             let member = message.mentions.members.first();
             if (!member)
-                return message.reply("Please mention a member.");
+                return message.channel.send("Please mention a member.");
             if (!member.kickable)
                 var reason = args.slice(1).join(" ");
             if (!reason)
-                return message.reply("Please indicate a reason for the kick.");
+                return message.channel.send("Please indicate a reason for the kick.");
             if (member.kick(reason)) {
                 .catch(error => message.channel.send(`${member.user.tag} could not be kicked due to the following error:\n\`\`\`${error}\`\`\``));
             message.reply(`${member.user.tag} has been kicked by ${message.author.tag} due to the follwing reason:\n\`\`\`$(reason}\`\`\``);
@@ -244,7 +244,6 @@ client.on("message", (message) => {
             message.delete();
             message.channel.send(args.join(" "));
         }
-
         const evalArgs = message.content.split(" ").slice(1);
         if (message.content.startsWith(prefix + "eval")) {
             try {
