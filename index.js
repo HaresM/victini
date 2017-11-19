@@ -225,19 +225,19 @@ client.on("message", (message) => {
                 message.channel.send("Messages could not be cleared.");
             }
         }
-  if (command === "kick") {
-      let member = message.mentions.members.first();
-      if (!member)
-          return message.reply("Please mention a member.");
-      if (!member.kickable)
-          let reason = args.slice(1).join(" ");
-      if (!reason)
-          return message.reply("Please indicate a reason for the kick.");
-      await member.kick(reason)
-          .catch(error => message.channel.send(`${member.user.tag} could not be kicked due to the following error:\n\`\`\`${error}\`\`\``));
-      message.reply(`${member.user.tag} has been kicked by ${message.author.tag} due to the follwing reason:\n\`\`\`$(reason}\`\`\``);
+        if (command === "kick") {
+            let member = message.mentions.members.first();
+            if (!member)
+                return message.reply("Please mention a member.");
+            if (!member.kickable)
+                var reason = args.slice(1).join(" ");
+            if (!reason)
+                return message.reply("Please indicate a reason for the kick.");
+            await member.kick(reason)
+                .catch(error => message.channel.send(`${member.user.tag} could not be kicked due to the following error:\n\`\`\`${error}\`\`\``));
+            message.reply(`${member.user.tag} has been kicked by ${message.author.tag} due to the follwing reason:\n\`\`\`$(reason}\`\`\``);
 
-  }
+        }
         if (command === "say") {
             if (args.length === 0)
                 return message.channel.send('Specify something you want me to say.');
