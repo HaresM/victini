@@ -233,10 +233,10 @@ client.on("message", (message) => {
                 var reason = args.slice(1).join(" ");
             if (!reason)
                 return message.reply("Please indicate a reason for the kick.");
-            await member.kick(reason)
+            if (member.kick(reason)) {
                 .catch(error => message.channel.send(`${member.user.tag} could not be kicked due to the following error:\n\`\`\`${error}\`\`\``));
             message.reply(`${member.user.tag} has been kicked by ${message.author.tag} due to the follwing reason:\n\`\`\`$(reason}\`\`\``);
-
+            }
         }
         if (command === "say") {
             if (args.length === 0)
