@@ -171,7 +171,7 @@ client.on("message", (message) => {
             if (err) message.channel.send(err);
 
             if (result.length === 0) {
-                message.channel.send('Location not found! Specify a valid location');
+                message.channel.send('Location not found! Please specify a valid location');
                 return;
             }
 
