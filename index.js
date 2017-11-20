@@ -218,21 +218,24 @@ client.on("message", (message) => {
     if (botExec(message.member)) {
         if (command === "count") {
             if (args[0] === "members") {
-                message.channel.send(`This server has ${message.guild.memberCount} members!`);
+                message.channel.send(`This server has ${message.guild.memberCount} members.`);
             } else
             if (args[0] === "servers") {
-                message.channel.send(`I am in ${client.guilds.size.toLocaleString()} servers!`);
-            }   
+                message.channel.send(`I am in ${client.guilds.size.toLocaleString()} servers.`);
+            } else
+            if (args[0] === "channels") {
+                message.channel.send(`This server has ${client.channels.size.toLocaleString()} channels.`);
+            }
             else {
-                message.channel.send("I can count the stuff. Yay!");
+                message.channel.send("Type the following commands to make me count stuff:\n```v.count members\nv.count channels\nv.count servers\n");
             }
         }
         if (command === "clear") {
             index = args.join(" ");
             if (index < 2)
-                return message.channel.send('Sorry but that is too small of an amount of msgs to delete')
+                return message.channel.send('Please specify a larger ammount of messages to be cleared.')
             if (index > 100)
-                return message.channel.send('Sorry but that is too large of an amount of msgs to delete (the limit is 100)')
+                return message.channel.send('Only 100 messages can be cleared at a time. Please specify a smaller ammount of message.')
             message.channel.bulkDelete(index);
             if (message.channel.bulkDelete(index)) {
                 return;
