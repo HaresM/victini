@@ -171,7 +171,7 @@ client.on("message", (message) => {
             if (err) message.channel.send(err);
 
             if (result.length === 0) {
-                message.channel.send('Location not found! Please specify a valid location');
+                message.channel.send('Location not found! Please specify a valid location.');
                 return;
             }
 
@@ -218,13 +218,13 @@ client.on("message", (message) => {
     if (botExec(message.member)) {
         if (command === "count") {
             if (args[0] === "members") {
-                message.channel.send(`This server has ${message.guild.memberCount} members.`);
+                message.channel.send(`This server has \`${message.guild.memberCount}\` members.`);
             } else
             if (args[0] === "servers") {
-                message.channel.send(`I am in ${client.guilds.size.toLocaleString()} servers.`);
+                message.channel.send(`I am in \`${client.guilds.size.toLocaleString()}\` servers.`);
             } else
             if (args[0] === "channels") {
-                message.channel.send(`This server has ${client.channels.size.toLocaleString()} channels.`);
+                message.channel.send(`This server has \`${guild.channels.size.toLocaleString()}\` channels.`);
             }
             else {
                 message.channel.send("Type the following commands to make me count stuff:\n```v.count members\nv.count channels\nv.count servers\n");
