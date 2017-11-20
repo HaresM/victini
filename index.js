@@ -218,6 +218,10 @@ client.on("message", (message) => {
     if (botExec(message.member)) {
         if (command === "clear") {
             index = args.join(" ");
+            if (index <2)
+                return message.channel.send('Sorry but that is too small of an amount of msgs to delete')
+            if (index >100)
+                return message.channel.send('Sorry but that is too large of an amount of msgs to delete (the limit is 100)')
             message.channel.bulkDelete(index);
             if (message.channel.bulkDelete(index)) {
                 return;
