@@ -224,7 +224,7 @@ client.on("message", (message) => {
                 message.channel.send(`I am in \`${client.guilds.size.toLocaleString()}\` servers.`);
             } else
             if (args[0] === "channels") {
-                message.channel.send(`This server has \`${message.channels.size.toLocaleString()}\` channels.`);
+                message.channel.send(`This server has \`${message.guild.channels.size.toLocaleString()}\` channels.`);
             }
             else {
                 message.channel.send("Type the following commands to make me count stuff:\n```v.count members\nv.count channels\nv.count servers\`\`\`");
