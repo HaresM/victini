@@ -216,11 +216,22 @@ client.on("message", (message) => {
         }
     }
     if (botExec(message.member)) {
+        if (command === "count") {
+            if (args[0] === "members") {
+                message.channel.send(`This server has ${message.guild.memberCount} members!`);
+            } else
+            if (args[0] === "servers") {
+                message.channel.send(`I am in ${client.guilds.size.toLocaleString()} servers!`);
+            }   
+            else {
+                message.channel.send("I can count the stuff. Yay!");
+            }
+        }
         if (command === "clear") {
             index = args.join(" ");
-            if (index <2)
+            if (index < 2)
                 return message.channel.send('Sorry but that is too small of an amount of msgs to delete')
-            if (index >100)
+            if (index > 100)
                 return message.channel.send('Sorry but that is too large of an amount of msgs to delete (the limit is 100)')
             message.channel.bulkDelete(index);
             if (message.channel.bulkDelete(index)) {
@@ -238,9 +249,8 @@ client.on("message", (message) => {
             if (!reason)
                 return message.channel.send("Please indicate a reason for the kick.");
             if (member.kick(reason)) {
-            message.channel.send(`${member.user.tag} has been kicked by ${message.author.tag} due to the follwing reason:\n\`\`\`$(reason}\`\`\``);
-            }
-            else {
+                message.channel.send(`${member.user.tag} has been kicked by ${message.author.tag} due to the follwing reason:\n\`\`\`$(reason}\`\`\``);
+            } else {
                 message.channel.send(`${member.user.tag} could not be kicked due to the following error:\n\`\`\`${error}\`\`\``);
             }
         }
