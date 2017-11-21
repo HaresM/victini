@@ -45,6 +45,7 @@ client.on("guildCreate", guild => {
             mentionable: true
         });
     }
+    client.channels.get('381137652713521163').send(`New guild joined: \`${guild.name}\`, with id: \`${guild.id}\`. This guild has \`${guild.memberCount}\``);
 });
 
 client.on('guildMemberAdd', member => {
