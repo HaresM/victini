@@ -58,7 +58,7 @@ client.on('guildMemberAdd', member => {
     }
 });
 
-client.on("guildMemberAdd", member => {
+client.on("guildMemberRemove", (member, message) => {
     message.channel.send('Sadly, ' + member.user.username + ' has left the server. RIP...!');
 });
 
