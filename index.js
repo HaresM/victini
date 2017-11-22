@@ -159,6 +159,15 @@ client.on("message", (message) => {
   if (command === "thinking") {
     message.channel.send("https://cdn.discordapp.com/attachments/347376772951572490/364168246628188162/the_real_thinking_emoji.gif");
   }
+  if (command === "victorius") {
+    if (message.guild.id === '369492433060364300') {
+      console.log('debug1');
+      if (args[0] === "story") {
+        console.log('debug2');
+        message.channel.send("Test");
+      }
+    }
+  }
   if (command === "victim") {
     var victim = JSON.parse(fs.readFileSync('database/victim.json')).victim;
     message.channel.sendMessage(message.member.user + victim[rand(victim.length)]);
@@ -278,15 +287,6 @@ client.on("message", (message) => {
       }
     } else {
       return;
-    }
-  }
-  if (command === "victorius") {
-    if (message.guild.id === '369492433060364300') {
-      console.log('debug1');
-      if (args[0] === "story") {
-        console.log('debug2');
-        message.channel.send("Test");
-      }
     }
   }
 });
