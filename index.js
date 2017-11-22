@@ -137,7 +137,7 @@ client.on("message", (message) => {
         message.channel.send("( ͡° ͜ʖ ͡°)");
     }
     if (command === "ping") {
-        const msg = await message.channel.send("Ping?");
+        const msg = message.channel.send("Ping?");
         msg.edit(`Ping! Latency is ${msg.createdTimestamp - message.createdTimestamp}ms. API Latency is ${Math.round(client.ping)}ms`);
     }
     if (command === "shrug") {
