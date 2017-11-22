@@ -283,8 +283,6 @@ client.on("message", (message) => {
             } catch (err) {
                 message.channel.send(`\`ERROR\`\`\`\`xl\n${clean(err)}\n\`\`\``);
             }
-        } else {
-            return;
         }
     }
 });
