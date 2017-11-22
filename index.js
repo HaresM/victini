@@ -284,13 +284,12 @@ client.on("message", async (message) => {
             return;
         }
     }
-}
-              if (message.guild.id === '369492433060364300') {
-            if (command === "victorius) {
-                    if (args[0] === "story") {
-                        message.channel.send("Test");
-                    }
-                }
+    if (message.guild.id === '369492433060364300') {
+        if (command === "victorius) {
+            if (args[0] === "story") {
+                message.channel.send("Test");
+            }
+        }
     }
 });
 
