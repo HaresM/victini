@@ -64,7 +64,7 @@ client.on("guildMemberAdd", member => {
 
 
 
-client.on("message", async (message) => {
+client.on("message", (message) => {
     if (message.author.bot) return;
     if (message.content.indexOf(prefix) !== 0) return;
     const args = message.content.slice(prefix.length).trim().split(/ +/g);
@@ -135,10 +135,6 @@ client.on("message", async (message) => {
     if (command === "lenny") {
         message.delete();
         message.channel.send("( ͡° ͜ʖ ͡°)");
-    }
-    if (command === "ping") {
-        const msg = await message.channel.send("Ping?");
-        msg.edit(`Latency is \`${msg.createdTimestamp - message.createdTimestamp}ms\`. API Latency is \`${Math.round(client.ping)}ms\``);
     }
     if (command === "shrug") {
         message.delete();
