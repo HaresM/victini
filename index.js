@@ -50,7 +50,7 @@ client.on("guildCreate", guild => {
 
 client.on('ready' , () => {
     const {version} = require("discord.js");
-    console.log(`Discord.js :: v${version} & Node :: ${process.version}`, "Versions");
+    console.log("log", `Discord.js :: v${version} & Node :: ${process.version}`, "Versions");
 })
 
 client.on('guildMemberAdd', member => {
