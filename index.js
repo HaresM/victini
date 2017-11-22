@@ -216,6 +216,13 @@ client.on("message", (message) => {
             message.channel.send("Temperature could not be converted.");
         }
     }
+    if (message.guild.id === '369492433060364300') {
+        if (command === "victorius") {
+            if (args[0] === "story") {
+                message.channel.send("Hehe");
+            }
+        }
+    }
     if (botExec(message.member)) {
         if (command === "count") {
             if (args[0] === "members") {
@@ -278,13 +285,6 @@ client.on("message", (message) => {
             }
         } else {
             return;
-        }
-    }
-    if (message.guild.id === '369492433060364300') {
-        if (command === "victorius") {
-            if (args[0] === "story") {
-                message.channel.send("Hehe");
-            }
         }
     }
 });
