@@ -282,7 +282,9 @@ client.on("message", (message) => {
     }
     if (message.guild.id === '369492433060364300') {
         if (command === "victorius") {
+            console.log('debug1')
             if (args[0] === "story") {
+                console.log('debug2')
                 message.channel.send("Test");
             }
         }
