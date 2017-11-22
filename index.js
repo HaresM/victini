@@ -138,7 +138,7 @@ client.on("message", async (message) => {
     }
     if (command === "ping") {
         const msg = await message.channel.send("Ping?");
-        msg.edit(`Ping! Latency is ${msg.createdTimestamp - message.createdTimestamp}ms. API Latency is ${Math.round(client.ping)}ms`);
+        msg.edit(`Latency is \`${msg.createdTimestamp - message.createdTimestamp}ms\`. API Latency is \`${Math.round(client.ping)}ms\``);
     }
     if (command === "shrug") {
         message.delete();
@@ -230,8 +230,7 @@ client.on("message", async (message) => {
             } else
             if (args[0] === "channels") {
                 message.channel.send(`This server has \`${message.guild.channels.size.toLocaleString()}\` channels.`);
-            }
-            else {
+            } else {
                 message.channel.send("Type the following commands to make me count stuff:\n```v.count members\nv.count channels\nv.count servers\`\`\`");
             }
         }
