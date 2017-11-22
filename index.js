@@ -48,7 +48,7 @@ client.on("guildCreate", guild => {
     client.channels.get('381137652713521163').send(`New guild joined: \`${guild.name}\`, with id: \`${guild.id}\`. This guild has \`${guild.memberCount}\``);
 });
 
-client.on('ready' => {
+client.on('ready' , () => {
     client.log(`Discord.js :: v${version} & Node :: ${process.version}`, "Versions");
 })
 
