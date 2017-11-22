@@ -48,6 +48,10 @@ client.on("guildCreate", guild => {
     client.channels.get('381137652713521163').send(`New guild joined: \`${guild.name}\`, with id: \`${guild.id}\`. This guild has \`${guild.memberCount}\``);
 });
 
+client.on('ready' => {
+    client.log(`Discord.js :: v${version} & Node :: ${process.version}`, "Versions");
+})
+
 client.on('guildMemberAdd', member => {
     if (member.guild.id === "369492433060364300") {
         client.channels.get('369507173937709056').send('Welcome to the official Pokémon Victorius server, ' + member.user + ' ! To proceed, please type in a separate message the number which corresponds the most to the reason you have come to this server. \n\n1)    I want to support the game but do not wish to contribute anything. (Type in `1`) \n2)   I want to help the game by contributing something, but do not want to be extremely commited. (Type in `2`) \n3)   I want to actively help the game and its development by providing aid in one particular field of which I am skilled at. (Type in `3`)\n\nFeel free to ask the <@&369499519794151425>, <@&369499281134059520>, or an <@&372096917611741184> for help!');
