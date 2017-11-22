@@ -49,6 +49,7 @@ client.on("guildCreate", guild => {
 });
 
 client.on('ready' , () => {
+    const {version} = require("discord.js");
     client.log(`Discord.js :: v${version} & Node :: ${process.version}`, "Versions");
 })
 
