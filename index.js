@@ -248,6 +248,8 @@ client.on("message", (message) => {
                 return message.channel.send('Please specify a larger ammount of messages to be cleared.');
             if (index > 100)
                 return message.channel.send('Only 100 messages can be cleared at a time. Please specify a smaller ammount of message.');
+            if (index < 2)
+                return message.channel.send('Sorry but the minimum number of msgs you can bulk delete is 2');
             message.channel.bulkDelete(index);
             if (message.channel.bulkDelete(index)) {
                 return;
