@@ -247,7 +247,7 @@ client.on("message", (message) => {
                 message.channel.send("You can use the following commands on this sever:\n\n    `v.equality story`: Sends a pocket-version of the story.\n    `v.equaltiy demo`: Sends a rough estimate for the release of the demo.");
             } else
             if (args[0] === "dex") {
-                if (args[1] === "Pyruff") {
+                if (args[1] === "pyruff") {
                     message.channel.send("**Pyruff**\n`It is loyal, and will flare up its tail if it is in trouble. It takes good care of its claws, and sometimes avoids fighting with them.`\n\n\n*Type:* `Fire`\n\n*Abilities:* `Blaze`\n\n*Gender ratio:* `12.5% ♀ 87.5% ♂`\n\n*Base stats:*\n   HP: `45`\n   Defense: `45`\n   Sp Defense: `45`\n   Attack: `60`\n   Sp Attack: `60`\n   Speed: `60`\n\nhttps://cdn.discordapp.com/attachments/383287520118702102/383317612807061505/004.png");
                 }
                 else {
