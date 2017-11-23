@@ -1,6 +1,8 @@
 const Discord = require("discord.js");
 const client = new Discord.Client();
 const weather = require('weather-js');
+const Enmap = require("enmap");
+const EnmapLevel = require("enmap-level");
 var fs = require('fs');
 var config = {};
 
