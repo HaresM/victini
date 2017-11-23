@@ -251,7 +251,7 @@ client.on("message", (message) => {
                     message.channel.send("**Pyruff**\n`It is loyal, and will flare up its tail if it is in trouble. It takes good care of its claws, and sometimes avoids fighting with them.`\n\n\n*Type:* `Fire`\n\n*Abilities:* `Blaze`\n\n*Gender ratio:* `12.5% ♀ 87.5% ♂`\n\n*Base stats:*\n   HP: `45`\n   Defense: `45`\n   Sp Defense: `45`\n   Attack: `60`\n   Sp Attack: `60`\n   Speed: `60`\n\nhttps://cdn.discordapp.com/attachments/383287520118702102/383317612807061505/004.png");
                 }
                 else {
-                    message.channel.send("Please specify a pokemon");
+                    message.channel.send("Please specify a Pokémon.");
                 }
             }
         }
