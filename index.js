@@ -32,10 +32,24 @@ function botExec(member) {
     return hasRole(member, "Victini Exec") || member.user.id == member.guild.ownerID || member.user.id == '311534497403371521';
 }
 
+const getDefaultChannel = async(guild) => {
+    if (guild.channel.has(guild.id))
+        return guild.channels.get(guild.id)
+
+    if (guild.channels.exists("name", "general"))
+        return guild.channels.find("name", "general");
+    return guild.channels
+        .filter(c => c.type === "text" &&
+            c.permissionsFor(guild.client.user).has("SEND_MESSAGES"))
+        .sort((a, b) => a.position - b.position ||
+            Long.fromString(a.id).sub(Long.fromString(b.id)).toNumber())
+        .first();
+}
+
 
 
 client.on("guildCreate", guild => {
-    defaultChannel(guild).send('Hey, I am Victini. Nice to meet you! I am here to make your life easier and more fun, with handy commands and text-based adventures! Use the `v.help`-command to get information of my commands, prefix, and much more, and if you face any problems or have any questions in general, contact my creator, `Hares#5947`!');
+    const defaultChannel = getDefaultChannel(member.guild);
     var role = guild.roles.find("name", "Victini Exec");
     if (role === null || role === undefined) {
         guild.createRole({
@@ -46,25 +60,23 @@ client.on("guildCreate", guild => {
         });
     }
     console.log(`New guild joined: \`${guild.name}\`, with id: \`${guild.id}\`. This guild has \`${guild.memberCount}\``);
-});
-
-client.on('ready' , () => {
-    const {version} = require("discord.js");
-    console.log("log", `Discord.js :: v${version} & Node :: ${process.version}`, "Versions");
+    defaultChannel.send('Hey, I am Victini. Nice to meet you! I am here to make your life easier and more fun, with handy commands and text-based adventures! Use the `v.help`-command to get information of my commands, prefix, and much more, and if you face any problems or have any questions in general, contact my creator, `Hares#5947`!');
 });
 
 client.on('guildMemberAdd', member => {
+    const defaultChannel = getDefaultChannel(member.guild);
     if (member.guild.id === "369492433060364300") {
         client.channels.get('369507173937709056').send('Welcome to the official Pokémon Victorius server, ' + member.user + ' ! To proceed, please type in a separate message the number which corresponds the most to the reason you have come to this server. \n\n1)    I want to support the game but do not wish to contribute anything. (Type in `1`) \n2)   I want to help the game by contributing something, but do not want to be extremely commited. (Type in `2`) \n3)   I want to actively help the game and its development by providing aid in one particular field of which I am skilled at. (Type in `3`)\n\nFeel free to ask the <@&369499519794151425>, <@&369499281134059520>, or an <@&372096917611741184> for help!');
         var roleIntro = member.guild.roles.find('name', 'Intro');
         member.addRole(roleIntro);
     } else {
-        message.channel.send(member + ' has joined the server. Welcome!');
+        defaultChannel.send(member + ' has joined the server. Welcome!');
     }
 });
 
 client.on("guildMemberRemove", (member, message) => {
-    client.channels.get('369507173937709056').send('Sadly, ' + member.user.username + ' has left the server. RIP...!');
+    const defaultChannel = getDefaultChannel(member.guild);
+    defaultChannel.send('Sadly, ' + member.user.username + ' has left the server. RIP...!');
 });
 
 
