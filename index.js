@@ -37,7 +37,7 @@ function botExec(member) {
 client.on("guildCreate", guild => {
     defaultChannel(guild).send('Hey, I am Victini. Nice to meet you! I am here to make your life easier and more fun, with handy commands and text-based adventures! Use the `v.help`-command to get information of my commands, prefix, and much more, and if you face any problems or have any questions in general, contact my creator, `Hares#5947`!');
     var role = guild.roles.find("name", "Victini Exec");
-    if (role == null || role == undefined) {
+    if (role === null || role === undefined) {
         guild.createRole({
             name: 'Victini Exec',
             color: '#ff9e30',
@@ -45,13 +45,13 @@ client.on("guildCreate", guild => {
             mentionable: true
         });
     }
-    client.channels.get('381137652713521163').send(`New guild joined: \`${guild.name}\`, with id: \`${guild.id}\`. This guild has \`${guild.memberCount}\``);
+    console.log(`New guild joined: \`${guild.name}\`, with id: \`${guild.id}\`. This guild has \`${guild.memberCount}\``);
 });
 
 client.on('ready' , () => {
     const {version} = require("discord.js");
     console.log("log", `Discord.js :: v${version} & Node :: ${process.version}`, "Versions");
-})
+});
 
 client.on('guildMemberAdd', member => {
     if (member.guild.id === "369492433060364300") {
