@@ -34,7 +34,7 @@ function botExec(member) {
     return hasRole(member, "Victini Exec") || member.user.id == member.guild.ownerID || member.user.id == '311534497403371521';
 }
 
-const getDefaultChannel = async(guild) => {
+const getDefaultChannel = async (guild) => {
     if (guild.channel.has(guild.id))
         return guild.channels.get(guild.id)
 
@@ -239,12 +239,20 @@ client.on("message", (message) => {
         if (command === "equality") {
             if (args[0] === "demo") {
                 message.channel.send("While we haven't confirmed anything, we are aiming to release a demo around February\March 2018!");
-            } else 
+            } else
             if (args[0] === "story") {
                 message.channel.send("```Welcome to your new adventure! Travel across the beautiful landscape of Scaniola with your Pokemon, uncovering secrets about the region and what lies above. Scaniola is home to more than just tourist hotspots; it has a vast history intertwined with ancient cities and new pokemon. Rivalry and friendship will follow on this journey, as you travel alongside two trainers-in-the-making, Zeak and Lisa. Conquer gyms and challenge the Elite Four, before facing the Champion of Scaniola. Professor Aspen recruits your help when strange anomalies threaten the natural order of things! And don’t forget to stop the bad guys!```");
             } else
             if (args[0] === "help") {
                 message.channel.send("You can use the following commands on this sever:\n\n    `v.equality story`: Sends a pocket-version of the story.\n    `v.equaltiy demo`: Sends a rough estimate for the release of the demo.");
+            } else
+            if (args[0] === "dex") {
+                if (args[1] === "Pyruff") {
+                    message.channel.send("**Pyruff**\n`It is loyal, and will flare up its tail if it is in trouble. It takes good care of its claws, and sometimes avoids fighting with them.`\n\n\n*Type:* `Fire`\n\n*Abilities:* `Blaze`\n\n*Gender ratio:* `12.5% ♀ 87.5% ♂`\n\n*Base stats:*\n   HP: `45`\n   Defense: `45`\n   Sp Defense: `45`\n   Attack: `60`\n   Sp Attack: `60`\n   Speed: `60`\n\nhttps://cdn.discordapp.com/attachments/383287520118702102/383317612807061505/004.png");
+                }
+                else {
+                    message.channel.send("Please specify a pokemon");
+                }
             }
         }
     }
