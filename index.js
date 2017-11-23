@@ -3,12 +3,6 @@ const client = new Discord.Client();
 const weather = require('weather-js');
 const Enmap = require("enmap");
 const EnmapLevel = require("enmap-level");
-const pointProvider = new EnmapLevel({
-    name: "points"
-});
-this.points = new Enmap({
-    provider: pointProvider
-});
 var fs = require('fs');
 var config = {};
 
@@ -54,19 +48,7 @@ const getDefaultChannel = async (guild) => {
         .first();
 }
 
-client.pointsMonitor = (client, message) => {
-  if (message.channel.type !=='text') return;
-  const settings = client.settings.get(message.guild.id);
-  if (message.content.startsWith(settings.prefix)) return;
-  const score = client.points.get(message.author.id) || { points: 0, level: 0 };
-  score.points++;
-  const curLevel = Math.floor(0.1 * Math.sqrt(score.points));
-  if (score.level < curLevel) {
-    message.reply(`You've leveled up to level **${curLevel}**! Ain't that dandy?`);
-    score.level = curLevel;
-  }
-  client.points.set(message.author.id, score);
-};
+
 
 client.on("guildCreate", guild => {
     const defaultChannel = getDefaultChannel(member.guild);
@@ -103,7 +85,6 @@ client.on("guildMemberRemove", (member, message) => {
 
 client.on("message", (message) => {
     if (message.author.bot) return;
-    client.pointsMonitor(client, message);
     if (message.content.indexOf(prefix) !== 0) return;
     const args = message.content.slice(prefix.length).trim().split(/ +/g);
     const command = args.shift().toLowerCase();
@@ -201,12 +182,6 @@ client.on("message", (message) => {
         var victim = JSON.parse(fs.readFileSync('database/victim.json')).victim;
         message.channel.send(message.member.user + victim[rand(victim.length)]);
     }
-    if (command === "level") {
-        const scorePoints = client.points.get(message.author.id).points;
-        !scorePoints ? message.channel.send('You have no points yet.') : message.channel.send(`You have ${scorePoints} points!`);
-        const scoreLevel = client.points.get(message.author.id).level;
-        !scoreLevel ? message.channel.send('You have no levels yet.') : message.channel.send(`You are currently level ${scoreLevel}!`);
-    }
     if (message.content.startsWith(prefix + 'weather')) {
         if (args.length === 0) return message.channel.send('Please specify a location.');
         weather.find({
@@ -274,7 +249,8 @@ client.on("message", (message) => {
             if (args[0] === "dex") {
                 if (args[1] === "pyruff") {
                     message.channel.send("**Pyruff**\n`It is loyal, and will flare up its tail if it is in trouble. It takes good care of its claws, and sometimes avoids fighting with them.`\n\n\n*Type:* `Fire`\n\n*Abilities:* `Blaze`\n\n*Gender ratio:* `12.5% ♀ 87.5% ♂`\n\n*Base stats:*\n   HP: `45`\n   Defense: `45`\n   Sp Defense: `45`\n   Attack: `60`\n   Sp Attack: `60`\n   Speed: `60`\n\nhttps://cdn.discordapp.com/attachments/383287520118702102/383317612807061505/004.png");
-                } else {
+                }
+                else {
                     message.channel.send("Please specify a Pokémon.");
                 }
             }
