@@ -3,6 +3,8 @@ const client = new Discord.Client();
 const weather = require('weather-js');
 const Enmap = require("enmap");
 const EnmapLevel = require("enmap-level");
+const pointProvider = new EnmapLevel({name: "points"});
+this.points = new Enmap({provider: pointProvider});
 var fs = require('fs');
 var config = {};
 
@@ -85,6 +87,7 @@ client.on("guildMemberRemove", (member, message) => {
 
 client.on("message", (message) => {
     if (message.author.bot) return;
+    client.pointsMonitor(client, message);
     if (message.content.indexOf(prefix) !== 0) return;
     const args = message.content.slice(prefix.length).trim().split(/ +/g);
     const command = args.shift().toLowerCase();
