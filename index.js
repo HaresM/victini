@@ -239,7 +239,18 @@ client.on("message", (message) => {
                 message.channel.send("While we haven't confirmed anything, we are aiming to release a demo around February\March 2018!");
             } else 
             if (args[0] === "story") {
-                message.channel.send("```Welcome to your new adventure! Travel across the beautiful landscape of Scaniola with your Pokemon, uncovering secrets about the region and what lies above. Scaniola is home to more than just tourist hotspots; it has a vast history intertwined with ancient cities and new pokemon. Rivalry and friendship will follow on this journey, as you travel alongside two trainers-in-the-making, Zeak and Lisa. Conquer gyms and challenge the Elite Four, before facing the Champion of Scaniola. Professor Aspen recruits your help when strange anomalies threaten the natural order of things! And don’t forget to stop the bad guys!```")
+                message.channel.send("```Welcome to your new adventure! Travel across the beautiful landscape of Scaniola with your Pokemon, uncovering secrets about the region and what lies above. Scaniola is home to more than just tourist hotspots; it has a vast history intertwined with ancient cities and new pokemon. Rivalry and friendship will follow on this journey, as you travel alongside two trainers-in-the-making, Zeak and Lisa. Conquer gyms and challenge the Elite Four, before facing the Champion of Scaniola. Professor Aspen recruits your help when strange anomalies threaten the natural order of things! And don’t forget to stop the bad guys!```");
+            } else
+            if (args[0] === "help") {
+                if (args[1] === "story") {
+                    message.channel.send("The `v.equality` `story`-command sends a pocket-version of the story.");
+                } else 
+                if (args[1] === "demo") {
+                    message.channel.send("The `v.equality` `demo`-command sends a rough estimate of the release date for the demo.");
+                }
+                else {
+                message.channel.send("Type the following commands to get help on specific stuff:\n```v.equaltiy help story\nv.equality help demo```");
+                }
             }
         }
     }
