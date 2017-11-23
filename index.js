@@ -233,6 +233,13 @@ client.on("message", (message) => {
             message.channel.send("Temperature could not be converted.");
         }
     }
+    if (message.guild.id === '383287520118702100') {
+        if (command === "equality") {
+            if (args[0] === "demo") {
+                message.channel.send("While we haven't confirmed anything, we are aiming to release a demo around February\March 2018!");
+            }
+        }
+    }
     if (message.guild.id === '369492433060364300') {
         if (command === "victorius") {
             if (args[0] === "story") {
