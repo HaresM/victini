@@ -84,6 +84,11 @@ client.on("message", (message) => {
 	let userData = points[message.author.id];
 	userData.points++;
 
+	
+	fs.writeFile("database/levels.json", JSON.stringify(points), (err) => {
+		if (err) console.error(err)
+	});
+	
 	let curLevel = Math.floor(0.1 * Math.sqrt(userData.points));
 	if (curLevel > userData.level) {
 		userData.level = curLevel;
@@ -146,10 +151,6 @@ client.on("message", (message) => {
 	if (command === "level") {
 		message.reply(`you are currently level ${userData.level}, with ${userData.points} EXP.`);
 	}
-	fs.writeFile("database/levels.json", JSON.stringify(points), (err) => {
-		if (err) console.error(err)
-	});
-
 	if (command === "helper") {
 		message.channel.send("https://cdn.discordapp.com/attachments/320716421757927436/376351118449573909/sketch1509192675057.png");
 	}
