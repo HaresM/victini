@@ -5,6 +5,7 @@ const Enmap = require("enmap");
 const EnmapLevel = require("enmap-level");
 var fs = require('fs');
 var config = {};
+let points = JSON.parse(fs.readFileSync("databse/levels.json", "utf8"));
 
 const prefix = "v.";
 
@@ -88,6 +89,19 @@ client.on("message", (message) => {
     if (message.content.indexOf(prefix) !== 0) return;
     const args = message.content.slice(prefix.length).trim().split(/ +/g);
     const command = args.shift().toLowerCase();
+    if (!points[message.author.id]) points[message.author.id] = {
+    points: 0,
+    level: 0
+  };
+  let userData = points[message.author.id];
+  userData.points++;
+
+  let curLevel = Math.floor(0.1 * Math.sqrt(userData.points));
+  if (curLevel > userData.level) {
+    userData.level = curLevel;
+    message.reply(` you've leveled up to level **${curLevel}**! Ain't that dandy?`);
+  }
+    
     if (command === "help") {
         if (args[0] === "commands") {
             if (args[1] === "8ball") {
@@ -141,6 +155,12 @@ client.on("message", (message) => {
             message.channel.send("Type the following commands to get help on specific stuff:\n```v.help gen-info\nv.help commands\nv.help exec-only```");
         }
     }
+      if (command === "level") {
+    message.reply(`you are currently level ${userData.level}, with ${userData.points} EXP.`);
+  }
+      fs.writeFile("databse/levels.json", JSON.stringify(points), (err) => {
+    if (err) console.error(err)
+  });
     if (command === "helper") {
         message.channel.send("https://cdn.discordapp.com/attachments/320716421757927436/376351118449573909/sketch1509192675057.png");
     }
