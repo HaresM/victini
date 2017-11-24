@@ -5,7 +5,7 @@ const Enmap = require("enmap");
 const EnmapLevel = require("enmap-level");
 var fs = require('fs');
 var config = {};
-let points = JSON.parse(fs.readFileSync("databse/levels.json", "utf8"));
+let points = JSON.parse(fs.readFileSync("database/levels.json", "utf8"));
 
 const prefix = "v.";
 
