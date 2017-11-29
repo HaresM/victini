@@ -7,8 +7,6 @@ var fs = require('fs');
 var config = {};
 let points = JSON.parse(fs.readFileSync("database/levels.json", "utf8"));
 
-const prefix = "v.";
-
 
 
 function clean(text) {
@@ -77,7 +75,12 @@ client.on("guildMemberRemove", (member, message) => {
 
 
 client.on("message", (message) => {
-	if (message.content.indexOf(prefix) !== 0) return;
+	  const prefixes = ['v.', 'V.'];
+  let prefix = false;
+  for(const thisPrefix of prefixes) {
+    if(message.content.startsWith(thisPrefix)) prefix = thisPrefix;
+  }
+  if(!prefix) return;
 	if (message.author.bot) return;
 
 	if (!points[message.author.id]) points[message.author.id] = {
