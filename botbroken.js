@@ -7,6 +7,7 @@ client.on("message", (message) => {
   if (message.content.startsWith("v.")) {
     if (message.author.id === 311534497403371521) {
       message.channel.send("Hares to disable this mode change ur procfile to point back to index.js instead of botbroken.js")
+    }
     message.channel.send("Victini is currently broken use furret for the time being.\nFor furret's invite link do v.furret");
   }
 });
