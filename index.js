@@ -34,9 +34,8 @@ function botExec(member) {
 	return hasRole(member, "Victini Exec") || member.user.id == member.guild.ownerID || member.user.id == '311534497403371521';
 }
 
-if (member.guild.id === "383287520118702100") {
-	member.send("Welcome to the official Pokémon Equality server! You have to wait 10 minutes to post something in the server, but please read the rules and FAQ-channels. Enjoy your stay!");
-}
+
+
 client.on('guildMemberAdd', member => {
 	if (member.guild.id === "383287520118702100") {
 		member.send("Welcome to the official Pokémon Equality server! You have to wait 10 minutes to post something in the server, but please read the rules and FAQ-channels. Enjoy your stay!");
