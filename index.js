@@ -5,7 +5,8 @@ const Enmap = require("enmap");
 const EnmapLevel = require("enmap-level");
 var fs = require('fs');
 var config = {};
-let points = JSON.parse(fs.readFileSync("database/levels.json", "utf8"));
+
+var prefix = "v."
 
 
 
@@ -73,25 +74,9 @@ client.on("guildMemberRemove", (member, message) => {
 
 
 client.on("message", (message) => {
-	const prefixes = ['v.', 'V.'];
-	let prefix = false;
-	for (const thisPrefix of prefixes) {
-		if (message.content.startsWith(thisPrefix)) prefix = thisPrefix;
-	}
-	if (!prefix) return;
+	
 	if (message.author.bot) return;
-
-	if (!points[message.author.id]) points[message.author.id] = {
-		points: 0,
-		level: 0
-	};
-	let userData = points[message.author.id];
-	userData.points++;
-
-	let curLevel = Math.floor(0.1 * Math.sqrt(userData.points));
-	if (curLevel > userData.level) {
-		userData.level = curLevel;
-		message.reply(`congrats, you have leveled up to level **${curLevel}**!`);
+	message.reply(`congrats, you have leveled up to level **${curLevel}**!`);
 	}
 
 	if (message.content.startsWith(prefix + "level")) {
