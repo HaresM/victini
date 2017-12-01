@@ -34,18 +34,16 @@ function botExec(member) {
 }
 
 if (member.guild.id === "383287520118702100") {
-		member.send("Welcome to the official Pokémon Equality server! You have to wait 10 minutes to post something in the server, but please read the rules and FAQ-channels. Enjoy your stay!");
+	member.send("Welcome to the official Pokémon Equality server! You have to wait 10 minutes to post something in the server, but please read the rules and FAQ-channels. Enjoy your stay!");
 }
 client.on('guildMemberAdd', member => {
 	if (member.guild.id === "383287520118702100") {
 		member.send("Welcome to the official Pokémon Equality server! You have to wait 10 minutes to post something in the server, but please read the rules and FAQ-channels. Enjoy your stay!");
-	} 
-	else if (member.guild.id === "369492433060364300") {
+	} else if (member.guild.id === "369492433060364300") {
 		client.channels.get("369507173937709056").send('Welcome to the official Pokémon Victorius server, ' + member.user + ' ! To proceed, please type in a separate message the number which corresponds the most to the reason you have come to this server. \n\n1)    I want to support the game but do not wish to contribute anything. (Type in `1`) \n2)   I want to help the game by contributing something, but do not want to be extremely commited. (Type in `2`) \n3)   I want to actively help the game and its development by providing aid in one particular field of which I am skilled at. (Type in `3`)\n\nFeel free to ask the <@&369499519794151425>, <@&369499281134059520>, or an <@&372096917611741184> for help!');
 		var roleIntro = member.guild.roles.find('name', 'Intro');
 		member.addRole(roleIntro);
-	} 
-	else {
+	} else {
 		const defaultChannel = getDefaultChannel(member.guild);
 		defaultChannel.send(member + ' has joined the server. Welcome!');
 	}
@@ -75,12 +73,12 @@ client.on("guildMemberRemove", (member, message) => {
 
 
 client.on("message", (message) => {
-	  const prefixes = ['v.', 'V.'];
-  let prefix = false;
-  for(const thisPrefix of prefixes) {
-    if(message.content.startsWith(thisPrefix)) prefix = thisPrefix;
-  }
-  if(!prefix) return;
+	const prefixes = ['v.', 'V.'];
+	let prefix = false;
+	for (const thisPrefix of prefixes) {
+		if (message.content.startsWith(thisPrefix)) prefix = thisPrefix;
+	}
+	if (!prefix) return;
 	if (message.author.bot) return;
 
 	if (!points[message.author.id]) points[message.author.id] = {
@@ -95,14 +93,14 @@ client.on("message", (message) => {
 		userData.level = curLevel;
 		message.reply(`congrats, you have leveled up to level **${curLevel}**!`);
 	}
-	
-	  if (message.content.startsWith(prefix + "level")) {
-    message.reply(`you are currently level ${userData.level}, with ${userData.points} EXP.`);
-  }
-  fs.writeFile("database/levels.json", JSON.stringify(points), (err) => {
-    if (err) console.error(err);
-  });
-	
+
+	if (message.content.startsWith(prefix + "level")) {
+		message.reply(`you are currently level ${userData.level}, with ${userData.points} EXP.`);
+	}
+	fs.writeFile("database/levels.json", JSON.stringify(points), (err) => {
+		if (err) console.error(err);
+	});
+
 	const args = message.content.slice(prefix.length).trim().split(/ +/g);
 	const command = args.shift().toLowerCase();
 
