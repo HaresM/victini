@@ -1,1 +1,1 @@
-  worker: node botbroken.js
+  worker: node index.js
