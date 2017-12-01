@@ -248,6 +248,7 @@ client.on("message", (message) => {
                     } else
                     if (args[0] === "dex") {
                         if (args[1] === "pyruff") {
+                            const embed = new Discord.RichEmbed()
                             .setEmbed(new EmbedBuilder()
                                 .setTitle("*Pyruff*")
                                 .setDescription("```It is loyal, and will flare up its tail if it is in trouble. It takes good care of its claws, and sometimes avoids fighting with them.```")
