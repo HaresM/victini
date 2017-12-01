@@ -246,7 +246,7 @@ client.on("message", (message) => {
                 message.channel.send("```Welcome to your new adventure! Travel across the beautiful landscape of Scaniola with your Pokemon, uncovering secrets about the region and what lies above. Scaniola is home to more than just tourist hotspots; it has a vast history intertwined with ancient cities and new pokemon. Rivalry and friendship will follow on this journey, as you travel alongside two trainers-in-the-making, Zeak and Lisa. Conquer gyms and challenge the Elite Four, before facing the Champion of Scaniola. Professor Aspen recruits your help when strange anomalies threaten the natural order of things! And don’t forget to stop the bad guys!```");
             } else
             if (args[0] === "help") {
-		message.channel.send("You can use the following commands on this sever:\n    `v.equality story`: Sends a pocket-version of the story.\n    `v.equaltiy demo`: Sends a rough estimate for the release of the demo.
+		message.channel.send("You can use the following commands on this sever:\n    `v.equality story`: Sends a pocket-version of the story.\n    `v.equaltiy demo`: Sends a rough estimate for the release of the demo.");
             }
         }
     }
