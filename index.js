@@ -74,7 +74,7 @@ client.on("guildMemberRemove", (member, message) => {
 
 
 client.on("message", (message) => {
-	
+	if (message.content.indexOf(prefix) !== 0) return;
 	if (message.author.bot) return;
 	message.reply(`congrats, you have leveled up to level **${curLevel}**!`);
 	}
