@@ -237,7 +237,7 @@ client.on("message", (message) => {
                     const embed = new Discord.RichEmbed()
                         .setTitle("*Pyruff*")
                         .setDescription("```It is loyal, and will flare up its tail if it is in trouble. It takes good care of its claws, and sometimes avoids fighting with them.```")
-                        .setColor(new Color(16752176))
+                        .setColor(0xff9e30)
                         .setThumbnail("https://cdn.discordapp.com/attachments/383287520118702102/383317612807061505/004.png")
                         .addField("Type:", "Fire", true)
                         .addField("Abilities:", "Blaze", true)
