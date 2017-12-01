@@ -35,7 +35,7 @@ function botExec(member) {
 
 if (member.guild.id === "383287520118702100") {
 		member.send("Welcome to the official Pokémon Equality server! You have to wait 10 minutes to post something in the server, but please read the rules and FAQ-channels. Enjoy your stay!");
-
+}
 client.on('guildMemberAdd', member => {
 	if (member.guild.id === "383287520118702100") {
 		member.send("Welcome to the official Pokémon Equality server! You have to wait 10 minutes to post something in the server, but please read the rules and FAQ-channels. Enjoy your stay!");
@@ -100,7 +100,7 @@ client.on("message", (message) => {
     message.reply(`you are currently level ${userData.level}, with ${userData.points} EXP.`);
   }
   fs.writeFile("database/levels.json", JSON.stringify(points), (err) => {
-    if (err) console.error(err)
+    if (err) console.error(err);
   });
 	
 	const args = message.content.slice(prefix.length).trim().split(/ +/g);
