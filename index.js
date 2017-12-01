@@ -249,19 +249,18 @@ client.on("message", (message) => {
                     if (args[0] === "dex") {
                         if (args[1] === "pyruff") {
                             const embed = new Discord.RichEmbed()
-                            .setEmbed(new EmbedBuilder()
                                 .setTitle("*Pyruff*")
-                                .setDescription("```It is loyal, and will flare up its tail if it is in trouble. It takes good care of its claws, and sometimes avoids fighting with them.```")
                                 .setColor(new Color(16752176))
+                                .setDescription("```It is loyal, and will flare up its tail if it is in trouble. It takes good care of its claws, and sometimes avoids fighting with them.```")
                                 .setThumbnail("https://cdn.discordapp.com/attachments/383287520118702102/383317612807061505/004.png")
                                 .addField("Type:", "Fire", true)
                                 .addField("Abilities:", "Blaze", true)
                                 .addField("Gender Ratio:", "12.5% ♀ 87.5% ♂", true)
-                                .addField("Base Stats:", "45, 45, 45, 60, 60, 60", true); 
-                                 message.channel.send({
-                                    embed
-                                });
-                            }
+                                .addField("Base Stats:", "45, 45, 45, 60, 60, 60", true)
+
+                            message.channel.send({
+                                embed
+                            });
                         }
                     }
                 }
