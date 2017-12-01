@@ -257,7 +257,8 @@ client.on("message", (message) => {
                                 .addField("Type:", "Fire", true)
                                 .addField("Abilities:", "Blaze", true)
                                 .addField("Gender Ratio:", "12.5% ♀ 87.5% ♂", true)
-                                .addField("Base Stats:", "45, 45, 45, 60, 60, 60", true) message.channel.send({
+                                .addField("Base Stats:", "45, 45, 45, 60, 60, 60", true); 
+                                 message.channel.send({
                                     embed
                                 });
                             }
