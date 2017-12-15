@@ -68,7 +68,7 @@ client.on("guildMemberRemove", (member, message) => {
 
 client,on("ready", () => {
     client.user.setGame("victini needs to really be debugged")
-}
+})
 
 client.on("message", (message) => {
     if (message.author.bot) return;
