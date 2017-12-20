@@ -254,7 +254,7 @@ client.on("message", message => {
         }
     }
     
-    if (member.guild.id === "265381707312660480") {
+    if (message.guild.id === "265381707312660480") {
             if (command === "role") {
                 if (args[0] === "spriter") {
                     addRole(member, 'Spriter');
