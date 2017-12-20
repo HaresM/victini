@@ -11,6 +11,16 @@ function isBotExec(member) {
     return hasRole(member, "Victini Exec") || member.user.id == member.guild.ownerID || member.user.id === "311534497403371521";
 }
 
+function hasRole(member, role){
+    var _role = member.guild.roles.find("name", role);
+    try{
+        return member.roles.has(_role.id);
+    }
+    catch (Error){
+        return false;
+    }
+}
+
 
 
 client.on("ready", () => {
