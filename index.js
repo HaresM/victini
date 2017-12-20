@@ -42,7 +42,7 @@ client.on("guildCreate", guild => {
 
 client.on("guildMemberAdd", member => {
     var defaultChannel = member.guild.channels.find(c => c.name.toLowerCase().includes('general') && c.type === "text");
-    var availableChannels = member.guild.channels.filter(channel => channel.permissionsFor(member.guild.me).has('SEND_MESSAGES'))
+    var availableChannels = member.guild.channels.filter(channel => channel.permissionsFor(member.guild.me).has('SEND_MESSAGES'));
     if (defaultChannel === null) {
         availableChannels.random().send(member.user + ' has joined the server. Welcome!');
     } else {
@@ -52,7 +52,7 @@ client.on("guildMemberAdd", member => {
 
 client.on("guildMemberRemove", member => {
     var defaultChannel = member.guild.channels.find(c => c.name.toLowerCase().includes('general') && c.type === "text");
-    var availableChannels = member.guild.channels.filter(channel => channel.permissionsFor(member.guild.me).has('SEND_MESSAGES'))
+    var availableChannels = member.guild.channels.filter(channel => channel.permissionsFor(member.guild.me).has('SEND_MESSAGES'));
     if (defaultChannel === null) {
         availableChannels.random().send(member.user.username + ' has left the server. RIP...!');
     } else {
@@ -62,7 +62,7 @@ client.on("guildMemberRemove", member => {
 
 
 
-client.on("message", async message => {
+client.on("message")m message => {
 
             if (message.author.bot) return;
             if (message.content.indexOf(config.prefix) !== 0) return;
@@ -228,7 +228,7 @@ client.on("message", async message => {
                 if (isBotExec(message.member)) {
                     if (command === "say") {
                         const sayMessage = args.join(" ");
-                        message.delete().catch(O_o => {});
+                        message.delete()
                         message.channel.send(sayMessage);
                     }
 
@@ -243,9 +243,7 @@ client.on("message", async message => {
                         if (!reason)
                             return message.reply("Please indicate a reason for the kick!");
 
-                        await member.kick(reason)
-                            .catch(error => message.reply(`Sorry ${message.author} I couldn't kick because of : ${error}`));
-                        message.reply(`${member.user.tag} has been kicked by ${message.author.tag} because: ${reason}`);
+                        message.channel.send(`${member.user.tag} has been kicked by ${message.author.tag}, because: of the following reason: \`\`\`${reason}\`\`\``);
 
                     }
 
@@ -255,9 +253,8 @@ client.on("message", async message => {
                         if (!deleteCount || deleteCount < 2 || deleteCount > 100 || isNan(deleteCount) === True)
                             return message.channel.send("Please provide a number between 2 and 100 for the number of messages to delete.");
 
-                        const fetched = deleteCount
-                        message.channel.bulkDelete(fetched)
-                            .catch(error => message.channel.send(`Couldn't delete messages because of: \`\`\`${error}\`\`\``));
+                        const fetched = deleteCount;
+                        message.channel.bulkDelete(fetched);
                     }
 
                 }
