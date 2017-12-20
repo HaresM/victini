@@ -62,7 +62,7 @@ client.on("guildMemberRemove", member => {
 
 
 
-client.on("message", (message) => {
+client.on("message", message => {
 
     if (message.author.bot) return;
     if (message.content.indexOf(config.prefix) !== 0) return;
@@ -259,7 +259,7 @@ client.on("message", (message) => {
 
         }
 
-    )};
+    });
 
 
 
