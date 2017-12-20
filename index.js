@@ -61,7 +61,7 @@ client.on('guildMemberAdd', member => {
   }
 });
 
-client.on("guildMemberRemove", (member, message) => {
+client.on("guildMemberRemove", (member) => {
   const defaultChannel = getDefaultChannel(member.guild);
   defaultChannel.send('Sadly, ' + member.user.username + ' has left the server. RIP...!');
 });
@@ -71,9 +71,8 @@ client.on("ready", () => {
 });
 
 client.on("message", (message) => {
-  if (message.author.bot) {
+  if (message.author.bot)
     return;
-  }
   if (message.content.indexOf(prefix) !== 0) return;
   const args = message.content.slice(prefix.length).trim().split(/ +/g);
   const command = args.shift().toLowerCase();
@@ -288,10 +287,11 @@ client.on("message", (message) => {
     }
     if (command === "kick") {
       let member = message.mentions.members.first();
+      const reason = args.slice(1).join(" ");
       if (!member)
         return message.channel.send("Please mention a member.");
       if (!member.kickable)
-        const reason = args.slice(1).join(" ");
+        return message.channel.send("Sorry I can't kick that person");
       if (!reason)
         return message.channel.send("Please indicate a reason for the kick.");
       if (member.kick(reason)) {
