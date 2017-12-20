@@ -262,6 +262,7 @@ client.on("message", message => {
             var spriterRole = message.guild.roles.find('name', 'Spriter');
             var mapperRole = message.guild.roles.find('name', 'Mapper');
             var coderRole = message.guild.roles.find('name', 'Coder');
+            var writerRole = message.guild.roles.find('name', 'Writer');
             var composerRole = message.guild.roles.find('name', 'Composer');
             
             if (command === "role") {
@@ -280,9 +281,13 @@ client.on("message", message => {
                  if (args[0] === "mapper") {
                     message.channel.send('Successfully added the role: `Mapper`.');
                     message.member.addRole(mapperRole);
-                }
+                } else
+                 if (args[0] === "writer") {
+                    message.channel.send('Successfully added the role: `Writer`.');
+                    message.member.addRole(writerRole);
+                 }
                  else {
-                     message.channel.send("Please provide a valid role. You can choose to be a `Mapper`, `Composer`, `Coder` or `Spriter`");
+                     message.channel.send("Please provide a valid role. You can choose to be a `Mapper`, `Composer`, `Coder`, `Writer` or `Spriter`");
                  }
             }
         }
