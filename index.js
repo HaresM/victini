@@ -11,20 +11,7 @@ function isBotExec(member){
     return hasRole(member, "Victini Exec") || member.user.id == member.guild.ownerID || member.user.id === "311534497403371521";
 }
 
-const getDefaultChannel = async (guild) => {
-  if(guild.channel.has(guild.id))
-    return guild.channels.get(guild.id)
 
-  if (guild.channels.exists(c => c.name.toLowerCase().includes('general') && c.type === "text"))
-    return guild.channels.find(c => c.name.toLowerCase().includes('general') && c.type === "text");
-    
-  return guild.channels
-   .filter(c => c.type === "text" &&
-     c.permissionsFor(guild.client.user).has("SEND_MESSAGES"))
-   .sort((a, b) => a.position - b.position ||
-     Long.fromString(a.id).sub(Long.fromString(b.id)).toNumber())
-   .first();
-}
 
 client.on('ready', () => {
     console.log("I'm online.");
@@ -33,8 +20,15 @@ client.on('ready', () => {
 
 client.on('guildCreate', guild =>{
     console.log(`Victini joined the ${guild.name} server, with ID ${guild.id.toString()}.`);
-    var defaultChannel= getDefaultChannel(member.guild);
-    defaultChannel.send('Hey, I am Victini. Nice to meet you! I am here to make your life easier and more fun, with handy commands and text-based adventures! Use the `v.help`-command to get information of my commands, prefix, and much more, and if you face any problems or have any questions in general, contact my creator, `Hares#5947`!');
+    
+    var defaultChannel = guild.channels.find(c => c.name.toLowerCase().includes('general') && c.type === "text");
+    var availableChannels = guild.channels.filter(channel => channel.permissionsFor(guild.me).has('SEND_MESSAGES'))
+    if (defaultChannel === null) {
+        availableChannels.random().send('Hey, I am Victini. Nice to meet you! I am here to make your life easier and more fun, with handy commands and text-based adventures! Use the `v.help`-command to get information of my commands, prefix, and much more, and if you face any problems or have any questions in general, contact my creator, `Hares#5947`!');
+    }
+    else {
+        defaultChannel.send('Hey, I am Victini. Nice to meet you! I am here to make your life easier and more fun, with handy commands and text-based adventures! Use the `v.help`-command to get information of my commands, prefix, and much more, and if you face any problems or have any questions in general, contact my creator, `Hares#5947`!');
+    }
   
     var role = guild.roles.find("name", "Vulpix Admin");
     if (role == null || role == undefined){
