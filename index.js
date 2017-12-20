@@ -17,6 +17,15 @@ function hasRole(member, role) {
     }
 }
 
+function addRole(member, role){
+        var mbr = getMember(member);
+        if (!mbr) return false;
+        var rle = getRole(role);
+        if (!rle) return false;
+        mbr.addRole(rle);
+        return true;
+    }
+
 
 
 client.on("ready", () => {
