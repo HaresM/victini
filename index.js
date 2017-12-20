@@ -67,7 +67,7 @@ defaultChannel.send('Sadly, ' + member.user.username + ' has left the server. RI
 });
 
 client.on("ready", () => {
-  client.user.setGame("victini needs to really be debugged")
+  client.user.setGame("victini needs to really be debugged");
 })
 
 client.on("message", (message) => {
