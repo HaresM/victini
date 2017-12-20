@@ -267,19 +267,19 @@ client.on("message", message => {
             if (command === "role") {
                 if (args[0] === "spriter") {
                     message.channel.send('Successfully added the role: `Spriter`.');
-                    member.addRole(spriterRole);
+                    message.member.addRole(spriterRole);
                 } else
                  if (args[0] === "coder") {
                     message.channel.send('Successfully added the role: `Coder`.');
-                    member.addRole(coderRole);
+                    message.member.addRole(coderRole);
                 } else
                   if (args[0] === "composer") {
                     message.channel.send('Successfully added the role: `Compposer`.');
-                    member.addRole(composerRole);
+                    message.member.addRole(composerRole);
                 } else
                  if (args[0] === "mapper") {
                     message.channel.send('Successfully added the role: `Mapper`.');
-                    member.addRole(mapperRole);
+                    message.member.addRole(mapperRole);
                 }
                  else {
                      message.channel.send("Please provide a valid role. You can choose to be a `Mapper`, `Composer`, `Coder` or `Spriter`");
