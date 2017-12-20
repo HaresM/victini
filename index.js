@@ -259,22 +259,31 @@ client.on("message", message => {
     }
     
     if (message.guild.id === "265381707312660480") {
+            var spriterRole = member.guild.roles.find('name', 'Spriter');
+            var mapperRole = member.guild.roles.find('name', 'Mapper');
+            var coderRole = member.guild.roles.find('name', 'Coder');
+            var composerRole = member.guild.roles.find('name', 'Composer');
+            
             if (command === "role") {
                 if (args[0] === "spriter") {
                     addRole(member, 'Spriter');
                     message.channel.send('Successfully added the role: `Spriter`.');
+                    member.addRole(spriterRole);
                 } else
                  if (args[0] === "coder") {
                     addRole(member, 'Coder');
                     message.channel.send('Successfully added the role: `Coder`.');
+                    member.addRole(coderRole);
                 } else
                   if (args[0] === "composer") {
                     addRole(member, 'Composer');
                     message.channel.send('Successfully added the role: `Compposer`.');
+                     member.addRole(composerRole);
                 } else
                  if (args[0] === "mapper") {
                     addRole(member, 'Mapper');
                     message.channel.send('Successfully added the role: `Mapper`.');
+                    member.addRole(mapperRole);
                 }
                  else {
                      message.channel.send("Please provide a valid role. You can choose to be a `Mapper`, `Composer`, `Coder` or `Spriter`");
