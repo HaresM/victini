@@ -41,7 +41,7 @@ client.on("guildCreate", guild => {
     }
 });
 
-client.on("guildMemberAdd", (member) => {
+client.on("guildMemberAdd", member => {
     var defaultChannel = member.guild.channels.find(c => c.name.toLowerCase().includes('general') && c.type === "text");
     var availableChannels = member.guild.channels.filter(channel => channel.permissionsFor(guild.me).has('SEND_MESSAGES'))
     if (defaultChannel === null) {
@@ -52,7 +52,7 @@ client.on("guildMemberAdd", (member) => {
     }
 });
 
-client.on("guildMemberRemove", (member) => {
+client.on("guildMemberRemove", member => {
     var defaultChannel = member.guild.channels.find(c => c.name.toLowerCase().includes('general') && c.type === "text");
     var availableChannels = member.guild.channels.filter(channel => channel.permissionsFor(guild.me).has('SEND_MESSAGES'))
     if (defaultChannel === null) {
