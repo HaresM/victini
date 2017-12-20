@@ -259,9 +259,7 @@ client.on("message", (message) => {
 
         }
 
-    });
-
-});
+    )};
 
 
 
