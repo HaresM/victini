@@ -259,10 +259,10 @@ client.on("message", message => {
     }
     
     if (message.guild.id === "265381707312660480") {
-            var spriterRole = member.guild.roles.find('name', 'Spriter');
-            var mapperRole = member.guild.roles.find('name', 'Mapper');
-            var coderRole = member.guild.roles.find('name', 'Coder');
-            var composerRole = member.guild.roles.find('name', 'Composer');
+            var spriterRole = message.guild.roles.find('name', 'Spriter');
+            var mapperRole = message.guild.roles.find('name', 'Mapper');
+            var coderRole = message.guild.roles.find('name', 'Coder');
+            var composerRole = message.guild.roles.find('name', 'Composer');
             
             if (command === "role") {
                 if (args[0] === "spriter") {
