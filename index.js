@@ -18,7 +18,7 @@ client.on("ready", () => {
     client.user.setGame("Type v.help!");
 });
 
-client.on("guildCreate", guild =>{
+client.on("guildCreate", guild => {
     console.log(`Victini joined the ${guild.name} server, with ID ${guild.id.toString()}.`);
     
     var defaultChannel = guild.channels.find(c => c.name.toLowerCase().includes('general') && c.type === "text");
@@ -42,8 +42,8 @@ client.on("guildCreate", guild =>{
 });
 
 client.on("guildMemberAdd", (member) => {
-    var defaultChannel = guild.channels.find(c => c.name.toLowerCase().includes('general') && c.type === "text");
-    var availableChannels = guild.channels.filter(channel => channel.permissionsFor(guild.me).has('SEND_MESSAGES'))
+    var defaultChannel = member.guild.channels.find(c => c.name.toLowerCase().includes('general') && c.type === "text");
+    var availableChannels = member.guild.channels.filter(channel => channel.permissionsFor(guild.me).has('SEND_MESSAGES'))
     if (defaultChannel === null) {
         availableChannels.random().send(member.user + ' has joined the server. Welcome!');
     }
@@ -53,8 +53,8 @@ client.on("guildMemberAdd", (member) => {
 });
 
 client.on("guildMemberRemove", (member) => {
-    var defaultChannel = guild.channels.find(c => c.name.toLowerCase().includes('general') && c.type === "text");
-    var availableChannels = guild.channels.filter(channel => channel.permissionsFor(guild.me).has('SEND_MESSAGES'))
+    var defaultChannel = member.guild.channels.find(c => c.name.toLowerCase().includes('general') && c.type === "text");
+    var availableChannels = member.guild.channels.filter(channel => channel.permissionsFor(guild.me).has('SEND_MESSAGES'))
     if (defaultChannel === null) {
         availableChannels.random().send(member.user.username + ' has left the server. RIP...!');
     }
