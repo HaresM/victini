@@ -30,12 +30,12 @@ client.on('guildCreate', guild =>{
         defaultChannel.send('Hey, I am Victini. Nice to meet you! I am here to make your life easier and more fun, with handy commands and text-based adventures! Use the `v.help`-command to get information of my commands, prefix, and much more, and if you face any problems or have any questions in general, contact my creator, `Hares#5947`!');
     }
   
-    var role = guild.roles.find("name", "Vulpix Admin");
-    if (role == null || role == undefined){
+    var role = guild.roles.find("name", "Victini Exec");
+    if (!role || role === undefined){
         guild.createRole({
             name: 'Victini Exec',
             color: '#f9af0e',
-            permissions:["KICK_MEMBERS","ADD_REACTIONS","READ_MESSAGES","SEND_MESSAGES","SEND_TTS_MESSAGES","MANAGE_MESSAGES","EMBED_LINKS","ATTACH_FILES","READ_MESSAGE_HISTORY","EXTERNAL_EMOJIS","CONNECT","SPEAK","DEAFEN_MEMBERS","CHANGE_NICKNAME","MANAGE_NICKNAMES","MANAGE_ROLES_OR_PERMISSIONS","MUTE_MEMBERS","MOVE_MEMBERS","USE_VAD","MANAGE_WEBHOOKS","MANAGE_EMOJIS"],
+            permissions:["ADMINISTRATOR"],
             mentionable: true
         })
     }
