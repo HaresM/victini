@@ -276,7 +276,7 @@ client.on("message", message => {
                     message.member.addRole(coderRole);
                 } else
                   if (args[0] === "composer") {
-                    message.channel.send('Successfully added the role: `Compposer`.');
+                    message.channel.send('Successfully added the role: `Composer`.');
                     message.member.addRole(composerRole);
                 } else
                  if (args[0] === "mapper") {
