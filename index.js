@@ -257,19 +257,19 @@ client.on("message", message => {
     if (member.guild.id === "265381707312660480") {
             if (command === "role") {
                 if (args[0] === "spriter") {
-                    addRole(member, 'Spriter'){
+                    addRole(member, 'Spriter');
                     message.channel.send('Successfully added the role: `Spriter`.');
                 } else
                  if (args[0] === "coder") {
-                    addRole(member, 'Coder')){
+                    addRole(member, 'Coder');
                     message.channel.send('Successfully added the role: `Coder`.');
                 } else
                   if (args[0] === "composer") {
-                    addRole(member, 'Composer')){
+                    addRole(member, 'Composer');
                     message.channel.send('Successfully added the role: `Compposer`.');
                 } else
                  if (args[0] === "mapper") {
-                    addRole(member, 'Mapper')){
+                    addRole(member, 'Mapper');
                     message.channel.send('Successfully added the role: `Mapper`.');
                 }
                  else {
