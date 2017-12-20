@@ -250,11 +250,10 @@ client.on("message", message => {
         }
         
         if (command === "clear") {
-            const deleteCount = parseInt(args[0], 10);
+            const deleteCount = args[0];
             if (!deleteCount || deleteCount < 2 || deleteCount > 100 || isNan(deleteCount) === True)
                 return message.channel.send("Please provide a number between 2 and 100 for the number of messages to delete.");
-            const fetched = deleteCount;
-            message.channel.bulkDelete(fetched)
+            message.channel.bulkDelete(deleteCount)
         }
     }
     
