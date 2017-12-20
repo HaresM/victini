@@ -17,7 +17,31 @@ function hasRole(member, role) {
     }
 }
 
-function addRole(member, role){
+    function getMember(arg){
+        if (arg && arg.constructor && arg.constructor.name == 'GuildMember') return arg;
+        var user = getUser(arg);
+        if (user) return guild.members.get(user.id);
+        return null;
+    }
+    function getRole(arg){
+        if (arg && arg.constructor && arg.constructor.name == 'Role') return arg;
+        var role = guild.roles.find(r => r.name == arg);
+        if (!role){
+            role = guild.roles.get(arg);
+        }
+        if (!role){
+            try{ role = guild.roles.find(r => r.name.toLowerCase() == arg.toLowerCase()); } catch (e){}
+        }
+        if (!role){
+            if (arg.toString().contains('<@&') && arg.toString().contains('>')){
+                arg = arg.split('<@&')[1].split('>')[0];
+                role = guild.roles.get(arg);
+            }
+        }
+        if (role && role.constructor && role.constructor.name == 'Role') return role;
+        return null;
+    }
+    function addRole(member, role){
         var mbr = getMember(member);
         if (!mbr) return false;
         var rle = getRole(role);
