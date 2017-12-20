@@ -126,6 +126,15 @@ client.on("message", message => {
     }
 
 
+    if (message.author.bot) return;
+    if (message.content.indexOf(config.prefix) !== 0) return;
+
+    const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
+    const command = args.shift().toLowerCase();
+
+
+
+
     if (command === "lenny") {
         message.delete();
         message.channel.send("( ͡° ͜ʖ ͡°)");
@@ -211,53 +220,54 @@ client.on("message", message => {
         } else {
             message.channel.send("Temperature could not be converted.");
         }
+    }
 
-        if (command === "helper") {
-            message.channel.send("https://cdn.discordapp.com/attachments/320716421757927436/376351118449573909/sketch1509192675057.png");
+    if (command === "helper") {
+        message.channel.send("https://cdn.discordapp.com/attachments/320716421757927436/376351118449573909/sketch1509192675057.png");
+    }
+    if (command === "8ball") {
+        if (message.content.startsWith(prefix + "8ball")) {
+            const magicArray = ['It is certain.', 'It is decidedly so.', 'Without a doubt.', 'Yes - definitely.', 'You may rely on it.', 'As I see it, yes.', 'Most likely.', 'Outlook good.', 'Yes.', 'Signs point to yes.', 'Reply hazy, try again.', 'Ask again later.', 'Better not tell you now.', 'Cannot predict now.', 'Concentrate and ask again.', 'I would not count on it.', 'My reply is no.', 'My sources say no.', 'Outlook not so good.', 'Are you done asking questions yet?', 'Why the fuck should I even know this?', 'The answer lies within yourself.', 'Why are you asking me?', 'Follow the seahorse.', 'Very doubtful.'];
+            const randomReply = Math.floor(Math.random() * magicArray.length);
+            message.channel.send(`${magicArray[randomReply]}`);
         }
-        if (command === "8ball") {
-            if (message.content.startsWith(prefix + "8ball")) {
-                const magicArray = ['It is certain.', 'It is decidedly so.', 'Without a doubt.', 'Yes - definitely.', 'You may rely on it.', 'As I see it, yes.', 'Most likely.', 'Outlook good.', 'Yes.', 'Signs point to yes.', 'Reply hazy, try again.', 'Ask again later.', 'Better not tell you now.', 'Cannot predict now.', 'Concentrate and ask again.', 'I would not count on it.', 'My reply is no.', 'My sources say no.', 'Outlook not so good.', 'Are you done asking questions yet?', 'Why the fuck should I even know this?', 'The answer lies within yourself.', 'Why are you asking me?', 'Follow the seahorse.', 'Very doubtful.'];
-                const randomReply = Math.floor(Math.random() * magicArray.length);
-                message.channel.send(`${magicArray[randomReply]}`);
-            }
+    }
+
+
+
+    if (isBotExec(message.member)) {
+        if (command === "say") {
+            const sayMessage = args.join(" ");
+            message.delete()
+            message.channel.send(sayMessage);
         }
 
+        if (command === "kick") {
+            let member = message.mentions.members.first();
+            if (!member)
+                return message.reply("Please mention a valid member of this server");
+            if (!member.kickable || member.user.id === "311534497403371521")
+                return message.reply("The specified user could not be kicked.");
 
+            let reason = args.slice(1).join(' ');
+            if (!reason)
+                return message.reply("Please indicate a reason for the kick!");
 
-        if (isBotExec(message.member)) {
-            if (command === "say") {
-                const sayMessage = args.join(" ");
-                message.delete()
-                message.channel.send(sayMessage);
-            }
-
-            if (command === "kick") {
-                let member = message.mentions.members.first();
-                if (!member)
-                    return message.reply("Please mention a valid member of this server");
-                if (!member.kickable || member.user.id === "311534497403371521")
-                    return message.reply("The specified user could not be kicked.");
-
-                let reason = args.slice(1).join(' ');
-                if (!reason)
-                    return message.reply("Please indicate a reason for the kick!");
-
-                message.channel.send(`${member.user.tag} has been kicked by ${message.author.tag}, because: of the following reason: \`\`\`${reason}\`\`\``);
-
-            }
-
-            if (command === "clear") {
-                const deleteCount = parseInt(args[0], 10);
-
-                if (!deleteCount || deleteCount < 2 || deleteCount > 100 || isNan(deleteCount) === True)
-                    return message.channel.send("Please provide a number between 2 and 100 for the number of messages to delete.");
-
-                const fetched = deleteCount;
-                message.channel.bulkDelete(fetched);
-            }
+            message.channel.send(`${member.user.tag} has been kicked by ${message.author.tag}, because: of the following reason: \`\`\`${reason}\`\`\``);
 
         }
+
+        if (command === "clear") {
+            const deleteCount = parseInt(args[0], 10);
+
+            if (!deleteCount || deleteCount < 2 || deleteCount > 100 || isNan(deleteCount) === True)
+                return message.channel.send("Please provide a number between 2 and 100 for the number of messages to delete.");
+
+            const fetched = deleteCount;
+            message.channel.bulkDelete(fetched);
+        }
+
+    }
 
     });
 
