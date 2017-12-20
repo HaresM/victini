@@ -2,6 +2,7 @@ const Discord = require("discord.js");
 const client = new Discord.Client();
 const weather = require('weather-js');
 var fs = require('fs');
+
 const prefix = "v.";
 
 function isBotExec(member) {
