@@ -215,6 +215,18 @@ client.on("message", message => {
     
     if (isBotExec(message.member)) {
         
+        if (command === "count") {
+            if (args[0] === "members") {
+                message.channel.send(`This server has \`${message.guild.memberCount}\` members.`);
+            } else if (args[0] === "servers") {
+                message.channel.send(`I am in \`${client.guilds.size.toLocaleString()}\` servers.`);
+            } else if (args[0] === "channels") {
+                message.channel.send(`This server has \`${message.guild.channels.size.toLocaleString()}\` channels.`);
+            } else {
+                message.channel.send("Type the following commands to make me count stuff:\n```v.count members\nv.count channels\nv.count servers\`\`\`");
+            }
+        }
+        
         if (command === "say") {
             const sayMessage = args.join(" ");
             message.delete()
