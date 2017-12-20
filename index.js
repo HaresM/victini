@@ -43,7 +43,7 @@ client.on("guildCreate", guild => {
 
 client.on("guildMemberAdd", member => {
     var defaultChannel = member.guild.channels.find(c => c.name.toLowerCase().includes('general') && c.type === "text");
-    var availableChannels = member.guild.channels.filter(channel => channel.permissionsFor(guild.me).has('SEND_MESSAGES'))
+    var availableChannels = member.guild.channels.filter(channel => channel.permissionsFor(member.guild.me).has('SEND_MESSAGES'))
     if (defaultChannel === null) {
         availableChannels.random().send(member.user + ' has joined the server. Welcome!');
     }
@@ -54,7 +54,7 @@ client.on("guildMemberAdd", member => {
 
 client.on("guildMemberRemove", member => {
     var defaultChannel = member.guild.channels.find(c => c.name.toLowerCase().includes('general') && c.type === "text");
-    var availableChannels = member.guild.channels.filter(channel => channel.permissionsFor(guild.me).has('SEND_MESSAGES'))
+    var availableChannels = member.guild.channels.filter(channel => channel.permissionsFor(member.guild.me).has('SEND_MESSAGES'))
     if (defaultChannel === null) {
         availableChannels.random().send(member.user.username + ' has left the server. RIP...!');
     }
