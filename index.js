@@ -264,6 +264,7 @@ client.on("message", message => {
             var coderRole = message.guild.roles.find('name', 'Coder');
             var writerRole = message.guild.roles.find('name', 'Writer');
             var composerRole = message.guild.roles.find('name', 'Composer');
+            var directorRole = message.guild.roles.find('name', 'Fangame Director');
             
             if (command === "role") {
                 if (args[0] === "spriter") {
@@ -285,9 +286,13 @@ client.on("message", message => {
                  if (args[0] === "writer") {
                     message.channel.send('Successfully added the role: `Writer`.');
                     message.member.addRole(writerRole);
+                 } else
+                 if (args[0] === "director") {
+                    message.channel.send('Successfully added the role: `Fangame Director`.');
+                    message.member.addRole(directorRole); 
                  }
                  else {
-                     message.channel.send("Please provide a valid role. You can choose to be a `Mapper`, `Composer`, `Coder`, `Writer` or `Spriter`");
+                     message.channel.send("Please provide a valid role. You can choose to be a `mapper`, `composer`, `coder`, `writer`, `spriter` or `director`.");
                  }
             }
         }
