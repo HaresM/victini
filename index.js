@@ -15,7 +15,7 @@ function isBotExec(member){
 
 client.on('ready', () => {
     console.log("I'm online.");
-    bot.user.setGame("Type v.help!");
+    client.user.setGame("Type v.help!");
 });
 
 client.on('guildCreate', guild =>{
