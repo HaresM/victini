@@ -252,76 +252,76 @@ if (message.guild.id === '383287520118702100') {
     }
   }
 }
-  if (message.guild.id === '369492433060364300') {
-    if (command === "victorius") {
-      if (args[0] === "story") {
-        message.channel.send("```Fated boy/girl who happens to live next to the pokemon lab gets tangled up with an evil organization after receiving a starter pokemon with a very rare genetic condition called \"Alium Syndrome\", works with professor and friends to prevent world annihilation from happening due to some evil dude taking advantage of this pokemon condition and abusing their power for his own gains. Using his newfound power he convinces a few renowned evil team leaders from around the pokemon world to help him create the perfect pokemon and rule over the world and its fate. However, the main character has the power to raise the odd pokemon to their full potential and use their power to foil the last part of the perfect pokemon, his creation, by obtaining victini, and then with the power of the victory pokemon is able to defeat the imperfect pokemon and restore peace.```");
-      }
-    }
-  }
-  if (botExec(message.member)) {
-    if (command === "count") {
-      if (args[0] === "members") {
-        message.channel.send(`This server has \`${message.guild.memberCount}\` members.`);
-      } else if (args[0] === "servers") {
-        message.channel.send(`I am in \`${client.guilds.size.toLocaleString()}\` servers.`);
-      } else if (args[0] === "channels") {
-        message.channel.send(`This server has \`${message.guild.channels.size.toLocaleString()}\` channels.`);
-      } else {
-        message.channel.send("Type the following commands to make me count stuff:\n```v.count members\nv.count channels\nv.count servers\`\`\`");
-      }
-    }
-    if (command === "clear") {
-      var index = args.join(" ");
-      if (index < 2)
-        return message.channel.send('Please specify a larger ammount of messages to be cleared.');
-      if (index > 100)
-        return message.channel.send('Only 100 messages can be cleared at a time. Please specify a smaller ammount of message.');
-      if (index < 2)
-        return message.channel.send('Sorry but the minimum number of msgs you can bulk delete is 2');
-      message.channel.bulkDelete(index);
-      if (message.channel.bulkDelete(index)) {
-        return;
-      } else {
-        message.channel.send("Messages could not be cleared.");
-      }
-    }
-    if (command === "kick") {
-      let member = message.mentions.members.first();
-      if (!member)
-        return message.channel.send("Please mention a member.");
-      if (!member.kickable)
-        var reason = args.slice(1).join(" ");
-      if (!reason)
-        return message.channel.send("Please indicate a reason for the kick.");
-      if (member.kick(reason)) {
-        message.channel.send(`${member.user.tag} has been kicked by ${message.author.tag} due to the follwing reason:\n\`\`\`$(reason}\`\`\``);
-      } else {
-        message.channel.send(`${member.user.tag} could not be kicked due to the following error:\n\`\`\`${error}\`\`\``);
-      }
-    }
-    if (command === "say") {
-      if (args.length === 0)
-        return message.channel.send('Specify something you want me to say.');
-      message.delete();
-      message.channel.send(args.join(" "));
-    }
-    const evalArgs = message.content.split(" ").slice(1);
-    if (message.content.startsWith(prefix + "eval")) {
-      try {
-        const code = evalArgs.join(" ");
-        let evaled = eval(code);
-        if (typeof evaled !== "string")
-          evaled = require("util").inspect(evaled);
-        message.channel.send(clean(evaled), {
-          code: "xl"
-        });
-      } catch (err) {
-        message.channel.send(`\`ERROR\`\`\`\`xl\n${clean(err)}\n\`\`\``);
-      }
+if (message.guild.id === '369492433060364300') {
+  if (command === "victorius") {
+    if (args[0] === "story") {
+      message.channel.send("```Fated boy/girl who happens to live next to the pokemon lab gets tangled up with an evil organization after receiving a starter pokemon with a very rare genetic condition called \"Alium Syndrome\", works with professor and friends to prevent world annihilation from happening due to some evil dude taking advantage of this pokemon condition and abusing their power for his own gains. Using his newfound power he convinces a few renowned evil team leaders from around the pokemon world to help him create the perfect pokemon and rule over the world and its fate. However, the main character has the power to raise the odd pokemon to their full potential and use their power to foil the last part of the perfect pokemon, his creation, by obtaining victini, and then with the power of the victory pokemon is able to defeat the imperfect pokemon and restore peace.```");
     }
   }
 }
+if (botExec(message.member)) {
+  if (command === "count") {
+    if (args[0] === "members") {
+      message.channel.send(`This server has \`${message.guild.memberCount}\` members.`);
+    } else if (args[0] === "servers") {
+      message.channel.send(`I am in \`${client.guilds.size.toLocaleString()}\` servers.`);
+    } else if (args[0] === "channels") {
+      message.channel.send(`This server has \`${message.guild.channels.size.toLocaleString()}\` channels.`);
+    } else {
+      message.channel.send("Type the following commands to make me count stuff:\n```v.count members\nv.count channels\nv.count servers\`\`\`");
+    }
+  }
+  if (command === "clear") {
+    var index = args.join(" ");
+    if (index < 2)
+      return message.channel.send('Please specify a larger ammount of messages to be cleared.');
+    if (index > 100)
+      return message.channel.send('Only 100 messages can be cleared at a time. Please specify a smaller ammount of message.');
+    if (index < 2)
+      return message.channel.send('Sorry but the minimum number of msgs you can bulk delete is 2');
+    message.channel.bulkDelete(index);
+    if (message.channel.bulkDelete(index)) {
+      return;
+    } else {
+      message.channel.send("Messages could not be cleared.");
+    }
+  }
+  if (command === "kick") {
+    let member = message.mentions.members.first();
+    if (!member)
+      return message.channel.send("Please mention a member.");
+    if (!member.kickable)
+      var reason = args.slice(1).join(" ");
+    if (!reason)
+      return message.channel.send("Please indicate a reason for the kick.");
+    if (member.kick(reason)) {
+      message.channel.send(`${member.user.tag} has been kicked by ${message.author.tag} due to the follwing reason:\n\`\`\`$(reason}\`\`\``);
+    } else {
+      message.channel.send(`${member.user.tag} could not be kicked due to the following error:\n\`\`\`${error}\`\`\``);
+    }
+  }
+  if (command === "say") {
+    if (args.length === 0)
+      return message.channel.send('Specify something you want me to say.');
+    message.delete();
+    message.channel.send(args.join(" "));
+  }
+  const evalArgs = message.content.split(" ").slice(1);
+  if (message.content.startsWith(prefix + "eval")) {
+    try {
+      const code = evalArgs.join(" ");
+      let evaled = eval(code);
+      if (typeof evaled !== "string")
+        evaled = require("util").inspect(evaled);
+      message.channel.send(clean(evaled), {
+        code: "xl"
+      });
+    } catch (err) {
+      message.channel.send(`\`ERROR\`\`\`\`xl\n${clean(err)}\n\`\`\``);
+    }
+  }
+}
+})
 });
 
 
