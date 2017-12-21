@@ -164,6 +164,17 @@ client.on("message", message => {
         message.channel.send(message.member.user + victim[rand(victim.length)])
     }
     
+    if (command === "hug") {
+        const hugArray = ['1. You can do better.', '2. It\'s a start. ¯\\_(ツ)_/¯', '3. We\'re getting there.', '4. Now we\'re talking!', '5. This is getting spoopy.', '6. Your power is admirable.', '7. Simply... Amazing... o_0', '8. Everyone, evacuate this server!'];
+        const randomReply = Math.floor(Math.random() * hugArray.length);
+        let member = message.mentions.members.first();
+        
+        if (!member)
+                return message.channel.send("Mention the user you want to hug."); 
+        
+        message.channel.send(`${member} recieved a hug from ${message.author}, with power `);
+    }
+    
     if (message.content.startsWith(prefix + 'weather')) {
         if (args.length === 0) return message.channel.send('Please specify a location.');
         weather.find({
