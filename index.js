@@ -172,7 +172,7 @@ client.on("message", message => {
         if (!member)
                 return message.channel.send("Mention the user you want to hug."); 
         
-        message.channel.send(`${member} recieved a hug from ${message.author}, with power `);
+        message.channel.send(`${member} recieved a hug from ${message.author}, with power ${randomReply}`);
     }
     
     if (message.content.startsWith(prefix + 'weather')) {
