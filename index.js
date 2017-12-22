@@ -1,5 +1,7 @@
 const Discord = require("discord.js");
 const client = new Discord.Client();
+const sql = require("sqlite");
+sql.open("./score.sqlite");
 const weather = require('weather-js');
 var fs = require('fs');
 
@@ -74,6 +76,7 @@ client.on("guildMemberRemove", member => {
 client.on("message", message => {
     if (message.author.bot) return;
     if (message.content.indexOf(prefix) !== 0) return;
+    if (message.channel.type === "dm") return;
     
     const args = message.content.slice(prefix.length).trim().split(/ +/g);
     const command = args.shift().toLowerCase();
@@ -303,6 +306,35 @@ client.on("message", message => {
                  }
             }
         }
+    
+    
+      sql.get(`SELECT * FROM scores WHERE userId ="${message.author.id}"`).then(row => {
+    if (!row) {
+      sql.run("INSERT INTO scores (userId, points, level) VALUES (?, ?, ?)", [message.author.id, 1, 0]);
+    } else {
+      sql.run(`UPDATE scores SET points = ${row.points + 1} WHERE userId = ${message.author.id}`);
+    }
+  }).catch(() => {
+    console.error;
+    sql.run("CREATE TABLE IF NOT EXISTS scores (userId TEXT, points INTEGER, level INTEGER)").then(() => {
+      sql.run("INSERT INTO scores (userId, points, level) VALUES (?, ?, ?)", [message.author.id, 1, 0]);
+    });
+  });
+    
+      if (message.content.startsWith(prefix + "level")) {
+    sql.get(`SELECT * FROM scores WHERE userId ="${message.author.id}"`).then(row => {
+      if (!row) return message.reply("Your current level is 0");
+      message.reply(`Your current level is ${row.level}`);
+    });
+  } else
+
+  if (message.content.startsWith(prefix + "points")) {
+    sql.get(`SELECT * FROM scores WHERE userId ="${message.author.id}"`).then(row => {
+      if (!row) return message.reply("sadly you do not have any points yet!");
+      message.reply(`you currently have ${row.points} points, good going!`);
+    });
+  }
+});
     
     
 });
