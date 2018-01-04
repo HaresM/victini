@@ -231,6 +231,14 @@ client.on("message", message => {
         }
     }
     
+    if (command === "remind") {
+        remindTime = args[0] * 60 * 1000
+        
+        setTimeout(function () {
+            message.author.sendMessage("Your message here.");
+        }, remindTime)
+    }
+    
     
     if (isBotExec(message.member)) {
         
