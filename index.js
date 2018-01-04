@@ -235,8 +235,12 @@ client.on("message", message => {
         var remindTime = args[0] * 60 * 1000
         var remindText = args.slice(1).join(" ");
         
+        if (!remindTime)
+                return message.channel.send("Please provide the ammount of time *in minutes* after which you want to be reminded.");
+        if (!remindText)
+                return message.channel.send("Please provide something you want to be reminded of.");
         
-        message.channel.send(`You will be reminded to \`${remindText}\`, after \`${remindTime}\` minutes.`);
+        message.channel.send(`You will be reminded to \`${remindText}\`, after \`${args[0]}\` minutes.`);
         
         setTimeout(function () {
             message.author.sendMessage(`Reminder to: \`\`\`${remindText}\`\`\``);
