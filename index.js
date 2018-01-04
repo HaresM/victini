@@ -238,7 +238,7 @@ client.on("message", message => {
         message.channal.send(`You will be reminded to \`${remindText}\`, after \`${remindTime}\`.`);
         
         setTimeout(function () {
-            message.author.sendMessage(`Reminder to: \`\`\`${remindText}\`\`\``;
+            message.author.sendMessage(`Reminder to: \`\`\`${remindText}\`\`\``);
         }, remindTime)
     }
     
