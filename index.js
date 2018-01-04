@@ -114,6 +114,8 @@ client.on("message", message => {
                 message.channel.send("The `v.weather`-command sends the weather of the location you specify. You use this command as follow: `v.weather` `[a real life location]`");
             } else if (args[1] === "convert") {
                 message.channel.send("The `v.convert`-command converts a temperature to Degrees Celsius or Degrees Fahrenheit. If you want to convert `[a number]` to Degrees Fahrenheit, you use this command as follows: `v.convert` `f` `[a number]`. On the other hand, if you want to convert `[a number]` to Degrees Celsius, you use this command as follows: `v.convert` `c` `[a number]`.");
+            } else if (args[1] === "hug") {
+                message.channel.send("Use the `v.hug`-command to express your love to someone. Everytime this command is used, a number is given to the power of your hug. Can you hug with the most power? Use this command as follows: `v.hug` `@[user you want to hug]`");
             } else {
                 message.channel.send("Type the following commands to get help on specific stuff:\n```v.help commands face\nv.help commands 8ball\nv.help commands helper\nv.help commands victim\nv.help commands weather\nv.help commands convert\nv.help commands hug```");
             }
@@ -121,7 +123,7 @@ client.on("message", message => {
             if (args[1] === "say") {
                 message.channel.send("Use the `v.say`-command to let Victini mimmick what you say. Use this command as follows: `v.say` `[the sentence you want Victini to repeat]`");
             } else if (args[1] === "kick") {
-                message.channel.send("The `v.kick`-command kicks a user. It's that straightforward. Use this command as follows: `v.kick` `@[user you want to kick]` `[eason as to why you want to kick this person]`");
+                message.channel.send("The `v.kick`-command kicks a user. It's that straightforward. Use this command as follows: `v.kick` `@[user you want to kick]` `[reason as to why you want to kick this person]`");
             } else if (args[1] === "clear") {
                 message.channel.send("The `v.clear`-command deletes the amount of specified messages. Note that the command itself counts as a message as well. Use this command as follows: `v.clear` `[ammount of messages you want to clear]`");
             } else {
