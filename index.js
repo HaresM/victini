@@ -117,7 +117,7 @@ client.on("message", message => {
             } else if (args[1] === "hug") {
                 message.channel.send("Use the `v.hug`-command to express your love to someone. Everytime this command is used, a number is given to the power of your hug. Can you hug with the most power? Use this command as follows: `v.hug` `@[user you want to hug]`");
             } else if (args[1] === "reminder") {
-                message.channel.send("When using the `v.reminder`-command, you will receive a DM after the ammount of specified time *in minutes* of something you wanted to be reminded. Use this command as follows: `v.reminder` `[time in minutes, a number]` `[thing you want to be reminded of]`");
+                message.channel.send("When using the `v.reminder`-command, you will receive a DM after the ammount of specified time *in minutes* of something you wanted to be reminded of. Use this command as follows: `v.reminder` `[time in minutes, a number]` `[thing you want to be reminded of]`");
             } else {
                 message.channel.send("Type the following commands to get help on specific stuff:\n```v.help commands face\nv.help commands 8ball\nv.help commands helper\nv.help commands victim\nv.help commands weather\nv.help commands convert\nv.help commands hug\nv.help commands reminder```");
             }
@@ -234,7 +234,7 @@ client.on("message", message => {
     }
     
     if (command === "reminder") {
-        var remindTime = args[0] * 60 * 1000
+        var remindTime = args[0] * 60 * 1000;
         var remindText = args.slice(1).join(" ");
         
         if (!remindTime)
