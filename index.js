@@ -368,7 +368,7 @@ client.on("message", message => {
 				message.channel.send('Successfully added the role: `orange`.');
 				message.member.addRole(orangeRole);
 			} else {
-				message.channel.send("Please provide a valid role. You can choose to be a `mapper`, `composer`, `coder`, `writer` or `spriter`. Alternatively, you add the following colours to yourself: `red`, `blue`, `yellow`, `lime`, `purple`, `pink` and `orange`.");
+				message.channel.send("Please provide a valid role. You can choose to be a `mapper`, `composer`, `coder`, `writer` or `spriter`. Alternatively, you can add the following colours to yourself: `red`, `blue`, `yellow`, `lime`, `purple`, `pink` and `orange`.");
 			}
 		}
 	}
