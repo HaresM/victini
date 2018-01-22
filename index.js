@@ -311,6 +311,13 @@ client.on("message", message => {
 		var coderRole = message.guild.roles.find('name', 'Coder');
 		var writerRole = message.guild.roles.find('name', 'Writer');
 		var composerRole = message.guild.roles.find('name', 'Composer');
+		var redRole = message.guild.roles.find('name', 'red');
+		var blueRole = message.guild.roles.find('name', 'blue');
+		var yellowRole = message.guild.roles.find('name', 'yellow');
+		var limeRole = message.guild.roles.find('name', 'lime');
+		var purpleRole = message.guild.roles.find('name', 'purple');
+		var pinkRole = message.guild.roles.find('name', 'pink');
+		var orangeRole = message.guild.roles.find('name', 'orange');
 
 		if (command === "role") {
 			if (args[0] === "spriter") {
@@ -332,8 +339,36 @@ client.on("message", message => {
 			if (args[0] === "writer") {
 				message.channel.send('Successfully added the role: `Writer`.');
 				message.member.addRole(writerRole);
+			} else 
+			if (args[0] === "red") {
+				message.channel.send('Successfully added the role: `red`.');
+				message.member.addRole(redRole);
+			} else
+			if (args[0] === "blue") {
+				message.channel.send('Successfully added the role: `blue`.');
+				message.member.addRole(blueRole);
+			} else
+			if (args[0] === "yellow") {
+				message.channel.send('Successfully added the role: `yellow`.');
+				message.member.addRole(yellowRole);
+			} else
+			if (args[0] === "lime") {
+				message.channel.send('Successfully added the role: `lime`.');
+				message.member.addRole(limeRole);
+			} else
+			if (args[0] === "purple") {
+				message.channel.send('Successfully added the role: `purple`.');
+				message.member.addRole(purpleRole);
+			} else
+			if (args[0] === "pink") {
+				message.channel.send('Successfully added the role: `pink`.');
+				message.member.addRole(pinkRole);
+			} else
+			if (args[0] === "orange") {
+				message.channel.send('Successfully added the role: `orange`.');
+				message.member.addRole(orangeRole);
 			} else {
-				message.channel.send("Please provide a valid role. You can choose to be a `mapper`, `composer`, `coder`, `writer` or `spriter`.");
+				message.channel.send("Please provide a valid role. You can choose to be a `mapper`, `composer`, `coder`, `writer` or `spriter`. Alternatively, you add the following colours to yourself: `red`, `blue`, `yellow`, `lime`, `purple`, `pink` and `orange`.");
 			}
 		}
 	}
