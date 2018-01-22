@@ -368,6 +368,8 @@ client.on("message", message => {
                 if (args[1] === "orange") {
                     message.channel.send('Successfully added the role: `orange`.');
                     message.member.addRole(orangeRole);
+                } else {
+                message.channel.send("Please provide a valid role. You can choose to be a `mapper`, `composer`, `coder`, `writer` or `spriter`. Alternatively, you can add the following colours to yourself: `red`, `blue`, `yellow`, `lime`, `purple`, `pink` and `orange`.");
                 }
             }
             if (args[0] === "remove") {
@@ -418,9 +420,9 @@ client.on("message", message => {
                 if (args[1] === "orange") {
                     message.channel.send('Successfully removeed the role: `orange`.');
                     message.member.removeRole(orangeRole);
+                } else {
+                message.channel.send("Please provide a valid role. You can remove the roles: `mapper`, `composer`, `coder`, `writer` or `spriter`. Alternatively, you can remove the following colours to yourself: `red`, `blue`, `yellow`, `lime`, `purple`, `pink` and `orange`.");
                 }
-            } else {
-                message.channel.send("Please provide a valid role. You can choose to be a `mapper`, `composer`, `coder`, `writer` or `spriter`. Alternatively, you can add the following colours to yourself: `red`, `blue`, `yellow`, `lime`, `purple`, `pink` and `orange`.");
             }
         }
     }
