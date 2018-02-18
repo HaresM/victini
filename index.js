@@ -27,7 +27,7 @@ function rand(int) {
 
 client.on("ready", () => {
   console.log("I'm online.");
-  client.user.setGame("Type v.help!");
+  client.user.setActivity("Type v.help!");
 });
 
 client.on("guildCreate", guild => {
@@ -157,11 +157,11 @@ client.on("message", message => {
               message.channel.send("The `v.clear`-command deletes the amount of specified messages. Note that the command itself counts as a message as well. Use this command as follows: `v.clear` `[amount of messages you want to clear]`");
               break;
             default:
-              message.channel.send("Exec-only commands require the `Victini Exec`-role to be used. Type the following commands to get further help:\n```v.help exec-only say\nv.help exec-only kick\nv.help exec-only clear```");
+              message.channel.send( Type the following commands to get further help:\n```v.help exec-only say\nv.help exec-only kick\nv.help exec-only clear```");
           }
         }
         else
-          return message.channel.send("Exec-only commands require the `Victini Exec`-role to be used. Type the following commands to get further help:\n```v.help exec-only say\nv.help exec-only kick\nv.help exec-only clear```");
+          message.channel.send("Exec-only commands require the `Victini Exec`-role to be used.");
         break;
       default:
         message.channel.send("Type the following commands to get help on specific stuff:\n```v.help gen-info\nv.help commands\nv.help exec-only```")
