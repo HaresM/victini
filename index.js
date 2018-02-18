@@ -23,10 +23,10 @@ function rand(int) {
   return Math.floor(Math.random() * parseInt(int));
 }
 
-
-
 client.on("ready", () => {
+  // I think this is pretty self explanatory
   console.log("I'm online.");
+  // Sets the playing msg to this:
   client.user.setActivity("Type v.help!");
 });
 
@@ -73,13 +73,17 @@ client.on("guildMemberRemove", member => {
 
 
 client.on("message", message => {
+  // Makes sure the author isn't a bot. By extension this also makes sure the bot doesn't listen to itself
   if (message.author.bot) return;
+  // Checks to see if the message starts with the bot prefix if i doesn't it gets ignored
   if (message.content.indexOf(prefix) !== 0) return;
+  // Ignores dm
   if (message.channel.type === "dm") return;
 
   const args = message.content.slice(prefix.toLowerCase().length).trim().split(/ +/g);
   const command = args.shift().toLowerCase();
   if (command === "help") {
+    // This is the help command here is a switch statement that checks the first argument the user has provided.
     switch (args[0]) {
       case "gen-info":
         switch (args[1]) {
