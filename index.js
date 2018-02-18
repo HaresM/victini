@@ -181,7 +181,7 @@ client.on("message", message => {
         message.channel.send(member + " recieved a hug from " + message.author + ", with power " + hugArray[randomReply]);
     }
 
-    if (message.content.startsWith(prefix + 'weather')) {
+    if (command === "weather") {
         if (args.length === 0) return message.channel.send('Please specify a location.');
         weather.find({
             search: args.join(" "),
@@ -237,9 +237,11 @@ client.on("message", message => {
     if (command === "reminder") {
         var remindTime = args[0] * 60 * 1000;
         var remindText = args.slice(1).join(" ");
-
+        
+        if (remindTime < 0)
+            return message.channel.send("Sorry but i'm afraid it looks like you typed in a negative number");
         if (!remindTime)
-            return message.channel.send("Please provide the ammount of time *in minutes* after which you want to be reminded.");
+            return message.channel.send("Please provide the amount of time *in minutes* after which you want to be reminded.");
         if (!remindText)
             return message.channel.send("Please provide something you want to be reminded of.");
 
