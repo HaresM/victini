@@ -27,7 +27,7 @@ client.on("ready", () => {
   // I think this is pretty self explanatory
   console.log("I'm online.");
   // Sets the playing msg to this:
-  client.user.setActivity("Type v.help! Victini is currently running the experimental rewritten version.  If shit goes wrong blame nathanielcwm#3522 not hares");
+  client.user.setActivity("Type v.help! Victini is currently running the experimental rewritten version.");
 });
 
 client.on("guildCreate", guild => {
