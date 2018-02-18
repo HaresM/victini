@@ -157,7 +157,7 @@ client.on("message", message => {
               message.channel.send("The `v.clear`-command deletes the amount of specified messages. Note that the command itself counts as a message as well. Use this command as follows: `v.clear` `[amount of messages you want to clear]`");
               break;
             default:
-              message.channel.send( Type the following commands to get further help:\n```v.help exec-only say\nv.help exec-only kick\nv.help exec-only clear```");
+              message.channel.send("Type the following commands to get further help:\n```v.help exec-only say\nv.help exec-only kick\nv.help exec-only clear```");
           }
         }
         else
