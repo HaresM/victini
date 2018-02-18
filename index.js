@@ -359,104 +359,80 @@ client.on("message", message => {
     if (command === "role") {
       if (args[0] === "add") {
         if (args[1] === "spriter") {
-          message.channel.send('Successfully added the role: `Spriter`.');
-          message.member.addRole(spriterRole);
+          message.member.addRole(spriterRole).then(message.channel.send('Successfully added the role: `Spriter`.'));
         } else
         if (args[1] === "coder") {
-          message.channel.send('Successfully added the role: `Coder`.');
-          message.member.addRole(coderRole);
+          message.member.addRole(coderRole).then(message.channel.send('Successfully added the role: `Coder`.'));
         } else
         if (args[1] === "composer") {
-          message.channel.send('Successfully added the role: `Composer`.');
-          message.member.addRole(composerRole);
+          message.member.addRole(composerRole).then(message.channel.send('Successfully added the role: `Composer`.'));
         } else
         if (args[1] === "mapper") {
-          message.channel.send('Successfully added the role: `Mapper`.');
-          message.member.addRole(mapperRole);
+          message.member.addRole(mapperRole).then(message.channel.send('Successfully added the role: `Mapper`.'));
         } else
         if (args[1] === "writer") {
-          message.channel.send('Successfully added the role: `Writer`.');
-          message.member.addRole(writerRole);
+          message.member.addRole(writerRole).then(message.channel.send('Successfully added the role: `Writer`.'));
         } else
         if (args[1] === "red") {
-          message.channel.send('Successfully added the role: `red`.');
-          message.member.addRole(redRole);
+          message.member.addRole(redRole).then(message.channel.send('Successfully added the role: `red`.'));
         } else
         if (args[1] === "blue") {
-          message.channel.send('Successfully added the role: `blue`.');
-          message.member.addRole(blueRole);
+          message.member.addRole(blueRole).then(message.channel.send('Successfully added the role: `blue`.'));
         } else
         if (args[1] === "yellow") {
-          message.channel.send('Successfully added the role: `yellow`.');
-          message.member.addRole(yellowRole);
+          message.member.addRole(yellowRole).then(message.channel.send('Successfully added the role: `yellow`.'));
         } else
         if (args[1] === "lime") {
-          message.channel.send('Successfully added the role: `lime`.');
-          message.member.addRole(limeRole);
+          message.member.addRole(limeRole).then(message.channel.send('Successfully added the role: `lime`.'));
         } else
         if (args[1] === "purple") {
-          message.channel.send('Successfully added the role: `purple`.');
-          message.member.addRole(purpleRole);
+          message.member.addRole(purpleRole).then(message.channel.send('Successfully added the role: `purple`.'));
         } else
         if (args[1] === "pink") {
-          message.channel.send('Successfully added the role: `pink`.');
-          message.member.addRole(pinkRole);
+          message.member.addRole(pinkRole).then(message.channel.send('Successfully added the role: `pink`.'));
         } else
         if (args[1] === "orange") {
-          message.channel.send('Successfully added the role: `orange`.');
-          message.member.addRole(orangeRole);
+          message.member.addRole(orangeRole).then(message.channel.send('Successfully added the role: `orange`.'));
         } else {
           message.channel.send("Please provide a valid role. You can choose to be a `mapper`, `composer`, `coder`, `writer` or `spriter`. Alternatively, you can add the following colours to yourself: `red`, `blue`, `yellow`, `lime`, `purple`, `pink` and `orange`.");
         }
       }
       if (args[0] === "remove") {
         if (args[1] === "spriter") {
-          message.channel.send('Successfully removeed the role: `Spriter`.');
-          message.member.removeRole(spriterRole);
+          message.member.removeRole(spriterRole).then(message.channel.send('Successfully removed the role: `Spriter`.'));
         } else
         if (args[1] === "coder") {
-          message.channel.send('Successfully removeed the role: `Coder`.');
-          message.member.removeRole(coderRole);
+          message.member.removeRole(coderRole).then(message.channel.send('Successfully removed the role: `Coder`.'));
         } else
         if (args[1] === "composer") {
-          message.channel.send('Successfully removeed the role: `Composer`.');
-          message.member.removeRole(composerRole);
+          message.member.removeRole(composerRole).then(message.channel.send('Successfully removed the role: `Composer`.'));
         } else
         if (args[1] === "mapper") {
-          message.channel.send('Successfully removeed the role: `Mapper`.');
-          message.member.removeRole(mapperRole);
+          message.member.removeRole(mapperRole).then(message.channel.send('Successfully removed the role: `Mapper`.'));
         } else
         if (args[1] === "writer") {
-          message.channel.send('Successfully removeed the role: `Writer`.');
-          message.member.removeRole(writerRole);
+          message.member.removeRole(writerRole).then(message.channel.send('Successfully removed the role: `Writer`.'));
         } else
         if (args[1] === "red") {
-          message.channel.send('Successfully removeed the role: `red`.');
-          message.member.removeRole(redRole);
+          message.member.removeRole(redRole).then(message.channel.send('Successfully removed the role: `red`.'));
         } else
         if (args[1] === "blue") {
-          message.channel.send('Successfully removeed the role: `blue`.');
-          message.member.removeRole(blueRole);
+          message.member.removeRole(blueRole).then(message.channel.send('Successfully removed the role: `blue`.'));
         } else
         if (args[1] === "yellow") {
-          message.channel.send('Successfully removeed the role: `yellow`.');
-          message.member.removeRole(yellowRole);
+          message.member.removeRole(yellowRole).then(message.channel.send('Successfully removed the role: `yellow`.'));
         } else
         if (args[1] === "lime") {
-          message.channel.send('Successfully removeed the role: `lime`.');
-          message.member.removeRole(limeRole);
+          message.member.removeRole(limeRole).then(message.channel.send('Successfully removed the role: `lime`.'));
         } else
         if (args[1] === "purple") {
-          message.channel.send('Successfully removeed the role: `purple`.');
-          message.member.removeRole(purpleRole);
+          message.member.removeRole(purpleRole).then(message.channel.send('Successfully removed the role: `purple`.'));
         } else
         if (args[1] === "pink") {
-          message.channel.send('Successfully removeed the role: `pink`.');
-          message.member.removeRole(pinkRole);
+          message.member.removeRole(pinkRole).then(message.channel.send('Successfully removed the role: `pink`.'));
         } else
         if (args[1] === "orange") {
-          message.channel.send('Successfully removeed the role: `orange`.');
-          message.member.removeRole(orangeRole);
+          message.member.removeRole(orangeRole).then(message.channel.send('Successfully removed the role: `orange`.'));
         } else {
           message.channel.send("Please provide a valid role. You can remove the roles: `mapper`, `composer`, `coder`, `writer` or `spriter`. Alternatively, you can remove the following colours to yourself: `red`, `blue`, `yellow`, `lime`, `purple`, `pink` and `orange`.");
         }
@@ -473,4 +449,4 @@ client.on("message", message => {
 
 
 
-client.login(process.env.BOT_TOKEN)
+client.login(process.env.BOT_TOKEN);
