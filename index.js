@@ -206,7 +206,7 @@ client.on("message", message => {
   }
   if (command === "welcomemsgs") {
     message.channel.send("Yes I know you did this command");
-    if (args[0] == true) {
+    if (args[0] == "true") {
       client.db.connect(() => {
         try {
           client.db.query("UPDATE welcome SET enabled = TRUE WHERE id = $1;", [message.guild.id]);
@@ -218,7 +218,7 @@ client.on("message", message => {
         }
       });
     }
-    if (args[1] == false) {
+    if (args[1] == "false") {
       client.db.connect(() => {
         try {
           client.db.query("UPDATE welcome SET enabled = FALSE WHERE id = $1;", [message.guild.id]);
@@ -245,7 +245,7 @@ client.on("message", message => {
   if (command === "farewellmsgs") {
     message.channel.send("yes <@!272986016242204672> i can see these commands");
     client.db.connect(() => {
-      if (args[0] == true)
+      if (args[0] == "true")
         try {
           client.db.query("UPDATE farewell SET enabled = TRUE WHERE id = $1;", [message.guild.id]);
           message.channel.send("Updated Database");
@@ -255,7 +255,7 @@ client.on("message", message => {
           message.channel.send("Added server to DB");
         }
     });
-    if (args[1] == false) {
+    if (args[1] == "false") {
       client.db.connect(() => {
         try {
           client.db.query("UPDATE welcome SET enabled = FALSE WHERE id = $1;", [message.guild.id]);
