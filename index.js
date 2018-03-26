@@ -60,7 +60,7 @@ client.on("guildCreate", guild => {
 
 client.on("guildMemberAdd", member => {
   client.db.connect(() => {
-    client.db.query("SELECT enabled FROM welcome WHERE id = $1;", [member.guild.id], (err, res) => {
+    client.db.query("SELECT enabled FROM welcome WHERE server = $1;", [member.guild.id], (err, res) => {
       try {
         welcomeenabled = JSON.parse(JSON.stringify(res.rows[0])).enabled;
       } catch (e) {
@@ -81,7 +81,7 @@ client.on("guildMemberAdd", member => {
 
 client.on("guildMemberRemove", member => {
   client.db.connect(() => {
-    client.db.query("SELECT enabled FROM farewell WHERE id = $1;", [member.guild.id], (err, res) => {
+    client.db.query("SELECT enabled FROM farewell WHERE server = $1;", [member.guild.id], (err, res) => {
       try {
         farewellenabled = JSON.parse(JSON.stringify(res.rows[0])).enabled;
       } catch (e) {
@@ -209,7 +209,7 @@ client.on("message", message => {
     if (args[0] == "true") {
       client.db.connect(() => {
         try {
-          client.db.query("UPDATE welcome SET enabled = TRUE WHERE id = $1;", [message.guild.id]);
+          client.db.query("UPDATE welcome SET enabled = TRUE WHERE server = $1;", [message.guild.id]);
           message.channel.send("Updated Database");
         }
         catch (e) {
@@ -221,7 +221,7 @@ client.on("message", message => {
     if (args[1] == "false") {
       client.db.connect(() => {
         try {
-          client.db.query("UPDATE welcome SET enabled = FALSE WHERE id = $1;", [message.guild.id]);
+          client.db.query("UPDATE welcome SET enabled = FALSE WHERE server = $1;", [message.guild.id]);
           message.channel.send("Updated Database");
         }
         catch (e) {
@@ -232,7 +232,7 @@ client.on("message", message => {
     }
     if (args[1] == "status") {
       client.db.connect(() => {
-        client.db.query("SELECT enabled FROM welcome WHERE id = $1;", [member.guild.id], (err, res) => {
+        client.db.query("SELECT enabled FROM welcome WHERE server = $1;", [member.guild.id], (err, res) => {
           try {
             message.channel.send(JSON.parse(JSON.stringify(res.rows[0])).enabled);
           } catch (e) {
@@ -247,7 +247,7 @@ client.on("message", message => {
     client.db.connect(() => {
       if (args[0] == "true")
         try {
-          client.db.query("UPDATE farewell SET enabled = TRUE WHERE id = $1;", [message.guild.id]);
+          client.db.query("UPDATE farewell SET enabled = TRUE WHERE server = $1;", [message.guild.id]);
           message.channel.send("Updated Database");
         }
         catch (e) {
@@ -258,7 +258,7 @@ client.on("message", message => {
     if (args[1] == "false") {
       client.db.connect(() => {
         try {
-          client.db.query("UPDATE welcome SET enabled = FALSE WHERE id = $1;", [message.guild.id]);
+          client.db.query("UPDATE welcome SET enabled = FALSE WHERE server = $1;", [message.guild.id]);
           message.channel.send("Updated Database");
         }
         catch (e) {
@@ -269,7 +269,7 @@ client.on("message", message => {
     }
     if (args[1] == "status") {
       client.db.connect(() => {
-        client.db.query("SELECT enabled FROM farewell WHERE id = $1;", [member.guild.id], (err, res) => {
+        client.db.query("SELECT enabled FROM farewell WHERE server = $1;", [member.guild.id], (err, res) => {
           try {
             message.channel.send(JSON.parse(JSON.stringify(res.rows[0])).enabled);
           } catch (e) {
