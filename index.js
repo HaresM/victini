@@ -225,18 +225,28 @@ client.on("message", message => {
         }
       });
     }
+    if (args[1] == "status") {
+      client.db.connect(() => {
+        client.db.query("SELECT enabled FROM welcome WHERE id = $1;", [member.guild.id], (err, res) => {
+          try {
+            message.channel.send(JSON.parse(JSON.stringify(res.rows[0])).enabled);
+          } catch (e) {
+            message.channel.send("Looks like I can't find it in the database please set it up by specifying if you want welcome msgs or not");
+          }
+        });
+      });
+    }
   }
   if (command === "farewellmsgs") {
-    if (args[0] == true) {
-      client.db.connect(() => {
+    client.db.connect(() => {
+      if (args[0] == true)
         try {
           client.db.query("UPDATE farewell SET enabled = TRUE WHERE id = $1;", [message.guild.id]);
         }
         catch (e) {
           client.db.query("INSERT INTO farewell ($1, TRUE);", [message.guild.id]);
         }
-      });
-    }
+    });
     if (args[1] == false) {
       client.db.connect(() => {
         try {
@@ -245,6 +255,17 @@ client.on("message", message => {
         catch (e) {
           client.db.query("INSERT INTO welcome ($1, FALSE);", [message.guild.id]);
         }
+      });
+    }
+    if (args[1] == "status") {
+      client.db.connect(() => {
+        client.db.query("SELECT enabled FROM farewell WHERE id = $1;", [member.guild.id], (err, res) => {
+          try {
+            message.channel.send(JSON.parse(JSON.stringify(res.rows[0])).enabled);
+          } catch (e) {
+            message.channel.send("Looks like I can't find it in the database please set it up by specifying if you want farewell msgs or not");
+          }
+        });
       });
     }
   }
