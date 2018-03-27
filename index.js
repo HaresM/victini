@@ -215,6 +215,7 @@ client.on("message", message => {
           client.db.query("UPDATE welcome SET enabled = TRUE WHERE server = $1;", [message.guild.id], (err, res) => {
             if (err) {
               client.db.query("INSERT INTO welcome ($1, TRUE);", [message.guild.id]).then(message.channel.send("Added server to DB"));
+              console.log("got error doing query")
             }
             else
               message.channel.send("Database updated")
@@ -226,6 +227,7 @@ client.on("message", message => {
         client.db.query("UPDATE welcome SET enabled = FALSE WHERE server = $1;", [message.guild.id], (err, res) => {
           if (err) {
             client.db.query("INSERT INTO welcome ($1, FALSE);", [message.guild.id]).then(message.channel.send("Added server to DB"));
+            console.log("got error doing query")
           }
           else
             message.channel.send("Database updated")
@@ -419,7 +421,7 @@ client.on("message", message => {
 
     if (command === "say") {
       const sayMessage = args.join(" ");
-      message.delete()
+      message.delete();
       message.channel.send(sayMessage);
     }
 
