@@ -6,6 +6,10 @@ var fs = require('fs');
 
 const prefix = "v.";
 
+process.on("unhandledRejection", err => {
+  client.logger.error("Uncaught Promise Error: " + err);
+});
+
 //Database stuff
 const { Pool } = require('pg');
 
