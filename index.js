@@ -6,8 +6,20 @@ var fs = require('fs');
 
 const prefix = "v.";
 
+process.on("unhandledRejection", err => {
+  client.logger.error("Uncaught Promise Error: " + err);
+});
+
+//Database stuff
+const { Pool } = require('pg');
+
+client.db = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: true,
+});
+
 function isBotExec(member) {
-  return hasRole(member, "Victini Exec") || member.user.id == member.guild.ownerID || member.user.id === "311534497403371521"
+  return hasRole(member, "Victini Exec" || member.user.id == member.guild.ownerID || member.user.id === "311534497403371521");
 }
 
 function hasRole(member, role) {
@@ -51,6 +63,17 @@ client.on("guildCreate", guild => {
 });
 
 client.on("guildMemberAdd", member => {
+  client.db.connect(() => {
+    client.db.query("SELECT enabled FROM welcome WHERE server = $1;", [member.guild.id], (err, res) => {
+      try {
+        welcomeenabled = JSON.parse(JSON.stringify(res.rows[0])).enabled;
+      } catch (err) {
+        console.log(err)
+      }
+    });
+  });
+  if (welcomeenabled === false)
+    return;
   var defaultChannel = member.guild.channels.find(c => c.name.toLowerCase().includes('general') && c.type === "text");
   var availableChannels = member.guild.channels.filter(channel => channel.permissionsFor(member.guild.me).has('SEND_MESSAGES'));
   if (defaultChannel === null) {
@@ -61,6 +84,17 @@ client.on("guildMemberAdd", member => {
 });
 
 client.on("guildMemberRemove", member => {
+  client.db.connect(() => {
+    client.db.query("SELECT enabled FROM farewell WHERE server = $1;", [member.guild.id], (err, res) => {
+      try {
+        farewellenabled = JSON.parse(JSON.stringify(res.rows[0])).enabled;
+      } catch (err) {
+        console.log(err)
+      }
+    });
+  });
+  if (farewellenabled === false)
+    return;
   var defaultChannel = member.guild.channels.find(c => c.name.toLowerCase().includes('general') && c.type === "text");
   var availableChannels = member.guild.channels.filter(channel => channel.permissionsFor(member.guild.me).has('SEND_MESSAGES'));
   if (defaultChannel === null) {
@@ -69,8 +103,6 @@ client.on("guildMemberRemove", member => {
     defaultChannel.send(member.user.username + ' has left the server. RIP...!');
   }
 });
-
-
 
 client.on("message", message => {
   // Makes sure the author isn't a bot. By extension this also makes sure the bot doesn't listen to itself
@@ -175,6 +207,73 @@ client.on("message", message => {
   if (command === "lenny") {
     message.delete();
     message.channel.send("( ͡° ͜ʖ ͡°)");
+  }
+  if (command === "welcomemsgs") {
+    message.channel.send("Yes I know you did this command");
+    if (args[0] == "true") {
+      client.db.connect(() => {
+        try {
+          client.db.query("UPDATE welcome SET enabled = TRUE WHERE server = $1;", [message.guild.id]).then(message.channel.send("Updated Database"));
+        }
+        catch (err) {
+          client.db.query("INSERT INTO welcome ($1, TRUE);", [message.guild.id]).then(message.channel.send("Added server to DB"));
+        }
+      });
+    }
+    if (args[1] == "false") {
+      client.db.connect(() => {
+        try {
+          client.db.query("UPDATE welcome SET enabled = FALSE WHERE server = $1;", [message.guild.id]).then(message.channel.send("Updated Database"));
+        }
+        catch (err) {
+          client.db.query("INSERT INTO welcome ($1, FALSE);", [message.guild.id]).then(message.channel.send("Added server to DB"));
+        }
+      });
+    }
+    if (args[1] == "status") {
+      client.db.connect(() => {
+        client.db.query("SELECT enabled FROM welcome WHERE server = $1;", [member.guild.id], (err, res) => {
+          try {
+            message.channel.send(JSON.parse(JSON.stringify(res.rows[0])).enabled);
+          } catch (err) {
+            message.channel.send("Looks like I can't find it in the database please set it up by specifying if you want welcome msgs or not");
+          }
+        });
+      });
+    }
+  }
+  if (command === "farewellmsgs") {
+    message.channel.send("yes <@!272986016242204672> i can see these commands");
+    client.db.connect(() => {
+      if (args[0] == "true")
+        try {
+          client.db.query("UPDATE farewell SET enabled = TRUE WHERE server = $1;", [message.guild.id]).then(message.channel.send("Updated Database"));
+        }
+        catch (err) {
+          client.db.query("INSERT INTO farewell ($1, TRUE);", [message.guild.id]).then(message.channel.send("Added server to DB"));
+        }
+    });
+    if (args[1] == "false") {
+      client.db.connect(() => {
+        try {
+          client.db.query("UPDATE welcome SET enabled = FALSE WHERE server = $1;", [message.guild.id]).then(message.channel.send("Updated Database"));
+        }
+        catch (err) {
+          client.db.query("INSERT INTO welcome ($1, FALSE);", [message.guild.id]).then(message.channel.send("Added server to DB"));
+        }
+      });
+    }
+    if (args[1] == "status") {
+      client.db.connect(() => {
+        client.db.query("SELECT enabled FROM farewell WHERE server = $1;", [member.guild.id], (err, res) => {
+          try {
+            message.channel.send(JSON.parse(JSON.stringify(res.rows[0])).enabled);
+          } catch (err) {
+            message.channel.send("Looks like I can't find it in the database please set it up by specifying if you want farewell msgs or not");
+          }
+        });
+      });
+    }
   }
   if (command === "shrug") {
     message.delete();
