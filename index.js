@@ -67,8 +67,8 @@ client.on("guildMemberAdd", member => {
     client.db.query("SELECT enabled FROM welcome WHERE server = $1;", [member.guild.id], (err, res) => {
       try {
         welcomeenabled = JSON.parse(JSON.stringify(res.rows[0])).enabled;
-      } catch (e) {
-        console.log(e)
+      } catch (err) {
+        console.log(err)
       }
     });
   });
@@ -88,8 +88,8 @@ client.on("guildMemberRemove", member => {
     client.db.query("SELECT enabled FROM farewell WHERE server = $1;", [member.guild.id], (err, res) => {
       try {
         farewellenabled = JSON.parse(JSON.stringify(res.rows[0])).enabled;
-      } catch (e) {
-        console.log(e)
+      } catch (err) {
+        console.log(err)
       }
     });
   });
@@ -213,24 +213,20 @@ client.on("message", message => {
     if (args[0] == "true") {
       client.db.connect(() => {
         try {
-          client.db.query("UPDATE welcome SET enabled = TRUE WHERE server = $1;", [message.guild.id]);
-          message.channel.send("Updated Database");
+          client.db.query("UPDATE welcome SET enabled = TRUE WHERE server = $1;", [message.guild.id]).then(message.channel.send("Updated Database"));
         }
-        catch (e) {
-          client.db.query("INSERT INTO welcome ($1, TRUE);", [message.guild.id]);
-          message.channel.send("Added server to DB");
+        catch (err) {
+          client.db.query("INSERT INTO welcome ($1, TRUE);", [message.guild.id]).then(message.channel.send("Added server to DB"));
         }
       });
     }
     if (args[1] == "false") {
       client.db.connect(() => {
         try {
-          client.db.query("UPDATE welcome SET enabled = FALSE WHERE server = $1;", [message.guild.id]);
-          message.channel.send("Updated Database");
+          client.db.query("UPDATE welcome SET enabled = FALSE WHERE server = $1;", [message.guild.id]).then(message.channel.send("Updated Database"));
         }
-        catch (e) {
-          client.db.query("INSERT INTO welcome ($1, FALSE);", [message.guild.id]);
-          message.channel.send("Added server to DB");
+        catch (err) {
+          client.db.query("INSERT INTO welcome ($1, FALSE);", [message.guild.id]).then(message.channel.send("Added server to DB"));
         }
       });
     }
@@ -239,7 +235,7 @@ client.on("message", message => {
         client.db.query("SELECT enabled FROM welcome WHERE server = $1;", [member.guild.id], (err, res) => {
           try {
             message.channel.send(JSON.parse(JSON.stringify(res.rows[0])).enabled);
-          } catch (e) {
+          } catch (err) {
             message.channel.send("Looks like I can't find it in the database please set it up by specifying if you want welcome msgs or not");
           }
         });
@@ -251,23 +247,19 @@ client.on("message", message => {
     client.db.connect(() => {
       if (args[0] == "true")
         try {
-          client.db.query("UPDATE farewell SET enabled = TRUE WHERE server = $1;", [message.guild.id]);
-          message.channel.send("Updated Database");
+          client.db.query("UPDATE farewell SET enabled = TRUE WHERE server = $1;", [message.guild.id]).then(message.channel.send("Updated Database"));
         }
-        catch (e) {
-          client.db.query("INSERT INTO farewell ($1, TRUE);", [message.guild.id]);
-          message.channel.send("Added server to DB");
+        catch (err) {
+          client.db.query("INSERT INTO farewell ($1, TRUE);", [message.guild.id]).then(message.channel.send("Added server to DB"));
         }
     });
     if (args[1] == "false") {
       client.db.connect(() => {
         try {
-          client.db.query("UPDATE welcome SET enabled = FALSE WHERE server = $1;", [message.guild.id]);
-          message.channel.send("Updated Database");
+          client.db.query("UPDATE welcome SET enabled = FALSE WHERE server = $1;", [message.guild.id]).then(message.channel.send("Updated Database"));
         }
-        catch (e) {
-          client.db.query("INSERT INTO welcome ($1, FALSE);", [message.guild.id]);
-          message.channel.send("Added server to DB");
+        catch (err) {
+          client.db.query("INSERT INTO welcome ($1, FALSE);", [message.guild.id]).then(message.channel.send("Added server to DB"));
         }
       });
     }
@@ -276,7 +268,7 @@ client.on("message", message => {
         client.db.query("SELECT enabled FROM farewell WHERE server = $1;", [member.guild.id], (err, res) => {
           try {
             message.channel.send(JSON.parse(JSON.stringify(res.rows[0])).enabled);
-          } catch (e) {
+          } catch (err) {
             message.channel.send("Looks like I can't find it in the database please set it up by specifying if you want farewell msgs or not");
           }
         });
