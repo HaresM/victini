@@ -7,7 +7,7 @@ var fs = require('fs');
 const prefix = "v.";
 
 process.on("unhandledRejection", err => {
-  client.logger.error("Uncaught Promise Error: " + err);
+  console.error("Uncaught Promise Error: " + err);
 });
 
 //Database stuff
@@ -212,22 +212,24 @@ client.on("message", message => {
     message.channel.send("Yes I know you did this command");
     if (args[0] == "true") {
       client.db.connect(() => {
-        try {
-          client.db.query("UPDATE welcome SET enabled = TRUE WHERE server = $1;", [message.guild.id]).then(message.channel.send("Updated Database"));
-        }
-        catch (err) {
-          client.db.query("INSERT INTO welcome ($1, TRUE);", [message.guild.id]).then(message.channel.send("Added server to DB"));
-        }
+          client.db.query("UPDATE welcome SET enabled = TRUE WHERE server = $1;", [message.guild.id], (err, res) => {
+            if (err) {
+              client.db.query("INSERT INTO welcome ($1, TRUE);", [message.guild.id]).then(message.channel.send("Added server to DB"));
+            }
+            else
+              message.channel.send("Database updated")
+          });
       });
     }
     if (args[1] == "false") {
       client.db.connect(() => {
-        try {
-          client.db.query("UPDATE welcome SET enabled = FALSE WHERE server = $1;", [message.guild.id]).then(message.channel.send("Updated Database"));
-        }
-        catch (err) {
-          client.db.query("INSERT INTO welcome ($1, FALSE);", [message.guild.id]).then(message.channel.send("Added server to DB"));
-        }
+        client.db.query("UPDATE welcome SET enabled = FALSE WHERE server = $1;", [message.guild.id], (err, res) => {
+          if (err) {
+            client.db.query("INSERT INTO welcome ($1, FALSE);", [message.guild.id]).then(message.channel.send("Added server to DB"));
+          }
+          else
+            message.channel.send("Database updated")
+        });
       });
     }
     if (args[1] == "status") {
