@@ -15,7 +15,7 @@ const client = new Discord.Client();
 const fs = require("fs");
 const weather = require("weather-js");
 const SQLite = require("better-sqlite3");
-const sql = new SQLite('./scores.sqlite');
+const sql = new SQLite('./database/db.sqlite');
 const ytdl = require('ytdl-core');
 const google = require('googleapis')
 const opus = require("opusscript");
@@ -25,7 +25,7 @@ var Long = require("long");
 const prefix = "v.";
 const talkedRecently = new Set();
 var userInventory = JSON.parse(fs.readFileSync('database/inventory.json', 'utf8'));
-client.on("error", (e) => console.error(e));
+//client.on("error", (e) => console.error(e));
 client.on("warn", (e) => console.warn(e));
 //client.on("debug", (e) => console.info(e));
 // Functions
@@ -74,16 +74,10 @@ client.on("ready", () => {
     createtable("CREATE TABLE settings (guild TEXT PRIMARY KEY, levelsys INTEGER, welcomemsg INTEGER, farewellmsg INTEGER);", "idx_settings_id", "settings", "guild");
   }
   if (!victimGameTable['count(*)']) {
-    sql.prepare("CREATE TABLE victimGameScores (id TEXT PRIMARY KEY, user TEXT, guild TEXT, lives INTEGER);").run();
-    sql.prepare("CREATE UNIQUE INDEX idx_victimGameScores_id ON victimGameScores (id);").run();
-    sql.pragma("synchronous = 1");
-    sql.pragma("journal_mode = wal");
+    createtable("CREATE TABLE victimGameScores (id TEXT PRIMARY KEY, user TEXT, guild TEXT, lives INTEGER);", "idx_victimGameScores_id", "victimGameScores", "id");
   }
   if (!wheelTable['count(*)']) {
-    sql.prepare("CREATE TABLE wheelScores (id TEXT PRIMARY KEY, user TEXT, guild TEXT, currency INTEGER);").run();
-    sql.prepare("CREATE UNIQUE INDEX idx_wheelScores_id ON wheelScores (id);").run();
-    sql.pragma("synchronous = 1");
-    sql.pragma("journal_mode = wal");
+    createtable("CREATE TABLE wheelScores (id TEXT PRIMARY KEY, user TEXT, guild TEXT, currency INTEGER);", "idx_wheelScores_id", "wheelScores", "id");
   }
   client.getScore = sql.prepare("SELECT * FROM scores WHERE user = ? AND guild = ?");
   client.setScore = sql.prepare("INSERT OR REPLACE INTO scores (id, user, guild, points, level) VALUES (@id, @user, @guild, @points, @level);");
@@ -181,6 +175,11 @@ client.on("message", message => {
         message.channel.send(`Congrats, ${message.author}! You've leveled up to level **${curLevel}**!`);
         score.level = curLevel;
       }
+      if (score.level > curLevel) {
+        const msg = message.channel.send("Your level doesn't match up with the level you are supposed to have at your amount of xp. Please wait a moment while I recalculate your level.").then(score.level = curLevel).then(msg => {
+          msg.edit(`Congrats, ${message.author}! You've leveled up to level **${curLevel}**!`)
+        });
+      }
       client.setScore.run(score);
     }
   };
@@ -217,106 +216,8 @@ client.on("message", message => {
   const args = message.content.slice(prefix.toLowerCase().length).trim().split(/ +/g);
   const command = args.shift().toLowerCase();
   if (command === "help") {
-    switch (args[0]) {
-    case "gen-info":
-      switch (args[1]) {
-      case "prefix":
-        message.channel.send("Victini's prefix is `v.`. Note that this is a *lower-case* \"v\"!");
-        break;
-      case "invite":
-        message.channel.send("You can invite Victini to you server by clicking on the following link. Please note that Victini is still *in Beta*, and is buggy at the moment. For further inquiries, please contact user `Hares#5947`.\nhttps://discordapp.com/oauth2/authorize?client_id=372037843574456342&scope=bot&permissions=2146958591");
-        break;
-      default:
-        message.channel.send("Type the following commands to get help on specific stuff:\n```v.help gen-info prefix\nv.help gen-info invite```");
-      }
-      break;
-    case "commands":
-      switch (args[1]) {
-      case "8ball":
-        message.channel.send("The `v.8ball`-command sends a reply to a question that can be answered with yes or no. You use this command as follows: `v.8ball` `[your yes/no question]`.");
-        break;
-      case "helper":
-        message.channel.send("The `v.helper`-command sends a image of Victini made by `#Greedere Ganciel#3872`.");
-        break;
-      case "face":
-        switch (args[2]) {
-        case "lenny":
-          message.channel.send("The `v.lenny`-command sends a lenny-face ( ( ͡° ͜ʖ ͡°) ). What more is there to say?");
-          break;
-        case "shrug":
-          message.channel.send("The `v.shrug`-command sends a shrug emoticon ( ¯\\_(ツ)_/¯ ).");
-          break;
-        case "dead":
-          message.channel.send("The `v.dead`-command sends a cute dead face ( ( ×ω× ) ).");
-          break;
-        case "angry":
-          message.channel.send("The `v.angry`-command sends an emoticon that represents an angry face ( ヽ(#`Д´)ﾉ )");
-          break;
-        case "shocked":
-          message.channel.send("The `v.shocked`-command sends an emoticon that represents an shocked face ( Σ(ﾟДﾟ；≡；ﾟдﾟ) )");
-          break;
-        case "superlenny":
-          message.channel.send("The `v.superlenny`-command sends sends a buffed up version of a lenny-face ( ( ͡o ͜ʖ ͡o) )");
-          break;
-        default:
-          message.channel.send("Type the following commands to get help on specific stuff:\n```v.help commands face lenny\nv.help commands face shrug\nv.help commands face superlenny\nv.help commands face dead\nv.help commands face angry\nv.help commands face shocked```");
-        }
-        break;
-      case "victim":
-        message.channel.send("Use the `v.victim`-command to test how lucky you are... or misfortunate... You can either lose a life, gain a life, or gain Ꝟ-currency by using this command. Simply type in `v.victim` and see what happens!");
-        break;
-      case "weather":
-        message.channel.send("The `v.weather`-command sends the weather of the location you specify. You use this command as follow: `v.weather` `[a real life location]`");
-        break;
-      case "convert":
-        message.channel.send("The `v.convert`-command converts a temperature to Degrees Celsius or Degrees Fahrenheit. If you want to convert `[a number]` to Degrees Fahrenheit, you use this command as follows: `v.convert` `f` `[a number]`. On the other hand, if you want to convert `[a number]` to Degrees Celsius, you use this command as follows: `v.convert` `c` `[a number]`.");
-        break;
-      case "hug":
-        message.channel.send("Use the `v.hug`-command to express your love to someone. Everytime this command is used, a number is given to the power of your hug. Can you hug with the most power? Use this command as follows: `v.hug` `@[user you want to hug]`");
-        break;
-      case "reminder":
-        message.channel.send("When using the `v.reminder`-command, you will receive a DM after the amount of specified time *in minutes* of something you wanted to be reminded of. Use this command as follows: `v.reminder` `[time in minutes, a number]` `[thing you want to be reminded of]`");
-        break;
-      case "score":
-        message.channel.send("Use the `v.score`-command to check your current level, your EXP and the amount of EXP needed to level up, your rank in the server (according to level), the amount of lives you have and the amount of Ꝟ-currency you have.");
-        break;
-      case "top":
-        message.channel.send("The `v.top`-command shows the top users in the server you use the command in, according to level. You can check your current level with the `v.level`-command!");
-        break;
-      case "wheel":
-        message.channel.send("Use the `v.wheel`-command to gain goodies such as extra lives and Ꝟ-currency every 6 hours!");
-        break;
-      case "shop":
-        message.channel.send("Use the `v.shop` command to buy goodies such as additional lives and collectibles, in exhange for Ꝟ-currency! Note that you can unlock items by leveling up. Use this command as follows: `v.shop` `[number in front of item you want to purchase`.");
-        break;
-      default:
-        message.channel.send("Type the following commands to get help on specific stuff:\n```v.help commands face\nv.help commands 8ball\nv.help commands helper\nv.help commands victim\nv.help commands wheel\nv.help commands weather\nv.help commands convert\nv.help commands hug\nv.help commands reminder\nv.help commands score\nv.help commands top```");
-      }
-      break;
-    case "exec-only":
-      if (isBotExec(message.member)) {
-        switch (args[1]) {
-        case "say":
-          message.channel.send("Use the `v.say`-command to let Victini mimic what you say. Use this command as follows: `v.say` `[the sentence you want Victini to repeat]`");
-          break;
-        case "kick":
-          message.channel.send("The `v.kick`-command kicks a user. It's that straightforward. Use this command as follows: `v.kick` `@[user you want to kick]` `[reason as to why you want to kick this person]`");
-          break;
-        case "clear":
-          message.channel.send("The `v.clear`-command deletes the amount of specified messages. Note that the command itself counts as a message as well. Use this command as follows: `v.clear` `[amount of messages you want to clear]`");
-          break;
-        case "give":
-          message.channel.send("The `v.give`-command allows Execs to give either `levels`, `exp` or `currency` to users in a server. Use this command as follows: `v.give` `@[user you want to give something to] `[level/exp/currency (choose 1)]` `[amount you want to give]`");
-          break;
-        default:
-          message.channel.send("Type the following commands to get further help:\n```v.help exec-only say\nv.help exec-only kick\nv.help exec-only clear```");
-        }
-      } else
-        message.channel.send("Exec-only commands require the `Victini Exec`-role to be used.");
-      break;
-    default:
-      message.channel.send("Type the following commands to get help on specific stuff:\n```v.help gen-info\nv.help commands\nv.help exec-only```")
-    }
+    const helpfile = require('./help.js');
+    helpfile(args, message, isBotExec);
   }
   if (command === "lenny") {
     message.delete();
@@ -346,9 +247,9 @@ client.on("message", message => {
     message.channel.send("https://cdn.discordapp.com/attachments/347376772951572490/364168246628188162/the_real_thinking_emoji.gif");
   }
   if (command === "victim") {
-    const victim1 = JSON.parse(fs.readFileSync('database/victim1.json')).victim1;
-    const victim2 = JSON.parse(fs.readFileSync('database/victim2.json')).victim2;
-    const victim3 = JSON.parse(fs.readFileSync('database/victim3.json')).victim3;
+    const victim1 = JSON.parse(fs.readFileSync('database/victim.json')).victim1;
+    const victim2 = JSON.parse(fs.readFileSync('database/victim.json')).victim2;
+    const victim3 = JSON.parse(fs.readFileSync('database/victim.json')).victim3;
     const outcomes = [1, 1, 2, 3, 3];
     const outcome = outcomes[Math.floor(Math.random() * outcomes.length)];
     const lives = victimGameScore.lives
@@ -843,7 +744,7 @@ client.on("message", message => {
     }, remindTime)
   }
   if (settings.levelsys === 1) {
-    if (command === "top") {
+    if (command === "top" || command === "lead" || command === "leaderboard") {
       const top10 = sql.prepare("SELECT * FROM scores WHERE guild = ? ORDER BY points DESC LIMIT 10;").all(message.guild.id);
       const embed = new Discord.RichEmbed()
         .setTitle("__Leaderboard__")
@@ -858,7 +759,7 @@ client.on("message", message => {
         embed
       });
     }
-    if (command === "score") {
+    if (command === "score" || command === "scores" || command === "points") {
       const rank = sql.prepare("SELECT * FROM scores WHERE guild = ? ORDER BY points DESC;").all(message.guild.id);
       const levelup = Math.pow((score.level + 1) * 2, 2) - score.points;
       const embed = new Discord.RichEmbed()
@@ -881,7 +782,7 @@ client.on("message", message => {
       });
     }
   }
-  if (settings.levelsys === 0 && command === "score" || command === "top") {
+  if (settings.levelsys === 0 && command === "score" || command === "top" || command === "scores" || command === "points" || command === "lead" || command === "leaderboard") {
     message.channel.send("The level system has been disabled in this server")
   }
   if (isBotExec(message.member)) {
