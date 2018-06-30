@@ -5,11 +5,11 @@ dependencies:
   enmap-sqlite: 2.0.3
   es6-set: 0.1.5
   express: 4.16.3
-  googleapis: 29.0.0
+  googleapis: 32.0.0
   long: 4.0.0
   node-gyp: 3.7.0
   opusscript: 0.0.6
-  simple-youtube-api: 3.0.1
+  simple-youtube-api: 5.0.2
   weather-js: 2.0.0
   ytdl-core: 0.20.4
 packages:
@@ -263,6 +263,13 @@ packages:
     dev: false
     resolution:
       integrity: sha1-tf1UIgqivFq1eqtxQMlAdUUDwac=
+  /cross-fetch/2.2.2:
+    dependencies:
+      node-fetch: 2.1.2
+      whatwg-fetch: 2.0.4
+    dev: false
+    resolution:
+      integrity: sha1-pH/09/xxLauo9qaVoRyUhEDUVyM=
   /cryptiles/2.0.5:
     dependencies:
       boom: 2.10.1
@@ -629,20 +636,21 @@ packages:
       node-forge: 0.7.5
       pify: 3.0.0
     dev: false
+    hasBin: true
     resolution:
       integrity: sha512-+EuKr4CLlGsnXx4XIJIVkcKYrsa2xkAmCvxRhX2HsazJzUBAJ35wARGeApHUn4nNfPD03Vl057FskNr20VaCyg==
-  /googleapis/29.0.0:
+  /googleapis/32.0.0:
     dependencies:
       google-auth-library: 1.6.1
       pify: 3.0.0
       qs: 6.5.2
       url-template: 2.0.8
-      uuid: 3.2.1
+      uuid: 3.3.2
     dev: false
     engines:
-      node: '>=4.0'
+      node: '>=6.0'
     resolution:
-      integrity: sha512-qac2RSPObw80AOvSPV9hus8VyRxrdaTnsUmttdO6hO12fBE5jI/R9XytUOuB3Z/4LP+1NpprNyKSHm9xXuJx2w==
+      integrity: sha512-UUPvQnztLkpkAt8cs2Zw/uVqCGbl9FuJbhqdvWIHr8RX7zrdemPQWkIrW7clyjhSZceHlnMya4U3tuQ4BXSxIQ==
   /graceful-fs/4.1.11:
     dev: false
     engines:
@@ -891,10 +899,6 @@ packages:
     dev: false
     resolution:
       integrity: sha1-1SfftUVuynzJu5XV2ur4i6VKVFE=
-  /lodash/4.17.10:
-    dev: false
-    resolution:
-      integrity: sha512-UejweD1pDoXu+AD825lWwp4ZGtSwgnpZxb3JDViD7StjQz+Nb/6l093lx4OQ0foGWNRoc19mWy7BzL+UAK2iVg==
   /long/4.0.0:
     dev: false
     resolution:
@@ -946,12 +950,14 @@ packages:
       integrity: sha512-lc/aahn+t4/SWV/qcmumYjymLsWfN3ELhpmVuUFjgsORruuZPVSwAQryq+HHGvO/SI2KVX26bx+En+zhM8g8hQ==
   /mime/1.4.1:
     dev: false
+    hasBin: true
     resolution:
       integrity: sha512-KI1+qOZu5DcW6wayYHSzR/tXKCDC5Om4s1z2QJjDULzLcmf3DvzS7oluY4HCTrc+9FiKmWUgeNLg7W3uIQvxtQ==
   /mime/2.3.1:
     dev: false
     engines:
       node: '>=4.0.0'
+    hasBin: true
     resolution:
       integrity: sha512-OEUllcVoydBHGN1z84yfQDimn58pZNNNXgZlHXSboxMlFvgI6MXSWpWKpFRra7H1HxpVhHTkrghfRW49k6yjeg==
   /miniget/1.2.0:
@@ -974,6 +980,7 @@ packages:
     dependencies:
       minimist: 0.0.8
     dev: false
+    hasBin: true
     resolution:
       integrity: sha1-MAV0OOrGz3+MR2fzhkjWaX11yQM=
   /ms/2.0.0:
@@ -990,6 +997,12 @@ packages:
     dev: false
     resolution:
       integrity: sha1-yobR/ogoFpsBICCOPchCS524NCw=
+  /node-fetch/2.1.2:
+    dev: false
+    engines:
+      node: 4.x || >=6.0.0
+    resolution:
+      integrity: sha1-q4hOjn5X44qUR1POxwb3iNF2i7U=
   /node-forge/0.7.5:
     dev: false
     resolution:
@@ -1011,12 +1024,14 @@ packages:
     dev: false
     engines:
       node: '>= 0.8.0'
+    hasBin: true
     resolution:
       integrity: sha512-qDQE/Ft9xXP6zphwx4sD0t+VhwV7yFaloMpfbL2QnnDZcyaiakWlLdtFGGQfTAwpFHdpbRhRxVhIHN1OKAjgbg==
   /nopt/3.0.6:
     dependencies:
       abbrev: 1.1.1
     dev: false
+    hasBin: true
     resolution:
       integrity: sha1-xkZdvwirzU2zWTF/eaxopkayj/k=
   /npmlog/4.1.2:
@@ -1132,10 +1147,6 @@ packages:
     dev: false
     resolution:
       integrity: sha1-8FKijacOYYkX7wqKw0wa5aaChrM=
-  /psl/1.1.28:
-    dev: false
-    resolution:
-      integrity: sha512-+AqO1Ae+N/4r7Rvchrdm432afjT9hqJRyBN3DQv9At0tPz4hIFSGKbq64fN9dVoCow4oggIIax5/iONx0r9hZw==
   /punycode/1.4.1:
     dev: false
     resolution:
@@ -1187,32 +1198,6 @@ packages:
     dev: false
     resolution:
       integrity: sha512-tQtKA9WIAhBF3+VLAseyMqZeBjW0AHJoxOtYqSUZNJxauErmLbVm2FW1y+J/YA9dUrAC39ITejlZWhVIwawkKw==
-  /request-promise-core/1.1.1/request@2.87.0:
-    dependencies:
-      lodash: 4.17.10
-      request: 2.87.0
-    dev: false
-    engines:
-      node: '>=0.10.0'
-    id: registry.npmjs.org/request-promise-core/1.1.1
-    peerDependencies:
-      request: ^2.34
-    resolution:
-      integrity: sha1-Pu4AssWqgyOc+wTFcA2jb4HNCLY=
-  /request-promise-native/1.0.5/request@2.87.0:
-    dependencies:
-      request: 2.87.0
-      request-promise-core: /request-promise-core/1.1.1/request@2.87.0
-      stealthy-require: 1.1.1
-      tough-cookie: 2.4.3
-    dev: false
-    engines:
-      node: '>=0.12.0'
-    id: registry.npmjs.org/request-promise-native/1.0.5
-    peerDependencies:
-      request: ^2.34
-    resolution:
-      integrity: sha1-UoF3D2jgyXGeUWP9P6tIIhX0/aU=
   /request/2.81.0:
     dependencies:
       aws-sign2: 0.6.0
@@ -1282,6 +1267,7 @@ packages:
     dependencies:
       glob: 7.1.2
     dev: false
+    hasBin: true
     resolution:
       integrity: sha512-lreewLK/BlghmxtfH36YYVg1i8IAce4TI7oao75I1g245+6BctqTVQiBP3YUJ9C6DQOXJmkYR9X9fCLtCOJc5w==
   /safe-buffer/5.1.1:
@@ -1302,6 +1288,7 @@ packages:
       integrity: sha512-NqVDv9TpANUjFm0N8uM5GxL36UgKi9/atZw+x7YFnQ8ckwFGKrl4xX4yWtrey3UJm5nP1kUbnYgLopqWNSRhWw==
   /semver/5.3.0:
     dev: false
+    hasBin: true
     resolution:
       integrity: sha1-myzl094C0XxgEq0yaqa00M9U+U8=
   /send/0.16.2:
@@ -1351,14 +1338,13 @@ packages:
     dev: false
     resolution:
       integrity: sha1-tf3AjxKH6hF4Yo5BXiUTK3NkbG0=
-  /simple-youtube-api/3.0.1:
+  /simple-youtube-api/5.0.2:
     dependencies:
+      cross-fetch: 2.2.2
       iso8601-duration: 1.1.1
-      request: 2.87.0
-      request-promise-native: /request-promise-native/1.0.5/request@2.87.0
     dev: false
     resolution:
-      integrity: sha512-giBeyvG3HIeeLLVi8G5/TH6WbIrjaK66Dm9j8eNp+1UCepbnp/5S4IpIUH3MhpqWTmOMs4MBPjqFaI/M6Y57DQ==
+      integrity: sha512-MtFToFLoX4eWNVUcqhbJ3J7SN8tBNaHRAHC4RKzSCW7cEVVZygNHa3nhCEWVINBoI1fmxjEUW7zwdlChYNuoZg==
   /snekfetch/3.6.4:
     dev: false
     resolution:
@@ -1380,6 +1366,7 @@ packages:
     dev: false
     engines:
       node: '>=0.10.0'
+    hasBin: true
     optionalDependencies:
       bcrypt-pbkdf: 1.0.1
       ecc-jsbn: 0.1.1
@@ -1397,6 +1384,7 @@ packages:
     dev: false
     engines:
       node: '>=0.10.0'
+    hasBin: true
     optionalDependencies:
       bcrypt-pbkdf: 1.0.1
       ecc-jsbn: 0.1.1
@@ -1416,12 +1404,6 @@ packages:
       node: '>= 0.6'
     resolution:
       integrity: sha1-Fhx9rBd2Wf2YEfQ3cfqZOBR4Yow=
-  /stealthy-require/1.1.1:
-    dev: false
-    engines:
-      node: '>=0.10.0'
-    resolution:
-      integrity: sha1-NbCYdbT/SfJqd35QmzCQoyJr8ks=
   /string-width/1.0.2:
     dependencies:
       code-point-at: 1.1.0
@@ -1483,15 +1465,6 @@ packages:
       node: '>=0.8'
     resolution:
       integrity: sha512-TZ6TTfI5NtZnuyy/Kecv+CnoROnyXn2DN97LontgQpCwsX2XyLYCC0ENhYkehSOwAp8rTQKc/NUIF7BkQ5rKLA==
-  /tough-cookie/2.4.3:
-    dependencies:
-      psl: 1.1.28
-      punycode: 1.4.1
-    dev: false
-    engines:
-      node: '>=0.8'
-    resolution:
-      integrity: sha512-Q5srk/4vDM54WJsJio3XNn6K2sCG+CQ8G5Wz6bZhRZoAe/+TxjWB/GlFAnYEbkYVlON9FMk/fE3h2RLpPXo4lQ==
   /tunnel-agent/0.6.0:
     dependencies:
       safe-buffer: 5.1.2
@@ -1538,8 +1511,14 @@ packages:
       integrity: sha1-n5VxD1CiZ5R7LMwSR0HBAoQn5xM=
   /uuid/3.2.1:
     dev: false
+    hasBin: true
     resolution:
       integrity: sha512-jZnMwlb9Iku/O3smGWvZhauCf6cvvpKi4BKRiliS3cxnI+Gz9j5MEpTz2UFuXiKPJocb7gnsLHwiS05ige5BEA==
+  /uuid/3.3.2:
+    dev: false
+    hasBin: true
+    resolution:
+      integrity: sha512-yXJmeNaw3DnnKAOKJE51sL/ZaYfWJRl1pK9dr19YFCu0ObS231AB1/LbqTKRAQ5kw8A90rA6fr4riOUpTZvQZA==
   /vary/1.1.2:
     dev: false
     engines:
@@ -1563,10 +1542,15 @@ packages:
     dev: false
     resolution:
       integrity: sha1-DZvNsFpPhNBrm585kAKKYB6kofw=
+  /whatwg-fetch/2.0.4:
+    dev: false
+    resolution:
+      integrity: sha512-dcQ1GWpOD/eEQ97k66aiEVpNnapVj90/+R+SXTPYGHpYBBypfKJEQjLrvMZ7YXbKm21gXd4NcuxUTjiv1YtLng==
   /which/1.3.1:
     dependencies:
       isexe: 2.0.0
     dev: false
+    hasBin: true
     resolution:
       integrity: sha512-HxJdYWq1MTIQbJ3nw0cqssHoTNU267KlrDuGZ1WYlxDStUtKUhOaJmh112/TZmHxxUfuJqPXSOm7tDyas0OSIQ==
   /wide-align/1.1.3:
@@ -1615,7 +1599,7 @@ packages:
     resolution:
       integrity: sha512-d+jthiJxSQ6yqCeCwwMggXYOjFSOJsD7ahvAAE1sFW9nVNnsA/roz91SFH1FzaMGS7/y7AnJfhVgpE9i8uYjJQ==
 registry: 'https://registry.npmjs.org/'
-shrinkwrapMinorVersion: 7
+shrinkwrapMinorVersion: 8
 shrinkwrapVersion: 3
 specifiers:
   better-sqlite3: ^4.1.4
@@ -1624,10 +1608,10 @@ specifiers:
   enmap-sqlite: ^2.0.3
   es6-set: ^0.1.5
   express: ^4.16.3
-  googleapis: ^29.0.0
+  googleapis: ^32.0.0
   long: ^4.0.0
   node-gyp: ^3.7.0
   opusscript: ^0.0.6
-  simple-youtube-api: ^3.0.0
+  simple-youtube-api: ^5.0.2
   weather-js: ^2.0.0
-  ytdl-core: ^0.20.2
+  ytdl-core: ^0.20.4

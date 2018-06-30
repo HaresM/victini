@@ -1,7 +1,7 @@
 {
   "name": "Victini",
-  "version": "2.0.3",
-  "description": "A robust Discord.js-based utility bot.",
+  "version": "2.0.1",
+  "description": "A robust Discord.js-based utility bot, with fun additions such as text-based games and adventures.",
   "main": "node index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -21,18 +21,18 @@
   },
   "homepage": "https://github.com/HaresM/victini/blob/master/README.md",
   "dependencies": {
+    "better-sqlite3": "^4.1.4",
     "discord.js": "^11.3.2",
-    "weather-js": "^2.0.0",
     "enmap": "^2.6.3",
     "enmap-sqlite": "^2.0.3",
-    "express": "^4.16.3",
-    "node-gyp": "^3.7.0",
-    "better-sqlite3": "^4.1.4",
-    "opusscript": "^0.0.6",
-    "ytdl-core": "^0.20.2",
-    "simple-youtube-api": "^3.0.0",
-    "googleapis": "^29.0.0",
     "es6-set": "^0.1.5",
-    "long": "^4.0.0"
+    "express": "^4.16.3",
+    "googleapis": "^32.0.0",
+    "long": "^4.0.0",
+    "node-gyp": "^3.7.0",
+    "opusscript": "^0.0.6",
+    "simple-youtube-api": "^5.0.2",
+    "weather-js": "^2.0.0",
+    "ytdl-core": "^0.20.4"
   }
 }
