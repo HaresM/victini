@@ -25,9 +25,15 @@ var Long = require("long");
 const prefix = "v.";
 const talkedRecently = new Set();
 var userInventory = JSON.parse(fs.readFileSync('database/inventory.json', 'utf8'));
+
+
+
 //client.on("error", (e) => console.error(e));
 client.on("warn", (e) => console.warn(e));
 //client.on("debug", (e) => console.info(e));
+
+
+
 // Functions
 function isBotExec(member) {
   return hasRole(member, "Victini Exec") || member.user.id == member.guild.ownerID || member.user.id === "311534497403371521";
@@ -531,14 +537,14 @@ client.on("message", message => {
         embed.addField(`Purchased Item`, `The Golden Poop Emoji`, true);
         embed.addField(`Cost`, `Ꝟ1500`, true);
       } else
-      if (args[0] == 6 && wheelScore.currency >= 1700 && itemInventory.indexOf("PokéBall of holiness") == -1) {
-        itemInventory.push("PokéBall of holiness");
+      if (args[0] == 6 && wheelScore.currency >= 1700 && itemInventory.indexOf("Holy PokéBall") == -1) {
+        itemInventory.push("Holy PokéBall");
         fs.writeFile('database/inventory.json', JSON.stringify(userInventory), (err) => {
           if (err) console.log(err);
         });
         wheelScore.currency = wheelScore.currency - 1700;
         client.setWheelScore.run(wheelScore);
-        embed.addField(`Purchased Item`, `PokéBall of holiness`, true);
+        embed.addField(`Purchased Item`, `Holy`, true);
         embed.addField(`Cost`, `Ꝟ1700`, true);
       } else
       if (args[0] == 7 && wheelScore.currency >= 2000 && itemInventory.indexOf("Kirdby's Yo-yo") == -1) {
@@ -551,23 +557,23 @@ client.on("message", message => {
         embed.addField(`Purchased Item`, `Kirby's Yo-yo"`, true);
         embed.addField(`Cost`, `Ꝟ2000`, true);
       } else
-      if (args[0] == 8 && wheelScore.currency >= 2500 && itemInventory.indexOf("Cluster of Magical Rats") == -1) {
-        itemInventory.push("Cluster of Magical Rats");
+      if (args[0] == 8 && wheelScore.currency >= 2500 && itemInventory.indexOf("Cluster of Rats (Divine Edition)") == -1) {
+        itemInventory.push("Cluster of Rats (Divine Edition)");
         fs.writeFile('database/inventory.json', JSON.stringify(userInventory), (err) => {
           if (err) console.log(err);
         });
         wheelScore.currency = wheelScore.currency - 2500;
         client.setWheelScore.run(wheelScore);
-        embed.addField(`Purchased Item`, `Cluster of Magical Rats`, true);
+        embed.addField(`Purchased Item`, `Cluster of Rats (Divine Edition)`, true);
         embed.addField(`Cost`, `Ꝟ2500`, true);
       } else
-      if (args[0] == 9 && wheelScore.currency >= 6000 && itemInventory.indexOf("Eastern Island Statue") == -1) {
-        itemInventory.push("Easter Island Statue");
+      if (args[0] == 9 && wheelScore.currency >= 6000 && itemInventory.indexOf("Magical Eastern Island Statue") == -1) {
+        itemInventory.push("Magical Easter Island Statue");
         fs.writeFile('database/inventory.json', JSON.stringify(userInventory), (err) => {
           if (err) console.log(err);
         });
         wheelScore.currency = wheelScore.currency - 6000;
-        embed.addField(`Purchased Item`, `Easter Islans Statue`, true);
+        embed.addField(`Purchased Item`, `Magical Easter Islans Statue`, true);
         embed.addField(`Cost`, `Ꝟ6000`, true);
       } else
       if (args[0] == 10 && wheelScore.currency >= 10000 && itemInventory.indexOf("Preserved Load of Bread from Pompeii") == -1) {
@@ -588,19 +594,84 @@ client.on("message", message => {
       });
     }
   }
-  if (command === "inventory") {
-    let itemInventory = userInventory[message.author.id].inventory;
-    const embed = new Discord.RichEmbed()
-      .setAuthor(message.author.username, message.author.avatarURL)
-      .setTitle("Your inventory")
-      .setColor(0xf9af0e);
-    for (var i = 0; i < itemInventory.length; i++) {
-      embed.addField(`${i + 1}: ${userInventory[message.author.id].inventory[i]}`, `[Desc]`, true);
-    }
-    embed.setTimestamp();
-    return message.channel.send({
-      embed
-    });
+    if (command === "inventory") {
+        var itemDescs = [{
+                "item": "Golden Idol of Midas",
+                "desc": "This statue is incrusted with incomprehensible writings all over its solid, golden surface. It shines superbly bright when exposed to sunlight and most likely used to trigger a death boulder somewhere inside a jungle temple."
+            },
+            {
+                "item": "The Golden Poop Emoji",
+                "desc": "This artifact of modern culture is truly the masterpiece binding together every era of mankind, it is the epitome of artistic accomplishments, the peak of virtuosity, a monument for years to come dedicated to the art of sculpture. You look into its eyes and its smile absolutely blinds and baffles you."
+            },
+            {
+                "item": "Holy PokéBall",
+                "desc": "This majestic PokéBall is even more powerful than the MasterBall. It can only be used by people who's heart is made out of pure Uranium."
+            },
+            {
+                "item": "Kirby's Yo-yo",
+                "desc": "Using this special yo-yo will instantly give you special yo-yo skils, and a purple baseball cap, as well as a bandage magically appear on your face as well."
+            },
+            {
+                "item": "Cluster of Rats (Divine Edition)",
+                "desc": "When Doraemon's tears accidentally fell on the original Japanese sculpture of rats, it began radiating a mystical light. It is said to grant superpowers to anyone who dares to lick it's surface."
+            },
+            {
+                "item": "Magical Easter Island Statue",
+                "desc": "This special Easter Island statue will follow you around wherever you go, even in your dreams, and will always be loyal to you. Its face has an odly disturbing smile on it. Rumors suggest that it has seen things it cannot unsee."
+            },
+            {
+                "item": "Preserved Loaf of Bread from Pompeii",
+                "desc": "This piece of bread is said to be around since the dawn of time. One bite of it will provide enough kinetic energy to shoot you to infinity and beyond. It is said that its core consists of all the secrets of the universe."
+            }
+        ];
+        let itemInventory = userInventory[message.author.id].inventory;
+        var searchItem = itemInventory[args[0] - 1];
+
+        function getDescription(item) {
+            return itemDescs.filter(
+                function(itemDescs) {
+                    return itemDescs.item == item
+                }
+            );
+        }
+       
+        var getDesc = function(item) {
+            var i = null;
+            for (i = 0; itemDescs.length > i; i += 1) {
+            if (itemDescs[i].item === item) {
+              return itemDescs[i].desc;
+            }
+          }
+        };
+      
+        var description = getDesc(searchItem);
+
+        if (args[0] > itemInventory.length || args[0] < 0) return message.channel.send("You do not own this item.");
+
+        if (!args[0]) {
+            const embed = new Discord.RichEmbed()
+                .setAuthor(message.author.username, message.author.avatarURL)
+                .setTitle("Your inventory")
+                .setColor(0xf9af0e)
+                .setDescription("To get information on an item, do `v.inventory [number in front of item]`");
+            for (var i = 0; i < itemInventory.length; i++) {
+                embed.addField(`${i + 1}:`, `${itemInventory[i]}`, true);
+            }
+            embed.setTimestamp();
+            return message.channel.send({
+                embed
+            });
+        }
+        if (args[0]) {
+            const embed = new Discord.RichEmbed()
+                .setAuthor(message.author.username, message.author.avatarURL)
+                .setTitle(`${itemInventory[args[0] - 1]}`)
+                .setColor(0xf9af0e);
+            embed.addField(`Description:`, `${description}`);
+            return message.channel.send({
+                embed
+            });
+        }
   }
   if (command === "hug") {
     const hugArray = ['1. You can do better.', '2. It\'s a start. ¯\\_(ツ)_/¯', '3. We\'re getting there.', '4. Now we\'re talking!', '5. This is getting spoopy.', '6. Your power is admirable.', '7. Simply... Amazing... o_0', '8. Everyone, evacuate this server!'];
@@ -826,7 +897,7 @@ client.on("message", message => {
       let reason = args.slice(1).join(' ');
       if (!reason)
         return message.channel.send("Please indicate a reason for the kick!");
-      message.channel.send(`${member.user.tag} has been kicked by ${message.author.tag}, because: of the following reason: \`\`\`${reason}\`\`\``)
+      member.kick(reason).then(message.channel.send(`${member.user.tag} has been kicked by ${message.author.tag}, because: of the following reason: \`\`\`${reason}\`\`\``))
     }
     if (command === "clear") {
       const deleteCount = args[0];
@@ -853,7 +924,9 @@ client.on("message", message => {
       if (settings.farewellmsg === 0) {
         var farewellmsgstatus = "Disabled";
       }
-      message.channel.send(`Server status:\`\`\`Leveling System [levels]: ${levelsysstatus}\nWelcome messages [welcomemsg]: ${welcomemsgstatus}\nFarewell messages [farewellmsg]: ${farewellmsgstatus}\n\nTo disable a setting, do v.settings disable [levels/farewellmsg/welcomemsg].\nTo enable a setting, do v.settings enable [levels/farewellmsg/welcomemsg]\`\`\``);
+      if (!args[0]) {
+        message.channel.send(`Server status:\`\`\`Leveling System [levels]: ${levelsysstatus}\nWelcome messages [welcomemsg]: ${welcomemsgstatus}\nFarewell messages [farewellmsg]: ${farewellmsgstatus}\n\nTo disable a setting, do v.settings disable [levels/farewellmsg/welcomemsg].\nTo enable a setting, do v.settings enable [levels/farewellmsg/welcomemsg]\`\`\``);
+      }
       if (args[0] === "enable") {
         if (args[1] === "levels") {
           if (settings.levelsys === 0) {
