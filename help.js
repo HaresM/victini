@@ -1,9 +1,8 @@
-module.exports = async(args, message, isBotExec) => {
-      switch (args[0]) {
-    case "gen-info":
-      switch (args[1]) {
+module.exports = async(type, args, message, isBotExec) => {
+  if (type === "gen-info") {
+    switch (args[1]) {
       case "prefix":
-        message.channel.send("Victini's prefix is `v.`. Note that this is a *lower-case* \"v\"!");
+        message.channel.send("Victini's prefix is `v.` Note that this is a *lower-case* \"v\"!");
         break;
       case "invite":
         message.channel.send("You can invite Victini to you server by clicking on the following link. Please note that Victini is still *in Beta*, and is buggy at the moment. For further inquiries, please contact user `Hares#5947`.\nhttps://discordapp.com/oauth2/authorize?client_id=372037843574456342&scope=bot&permissions=2146958591");
@@ -11,38 +10,32 @@ module.exports = async(args, message, isBotExec) => {
       default:
         message.channel.send("Type the following commands to get help on specific stuff:\n```v.help gen-info prefix\nv.help gen-info invite```");
       }
-      break;
-    case "commands":
-      switch (args[1]) {
+  }
+  if (type === "commands") {
+    switch (args[1]) {
       case "8ball":
         message.channel.send("The `v.8ball`-command sends a reply to a question that can be answered with yes or no. You use this command as follows: `v.8ball` `[your yes/no question]`.");
         break;
       case "helper":
         message.channel.send("The `v.helper`-command sends a image of Victini made by `#Greedere Ganciel#3872`.");
         break;
-      case "face":
-        switch (args[2]) {
-        case "lenny":
-          message.channel.send("The `v.lenny`-command sends a lenny-face ( ( ͡° ͜ʖ ͡°) ). What more is there to say?");
-          break;
-        case "shrug":
-          message.channel.send("The `v.shrug`-command sends a shrug emoticon ( ¯\\_(ツ)_/¯ ).");
-          break;
-        case "dead":
-          message.channel.send("The `v.dead`-command sends a cute dead face ( ( ×ω× ) ).");
-          break;
-        case "angry":
-          message.channel.send("The `v.angry`-command sends an emoticon that represents an angry face ( ヽ(#`Д´)ﾉ )");
-          break;
-        case "shocked":
-          message.channel.send("The `v.shocked`-command sends an emoticon that represents an shocked face ( Σ(ﾟДﾟ；≡；ﾟдﾟ) )");
-          break;
-        case "superlenny":
-          message.channel.send("The `v.superlenny`-command sends sends a buffed up version of a lenny-face ( ( ͡o ͜ʖ ͡o) )");
-          break;
-        default:
-          message.channel.send("Type the following commands to get help on specific stuff:\n```v.help commands face lenny\nv.help commands face shrug\nv.help commands face superlenny\nv.help commands face dead\nv.help commands face angry\nv.help commands face shocked```");
-        }
+      case "lenny":
+        message.channel.send("The `v.lenny`-command sends a lenny-face ( ( ͡° ͜ʖ ͡°) ). What more is there to say?");
+        break;
+      case "shrug":
+        message.channel.send("The `v.shrug`-command sends a shrug emoticon ( ¯\\_(ツ)_/¯ ).");
+        break;
+      case "dead":
+        message.channel.send("The `v.dead`-command sends a cute dead face ( ( ×ω× ) ).");
+        break;
+      case "angry":
+        message.channel.send("The `v.angry`-command sends an emoticon that represents an angry face ( ヽ(#`Д´)ﾉ )");
+        break;
+      case "shocked":
+        message.channel.send("The `v.shocked`-command sends an emoticon that represents an shocked face ( Σ(ﾟДﾟ；≡；ﾟдﾟ) )");
+        break;
+      case "superlenny":
+        message.channel.send("The `v.superlenny`-command sends sends a buffed up version of a lenny-face ( ( ͡o ͜ʖ ͡o) )");
         break;
       case "victim":
         message.channel.send("Use the `v.victim`-command to test how lucky you are... or misfortunate... You can either lose a life, gain a life, or gain Ꝟ-currency by using this command. Simply type in `v.victim` and see what happens!");
@@ -72,10 +65,10 @@ module.exports = async(args, message, isBotExec) => {
         message.channel.send("Use the `v.shop` command to buy goodies such as additional lives and collectibles, in exhange for Ꝟ-currency! Note that you can unlock items by leveling up. Use this command as follows: `v.shop` `[number in front of item you want to purchase`.");
         break;
       default:
-        message.channel.send("Type the following commands to get help on specific stuff:\n```v.help commands face\nv.help commands 8ball\nv.help commands helper\nv.help commands victim\nv.help commands wheel\nv.help commands weather\nv.help commands convert\nv.help commands hug\nv.help commands reminder\nv.help commands score\nv.help commands top```");
+        message.channel.send("Type the following commands to get help on specific stuff:\n```v.help commands 8ball\nv.help commands helper\nv.help commands victim\nv.help commands wheel\nv.help commands weather\nv.help commands convert\nv.help commands hug\nv.help commands reminder\nv.help commands score\nv.help commands top```");
       }
-      break;
-    case "exec-only":
+  }
+  if (type === "exec-only") {
       if (isBotExec(message.member)) {
         switch (args[1]) {
         case "say":
@@ -95,8 +88,8 @@ module.exports = async(args, message, isBotExec) => {
         }
       } else
         message.channel.send("Exec-only commands require the `Victini Exec`-role to be used.");
-      break;
-    default:
-      message.channel.send("Type the following commands to get help on specific stuff:\n```v.help gen-info\nv.help commands\nv.help exec-only```")
     }
+  if (!type) {
+    message.channel.send("Type the following commands to get help on specific stuff:\n```v.help gen-info\nv.help commands\nv.help exec-only```")
+  }
 }

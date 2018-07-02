@@ -2,13 +2,13 @@ const http = require('http');
 const express = require('express');
 const app = express();
 app.get("/", (request, response) => {
-  //console.log(Date.now() + " Just got pinged!");
+  //console.log(Date.now() + " Ping Received");
   response.sendStatus(200);
 });
 app.listen(process.env.PORT);
 setInterval(() => {
   http.get(`http://${process.env.PROJECT_DOMAIN}.glitch.me/`);
-}, 300000);
+}, 280000);
 // Dependancies
 const Discord = require("discord.js");
 const client = new Discord.Client();
@@ -176,6 +176,9 @@ client.on("message", message => {
         score.level = curLevel;
       }
       if (score.level > curLevel) {
+        if (score.level === 1) {
+          return
+        }
         const msg = message.channel.send("Your level doesn't match up with the level you are supposed to have at your amount of xp. Please wait a moment while I recalculate your level.").then(score.level = curLevel).then(msg => {
           msg.edit(`Congrats, ${message.author}! You've leveled up to level **${curLevel}**!`)
         });
@@ -217,7 +220,7 @@ client.on("message", message => {
   const command = args.shift().toLowerCase();
   if (command === "help") {
     const helpfile = require('./help.js');
-    helpfile(args, message, isBotExec);
+    helpfile(args[0], args, message, isBotExec);
   }
   if (command === "lenny") {
     message.delete();
@@ -247,9 +250,16 @@ client.on("message", message => {
     message.channel.send("https://cdn.discordapp.com/attachments/347376772951572490/364168246628188162/the_real_thinking_emoji.gif");
   }
   if (command === "victim") {
+    //lose a life
     const victim1 = JSON.parse(fs.readFileSync('database/victim.json')).victim1;
+    //gain a life
     const victim2 = JSON.parse(fs.readFileSync('database/victim.json')).victim2;
+    //gain 10 credits
     const victim3 = JSON.parse(fs.readFileSync('database/victim.json')).victim3;
+    //lose 10 credits
+    const victim4 = JSON.parse(fs.readFileSync('database/victim.json')).victim4;
+    //neutral
+    const victim5 = JSON.parse(fs.readFileSync('database/victim.json')).victim5;
     const outcomes = [1, 1, 2, 3, 3];
     const outcome = outcomes[Math.floor(Math.random() * outcomes.length)];
     const lives = victimGameScore.lives
@@ -745,7 +755,7 @@ client.on("message", message => {
   }
   if (settings.levelsys === 1) {
     if (command === "top" || command === "lead" || command === "leaderboard") {
-      const top10 = sql.prepare("SELECT * FROM scores WHERE guild = ? ORDER BY points DESC LIMIT 10;").all(message.guild.id);
+      const top10 = sql.prepare("SELECT * FROM scores WHERE guild = ? ORDER BY points DESC;").all(message.guild.id);
       const embed = new Discord.RichEmbed()
         .setTitle("__Leaderboard__")
         .setDescription("**Top 10 users (ranked by level):**")
@@ -753,7 +763,12 @@ client.on("message", message => {
       let i = 0;
       for (const data of top10) {
         i++
-        embed.addField(`${i}: ${client.users.get(data.user).username}`, `Level ${data.level} (${data.points} EXP)`);
+        if (i <= 10) {
+          embed.addField(`${i}: ${client.users.get(data.user).username}`, `Level ${data.level} (${data.points} EXP)`);
+        }
+        if (data.user === message.author.id && i > 10) {
+          embed.addField(`${i}: ${client.users.get(data.user).username}`, `Level ${data.level} (${data.points} EXP)`);
+        }
       }
       return message.channel.send({
         embed
@@ -838,9 +853,7 @@ client.on("message", message => {
       if (settings.farewellmsg === 0) {
         var farewellmsgstatus = "Disabled";
       }
-      if (args[0] === "status") {
-        message.channel.send(`Server status:\`\`\`Leveling System: ${levelsysstatus}\nWelcome messages: ${welcomemsgstatus}\nFarewell messages: ${farewellmsgstatus}\`\`\``);
-      } else
+      message.channel.send(`Server status:\`\`\`Leveling System [levels]: ${levelsysstatus}\nWelcome messages [welcomemsg]: ${welcomemsgstatus}\nFarewell messages [farewellmsg]: ${farewellmsgstatus}\n\nTo disable a setting, do v.settings disable [levels/farewellmsg/welcomemsg].\nTo enable a setting, do v.settings enable [levels/farewellmsg/welcomemsg]\`\`\``);
       if (args[0] === "enable") {
         if (args[1] === "levels") {
           if (settings.levelsys === 0) {
@@ -850,7 +863,7 @@ client.on("message", message => {
           } else if (settings.levelsys === 1) {
             message.channel.send("Leveling system is already enabled.");
           }
-        } else
+        }
         if (args[1] === "welcomemsg") {
           if (settings.welcomemsg === 0) {
             settings.welcomemsg = 1;
@@ -859,7 +872,7 @@ client.on("message", message => {
           } else if (settings.welcomemsg === 1) {
             message.channel.send("Welcome messages are already enabled.");
           }
-        } else
+        }
         if (args[1] === "farewellmsg") {
           if (settings.farewellmsg === 0) {
             settings.farewellmsg = 1;
@@ -872,7 +885,7 @@ client.on("message", message => {
             client.setSettings.run(settings);
           }
         } else {
-          message.channel.send("You can enable: ```v.settings enable levels\nv.settings enable welcomemsg\nv.settings.enable farewellmsg```");
+          message.channel.send("You can enable: ```v.settings enable levels\nv.settings enable welcomemsg\nv.settings enable farewellmsg```");
         }
       } else
       if (args[0] === "disable") {
@@ -884,7 +897,7 @@ client.on("message", message => {
           } else if (settings.levelsys == 0) {
             message.channel.send("Leveling system is already disabled.");
           }
-        } else
+        } 
         if (args[1] === "welcomemsg") {
           if (settings.welcomemsg === 1) {
             settings.welcomemsg = 0;
@@ -893,7 +906,7 @@ client.on("message", message => {
           } else if (settings.welcomemsg === 0) {
             message.channel.send("Welcome messages are already disabled.");
           }
-        } else
+        }
         if (args[1] === "farewellmsg") {
           if (settings.farewellmsg === 1) {
             settings.farewellmsg = 0;
@@ -905,8 +918,6 @@ client.on("message", message => {
         } else {
           message.channel.send("You can disable: ```v.settings disable levels\nv.settings disable welcomemsg\nv.settings disable farewellmsg```");
         }
-      } else {
-        message.channel.send("You can change the following settings: ```v.settings status\nv.settings enable\nv.settings disable```");
       }
     }
     if (command === "give") {
@@ -960,18 +971,17 @@ client.on("message", message => {
       }
     }
   }
-  if (message.author.id === "311534497403371521") {
+  if (message.author.id === "311534497403371521" || message.author.id === "272986016242204672") {
     if (command === "restart") {
       const embed = new Discord.RichEmbed()
         .setTitle('Done.')
         .setDescription(`Restarted in **${Math.floor(client.ping)}**ms`);
-      if (message.author.id !== '311534497403371521') return;
       message.channel.send(embed).then(() => {
         process.exit(1);
       })
     }
     if (command === "announce") {
-      var announcement = args.join(" ");
+      const announcement = args.join(" ");
       if (!announcement) return message.channel.send(`Please enter a message that you would like to send to all servers the bot is a part of.`);
       client.guilds.forEach(guild => {
         var defaultChannel = guild.channels.find(c => c.name.toLowerCase().includes('general') && c.type === "text");
