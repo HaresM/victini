@@ -996,62 +996,59 @@ client.on("message", message => {
     }
     if (command === "give") {
       var user = message.mentions.members.first();
-      let score = client.getScore.get(user.id, message.guild.id);
-      const toAdd = parseInt(args[2], 10);
       if (!user) {
         return message.channel.send("Mention the user you want to give something to.");
-      } else {
-        if (!score) {
-          score = {
-            id: `${message.guild.id}-${user.id}`,
-            user: user.id,
-            guild: message.guild.id,
-            points: 0,
-            level: 1
-          }
-        }
-        if (!args[1]) {
-          return message.channel.send("State what you want to give the user. You can choose between: ```v.give [@user] levels\nv.give [@user] exp\nv.give [@user] currency```");
-        }
-        if (!toAdd) {
-          return message.channel.send("Specify the amount you want to give.");
-        }
-        if (args[1] === "levels") {
-          score.level += toAdd;
-          client.setScore.run(score);
-          message.channel.send(`Successfully gave user ${user} \`${toAdd}\` Level(s)`);
-        } else
-        if (args[1] === "exp") {
-          score.points += toAdd;
-          score.level = Math.floor(0.5 * Math.sqrt(toAdd));
-          client.setScore.run(score);
-          message.channel.send(`Successfully gave user ${user} \`${toAdd}\` EXP.`);
-        } else
-        if (args[1] === "currency") {
-          victimGameScore.currency += toAdd;
-          client.setVictimGameScore.run(victimGameScore);
-          message.channel.send(`Successfully gave user ${user} \`${toAdd}\` currency.`);
-        } else {
-          return message.channel.send("State what you want to give the user. You can choose between: ```v.give [@user] levels\nv.give [@user] exp\nv.give [@user] currency```");
-        }
-      }
-    }
-    if (command === "reset") {
-      var user = message.mentions.members.first();
-      if (!user) {
-        return message.channel.send("Mention the user you want to reset.");
       }
       let score = client.getScore.get(user.id, message.guild.id);
-      score = {
-        id: `${message.guild.id}-${user.id}`,
-        user: user.id,
-        guild: message.guild.id,
-        points: 0,
-        level: 1
+      if (!score) {
+        score = {
+          id: `${message.guild.id}-${user.id}`,
+          user: user.id,
+          guild: message.guild.id,
+          points: 0,
+          level: 1
+        }
       }
-      client.setScore.run(score);
-      message.channel.send(`Successfully reset user ${user}`);
+      const toAdd = parseInt(args[2], 10);
+      if (!args[1])
+        return message.channel.send("State what you want to give the user. You can choose between: ```v.give [@user] levels\nv.give [@user] exp\nv.give [@user] currency```");
+      if (!toAdd)
+        return message.channel.send("Specify the amount you want to give.");
+      if (args[1] === "levels") {
+        score.level += toAdd;
+        client.setScore.run(score);
+        message.channel.send(`Successfully gave user ${user} \`${toAdd}\` Level(s)`);
+      } else
+      if (args[1] === "exp") {
+        score.points += toAdd;
+        score.level = Math.floor(0.5 * Math.sqrt(toAdd));
+        client.setScore.run(score);
+        message.channel.send(`Successfully gave user ${user} \`${toAdd}\` EXP.`);
+      } else
+      if (args[1] === "currency") {
+        victimGameScore.currency += toAdd;
+        client.setVictimGameScore.run(victimGameScore);
+        message.channel.send(`Successfully gave user ${user} \`${toAdd}\` currency.`);
+      } else {
+        return message.channel.send("State what you want to give the user. You can choose between: ```v.give [@user] levels\nv.give [@user] exp\nv.give [@user] currency```");
+      }
     }
+  }
+  if (command === "reset") {
+    var user = message.mentions.members.first();
+    if (!user) {
+      return message.channel.send("Mention the user you want to reset.");
+    }
+    let score = client.getScore.get(user.id, message.guild.id);
+    score = {
+      id: `${message.guild.id}-${user.id}`,
+      user: user.id,
+      guild: message.guild.id,
+      points: 0,
+      level: 1
+    }
+    client.setScore.run(score);
+    message.channel.send(`Successfully reset user ${user}`);
   }
   if (message.author.id === "311534497403371521" || message.author.id === "272986016242204672") {
     if (command === "restart") {
