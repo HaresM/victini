@@ -8,7 +8,7 @@ app.get("/", (request, response) => {
 app.listen(process.env.PORT);
 setInterval(() => {
   http.get(`http://${process.env.PROJECT_DOMAIN}.glitch.me/`);
-}, 280000);
+}, 200000);
 // Dependancies
 const Discord = require("discord.js");
 const client = new Discord.Client();
@@ -25,15 +25,9 @@ var Long = require("long");
 const prefix = "v.";
 const talkedRecently = new Set();
 var userInventory = JSON.parse(fs.readFileSync('database/inventory.json', 'utf8'));
-
-
-
 //client.on("error", (e) => console.error(e));
 client.on("warn", (e) => console.warn(e));
 //client.on("debug", (e) => console.info(e));
-
-
-
 // Functions
 function isBotExec(member) {
   return hasRole(member, "Victini Exec") || member.user.id == member.guild.ownerID || member.user.id === "311534497403371521";
@@ -266,27 +260,52 @@ client.on("message", message => {
     const victim4 = JSON.parse(fs.readFileSync('database/victim.json')).victim4;
     //neutral
     const victim5 = JSON.parse(fs.readFileSync('database/victim.json')).victim5;
-    const outcomes = [1, 1, 2, 3, 3];
+    const outcomes = [1, 2, 3, 4, 5];
     const outcome = outcomes[Math.floor(Math.random() * outcomes.length)];
     const lives = victimGameScore.lives
+    //autospacing
+    function victim(victimnum) {
+      if (victimnum === 1)
+        victim = victim1[rand(victim1.length)]
+      if (victimnum === 2)
+        victim = victim2[rand(victim2.length)]
+      if (victimnum === 3)
+        victim = victim3[rand(victim3.length)]
+      if (victimnum === 4)
+        victim = victim4[rand(victim4.length)]
+      if (victimnum === 5)
+        victim = victim5[rand(victim5.length)]
+      if (victim.charAt(0) === "'" || victim.charAt(0) === ",")
+        return victim
+      else
+        return " " + victim
+    }
     if (lives === 0) {
       message.channel.send(`You have 0 lives left!`);
       return;
     } else
     if (outcome === 1) {
-      victimGameScore.lives = victimGameScore.lives - 1;
+      victimGameScore.lives -= 1;
       client.setVictimGameScore.run(victimGameScore);
-      message.channel.send(message.member.user + " " + victim1[rand(victim1.length)] + ". You lost a life!");
+      message.channel.send(message.member.user + victim(1) + ". You lost a life!");
     } else
     if (outcome === 2) {
       victimGameScore.lives++;
       client.setVictimGameScore.run(victimGameScore);
-      message.channel.send(message.member.user + " " + victim2[rand(victim2.length)] + ". You gained a life!");
+      message.channel.send(message.member.user + victim(2) + ". You gained a life!");
     } else
     if (outcome === 3) {
-      wheelScore.currency = wheelScore.currency + 10;
+      wheelScore.currency += 10;
       client.setWheelScore.run(wheelScore);
-      message.channel.send(message.member.user + " " + victim3[rand(victim3.length)] + ". You gained Ꝟ10!");
+      message.channel.send(message.member.user + victim(3) + ". You gained Ꝟ10!");
+    }
+    if (outcome === 4) {
+      wheelScore.currency -= 10;
+      client.setWheelScore.run(wheelScore);
+      message.channel.send(message.member.user + victim(4) + ". You lost Ꝟ10!");
+    }
+    if (outcome === 5) {
+      message.channel.send(message.member.user + victim(5) + ". And nothing happened.");
     }
   }
   if (command === "wheel") {
@@ -594,84 +613,80 @@ client.on("message", message => {
       });
     }
   }
-    if (command === "inventory") {
-        var itemDescs = [{
-                "item": "Golden Idol of Midas",
-                "desc": "This statue is incrusted with incomprehensible writings all over its solid, golden surface. It shines superbly bright when exposed to sunlight and most likely used to trigger a death boulder somewhere inside a jungle temple."
-            },
-            {
-                "item": "The Golden Poop Emoji",
-                "desc": "This artifact of modern culture is truly the masterpiece binding together every era of mankind, it is the epitome of artistic accomplishments, the peak of virtuosity, a monument for years to come dedicated to the art of sculpture. You look into its eyes and its smile absolutely blinds and baffles you."
-            },
-            {
-                "item": "Holy PokéBall",
-                "desc": "This majestic PokéBall is even more powerful than the MasterBall. It can only be used by people who's heart is made out of pure Uranium."
-            },
-            {
-                "item": "Kirby's Yo-yo",
-                "desc": "Using this special yo-yo will instantly give you special yo-yo skils, and a purple baseball cap, as well as a bandage magically appear on your face as well."
-            },
-            {
-                "item": "Cluster of Rats (Divine Edition)",
-                "desc": "When Doraemon's tears accidentally fell on the original Japanese sculpture of rats, it began radiating a mystical light. It is said to grant superpowers to anyone who dares to lick it's surface."
-            },
-            {
-                "item": "Magical Easter Island Statue",
-                "desc": "This special Easter Island statue will follow you around wherever you go, even in your dreams, and will always be loyal to you. Its face has an odly disturbing smile on it. Rumors suggest that it has seen things it cannot unsee."
-            },
-            {
-                "item": "Preserved Loaf of Bread from Pompeii",
-                "desc": "This piece of bread is said to be around since the dawn of time. One bite of it will provide enough kinetic energy to shoot you to infinity and beyond. It is said that its core consists of all the secrets of the universe."
-            }
-        ];
-        let itemInventory = userInventory[message.author.id].inventory;
-        var searchItem = itemInventory[args[0] - 1];
+  if (command === "inventory") {
+    var itemDescs = [{
+        "item": "Golden Idol of Midas",
+        "desc": "This statue is incrusted with incomprehensible writings all over its solid, golden surface. It shines superbly bright when exposed to sunlight and most likely used to trigger a death boulder somewhere inside a jungle temple."
+      },
+      {
+        "item": "The Golden Poop Emoji",
+        "desc": "This artifact of modern culture is truly the masterpiece binding together every era of mankind, it is the epitome of artistic accomplishments, the peak of virtuosity, a monument for years to come dedicated to the art of sculpture. You look into its eyes and its smile absolutely blinds and baffles you."
+      },
+      {
+        "item": "Holy PokéBall",
+        "desc": "This majestic PokéBall is even more powerful than the MasterBall. It can only be used by people who's heart is made out of pure Uranium."
+      },
+      {
+        "item": "Kirby's Yo-yo",
+        "desc": "Using this special yo-yo will instantly give you special yo-yo skils, and a purple baseball cap, as well as a bandage magically appear on your face as well."
+      },
+      {
+        "item": "Cluster of Rats (Divine Edition)",
+        "desc": "When Doraemon's tears accidentally fell on the original Japanese sculpture of rats, it began radiating a mystical light. It is said to grant superpowers to anyone who dares to lick it's surface."
+      },
+      {
+        "item": "Magical Easter Island Statue",
+        "desc": "This special Easter Island statue will follow you around wherever you go, even in your dreams, and will always be loyal to you. Its face has an odly disturbing smile on it. Rumors suggest that it has seen things it cannot unsee."
+      },
+      {
+        "item": "Preserved Loaf of Bread from Pompeii",
+        "desc": "This piece of bread is said to be around since the dawn of time. One bite of it will provide enough kinetic energy to shoot you to infinity and beyond. It is said that its core consists of all the secrets of the universe."
+      }
+    ];
+    let itemInventory = userInventory[message.author.id].inventory;
+    var searchItem = itemInventory[args[0] - 1];
 
-        function getDescription(item) {
-            return itemDescs.filter(
-                function(itemDescs) {
-                    return itemDescs.item == item
-                }
-            );
+    function getDescription(item) {
+      return itemDescs.filter(
+        function (itemDescs) {
+          return itemDescs.item == item
         }
-       
-        var getDesc = function(item) {
-            var i = null;
-            for (i = 0; itemDescs.length > i; i += 1) {
-            if (itemDescs[i].item === item) {
-              return itemDescs[i].desc;
-            }
-          }
-        };
-      
-        var description = getDesc(searchItem);
-
-        if (args[0] > itemInventory.length || args[0] < 0) return message.channel.send("You do not own this item.");
-
-        if (!args[0]) {
-            const embed = new Discord.RichEmbed()
-                .setAuthor(message.author.username, message.author.avatarURL)
-                .setTitle("Your inventory")
-                .setColor(0xf9af0e)
-                .setDescription("To get information on an item, do `v.inventory [number in front of item]`");
-            for (var i = 0; i < itemInventory.length; i++) {
-                embed.addField(`${i + 1}:`, `${itemInventory[i]}`, true);
-            }
-            embed.setTimestamp();
-            return message.channel.send({
-                embed
-            });
+      );
+    }
+    var getDesc = function (item) {
+      var i = null;
+      for (i = 0; itemDescs.length > i; i += 1) {
+        if (itemDescs[i].item === item) {
+          return itemDescs[i].desc;
         }
-        if (args[0]) {
-            const embed = new Discord.RichEmbed()
-                .setAuthor(message.author.username, message.author.avatarURL)
-                .setTitle(`${itemInventory[args[0] - 1]}`)
-                .setColor(0xf9af0e);
-            embed.addField(`Description:`, `${description}`);
-            return message.channel.send({
-                embed
-            });
-        }
+      }
+    };
+    var description = getDesc(searchItem);
+    if (args[0] > itemInventory.length || args[0] < 0) return message.channel.send("You do not own this item.");
+    if (!args[0]) {
+      const embed = new Discord.RichEmbed()
+        .setAuthor(message.author.username, message.author.avatarURL)
+        .setTitle("Your inventory")
+        .setColor(0xf9af0e)
+        .setDescription("To get information on an item, do `v.inventory [number in front of item]`");
+      for (var i = 0; i < itemInventory.length; i++) {
+        embed.addField(`${i + 1}:`, `${itemInventory[i]}`, true);
+      }
+      embed.setTimestamp();
+      return message.channel.send({
+        embed
+      });
+    }
+    if (args[0]) {
+      const embed = new Discord.RichEmbed()
+        .setAuthor(message.author.username, message.author.avatarURL)
+        .setTitle(`${itemInventory[args[0] - 1]}`)
+        .setColor(0xf9af0e);
+      embed.addField(`Description:`, `${description}`);
+      return message.channel.send({
+        embed
+      });
+    }
   }
   if (command === "hug") {
     const hugArray = ['1. You can do better.', '2. It\'s a start. ¯\\_(ツ)_/¯', '3. We\'re getting there.', '4. Now we\'re talking!', '5. This is getting spoopy.', '6. Your power is admirable.', '7. Simply... Amazing... o_0', '8. Everyone, evacuate this server!'];
@@ -970,7 +985,7 @@ client.on("message", message => {
           } else if (settings.levelsys == 0) {
             message.channel.send("Leveling system is already disabled.");
           }
-        } 
+        }
         if (args[1] === "welcomemsg") {
           if (settings.welcomemsg === 1) {
             settings.welcomemsg = 0;
@@ -995,6 +1010,7 @@ client.on("message", message => {
     }
     if (command === "give") {
       var user = message.mentions.members.first();
+      let score = client.getScore.get(user.id, message.guild.id);
       const toAdd = parseInt(args[2], 10);
       if (!user) {
         return message.channel.send("Mention the user you want to give something to.");
@@ -1043,6 +1059,22 @@ client.on("message", message => {
         }
       }
     }
+    if (command === "reset") {
+      var user = message.mentions.members.first();
+      if (!user) {
+        return message.channel.send("Mention the user you want to reset.");
+      }
+      let score = client.getScore.get(user.id, message.guild.id);
+      score = {
+        id: `${message.guild.id}-${user.id}`,
+        user: user.id,
+        guild: message.guild.id,
+        points: 0,
+        level: 1
+      }
+      client.setScore.run(score);
+      message.channel.send(`Successfully reset user ${user}`);
+    }
   }
   if (message.author.id === "311534497403371521" || message.author.id === "272986016242204672") {
     if (command === "restart") {
@@ -1068,100 +1100,8 @@ client.on("message", message => {
     }
   }
   if (message.guild.id === "265381707312660480") {
-    var spriterRole = message.guild.roles.find('name', 'Spriter');
-    var mapperRole = message.guild.roles.find('name', 'Mapper');
-    var coderRole = message.guild.roles.find('name', 'Coder');
-    var writerRole = message.guild.roles.find('name', 'Writer');
-    var composerRole = message.guild.roles.find('name', 'Composer');
-    var redRole = message.guild.roles.find('name', 'red');
-    var blueRole = message.guild.roles.find('name', 'blue');
-    var yellowRole = message.guild.roles.find('name', 'yellow');
-    var limeRole = message.guild.roles.find('name', 'lime');
-    var purpleRole = message.guild.roles.find('name', 'purple');
-    var pinkRole = message.guild.roles.find('name', 'pink');
-    var orangeRole = message.guild.roles.find('name', 'orange');
-    if (command === "role") {
-      if (args[0] === "add") {
-        if (args[1] === "spriter") {
-          message.member.addRole(spriterRole).then(message.channel.send('Successfully added the role: `Spriter`.'));
-        } else
-        if (args[1] === "coder") {
-          message.member.addRole(coderRole).then(message.channel.send('Successfully added the role: `Coder`.'));
-        } else
-        if (args[1] === "composer") {
-          message.member.addRole(composerRole).then(message.channel.send('Successfully added the role: `Composer`.'));
-        } else
-        if (args[1] === "mapper") {
-          message.member.addRole(mapperRole).then(message.channel.send('Successfully added the role: `Mapper`.'));
-        } else
-        if (args[1] === "writer") {
-          message.member.addRole(writerRole).then(message.channel.send('Successfully added the role: `Writer`.'));
-        } else
-        if (args[1] === "red") {
-          message.member.addRole(redRole).then(message.channel.send('Successfully added the role: `red`.'));
-        } else
-        if (args[1] === "blue") {
-          message.member.addRole(blueRole).then(message.channel.send('Successfully added the role: `blue`.'));
-        } else
-        if (args[1] === "yellow") {
-          message.member.addRole(yellowRole).then(message.channel.send('Successfully added the role: `yellow`.'));
-        } else
-        if (args[1] === "lime") {
-          message.member.addRole(limeRole).then(message.channel.send('Successfully added the role: `lime`.'));
-        } else
-        if (args[1] === "purple") {
-          message.member.addRole(purpleRole).then(message.channel.send('Successfully added the role: `purple`.'));
-        } else
-        if (args[1] === "pink") {
-          message.member.addRole(pinkRole).then(message.channel.send('Successfully added the role: `pink`.'));
-        } else
-        if (args[1] === "orange") {
-          message.member.addRole(orangeRole).then(message.channel.send('Successfully added the role: `orange`.'));
-        } else {
-          message.channel.send("Please provide a valid role. You can choose to be a `mapper`, `composer`, `coder`, `writer` or `spriter`. Alternatively, you can add the following colours to yourself: `red`, `blue`, `yellow`, `lime`, `purple`, `pink` and `orange`.");
-        }
-      }
-      if (args[0] === "remove") {
-        if (args[1] === "spriter") {
-          message.member.removeRole(spriterRole).then(message.channel.send('Successfully removed the role: `Spriter`.'));
-        } else
-        if (args[1] === "coder") {
-          message.member.removeRole(coderRole).then(message.channel.send('Successfully removed the role: `Coder`.'));
-        } else
-        if (args[1] === "composer") {
-          message.member.removeRole(composerRole).then(message.channel.send('Successfully removed the role: `Composer`.'));
-        } else
-        if (args[1] === "mapper") {
-          message.member.removeRole(mapperRole).then(message.channel.send('Successfully removed the role: `Mapper`.'));
-        } else
-        if (args[1] === "writer") {
-          message.member.removeRole(writerRole).then(message.channel.send('Successfully removed the role: `Writer`.'));
-        } else
-        if (args[1] === "red") {
-          message.member.removeRole(redRole).then(message.channel.send('Successfully removed the role: `red`.'));
-        } else
-        if (args[1] === "blue") {
-          message.member.removeRole(blueRole).then(message.channel.send('Successfully removed the role: `blue`.'));
-        } else
-        if (args[1] === "yellow") {
-          message.member.removeRole(yellowRole).then(message.channel.send('Successfully removed the role: `yellow`.'));
-        } else
-        if (args[1] === "lime") {
-          message.member.removeRole(limeRole).then(message.channel.send('Successfully removed the role: `lime`.'));
-        } else
-        if (args[1] === "purple") {
-          message.member.removeRole(purpleRole).then(message.channel.send('Successfully removed the role: `purple`.'));
-        } else
-        if (args[1] === "pink") {
-          message.member.removeRole(pinkRole).then(message.channel.send('Successfully removed the role: `pink`.'));
-        } else
-        if (args[1] === "orange") {
-          message.member.removeRole(orangeRole).then(message.channel.send('Successfully removed the role: `orange`.'));
-        } else {
-          message.channel.send("Please provide a valid role. You can remove the roles: `mapper`, `composer`, `coder`, `writer` or `spriter`. Alternatively, you can remove the following colours to yourself: `red`, `blue`, `yellow`, `lime`, `purple`, `pink` and `orange`.");
-        }
-      }
-    }
+    const guildspecific = require('./guildspecific.js');
+    guildspecific(command, args, message);
   }
 });
 client.login(process.env.TOKEN);
