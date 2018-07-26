@@ -5,7 +5,7 @@
   "main": "node index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node null.js"
+    "start": "node maintainance.js"
   },
   "engines": {
     "node": "10.x.x"
