@@ -66,7 +66,6 @@ client.on("ready", () => {
   const table = sql.prepare("SELECT count(*) FROM sqlite_master WHERE type='table' AND name = 'scores';").get();
   const settings = sql.prepare("SELECT count(*) FROM sqlite_master WHERE type='table' AND name = 'settings';").get();
   const victimGameTable = sql.prepare("SELECT count(*) FROM sqlite_master WHERE type='table' AND name = 'victimGameScores';").get();
-  const wheelTable = sql.prepare("SELECT count(*) FROM sqlite_master WHERE type='table' AND name = 'wheelScores';").get();
   if (!table['count(*)']) {
     createtable("CREATE TABLE scores (id TEXT PRIMARY KEY, user TEXT, guild TEXT, points INTEGER, level INTEGER);", "idx_scores_id", "scores", "id");
   }
@@ -74,19 +73,14 @@ client.on("ready", () => {
     createtable("CREATE TABLE settings (guild TEXT PRIMARY KEY, levelsys INTEGER, welcomemsg INTEGER, farewellmsg INTEGER);", "idx_settings_id", "settings", "guild");
   }
   if (!victimGameTable['count(*)']) {
-    createtable("CREATE TABLE victimGameScores (id TEXT PRIMARY KEY, user TEXT, guild TEXT, lives INTEGER);", "idx_victimGameScores_id", "victimGameScores", "id");
-  }
-  if (!wheelTable['count(*)']) {
-    createtable("CREATE TABLE wheelScores (id TEXT PRIMARY KEY, user TEXT, guild TEXT, currency INTEGER);", "idx_wheelScores_id", "wheelScores", "id");
+    createtable("CREATE TABLE victimGameScores (id TEXT PRIMARY KEY, user TEXT, guild TEXT, lives INTEGER, currency INTEGER);", "idx_victimGameScores_id", "victimGameScores", "id");
   }
   client.getScore = sql.prepare("SELECT * FROM scores WHERE user = ? AND guild = ?");
   client.setScore = sql.prepare("INSERT OR REPLACE INTO scores (id, user, guild, points, level) VALUES (@id, @user, @guild, @points, @level);");
   client.getSettings = sql.prepare("SELECT * FROM settings WHERE guild = ?");
   client.setSettings = sql.prepare("INSERT OR REPLACE INTO settings (guild, levelsys, welcomemsg, farewellmsg) VALUES (@guild, @levelsys, @welcomemsg, @farewellmsg);");
   client.getVictimGameScore = sql.prepare("SELECT * FROM victimGameScores WHERE user = ? AND guild = ?");
-  client.setVictimGameScore = sql.prepare("INSERT OR REPLACE INTO victimGameScores (id, user, guild, lives) VALUES (@id, @user, @guild, @lives);");
-  client.getWheelScore = sql.prepare("SELECT * FROM wheelScores WHERE user = ? AND guild = ?");
-  client.setWheelScore = sql.prepare("INSERT OR REPLACE INTO wheelScores (id, user, guild, currency) VALUES (@id, @user, @guild, @currency);");
+  client.setVictimGameScore = sql.prepare("INSERT OR REPLACE INTO victimGameScores (id, user, guild, lives, currency) VALUES (@id, @user, @guild, @lives, @currency);");
 });
 client.on("guildCreate", guild => {
   const settings = {
@@ -148,7 +142,6 @@ client.on("message", message => {
   let score = client.getScore.get(message.author.id, message.guild.id);
   let settings = client.getSettings.get(message.guild.id);
   let victimGameScore = client.getVictimGameScore.get(message.author.id, message.guild.id);
-  let wheelScore = client.getWheelScore.get(message.author.id, message.guild.id);
   if (!score) {
     score = {
       id: `${message.guild.id}-${message.author.id}`,
@@ -191,14 +184,7 @@ client.on("message", message => {
       id: `${message.guild.id}-${message.author.id}`,
       user: message.author.id,
       guild: message.guild.id,
-      lives: 10
-    }
-  }
-  if (!wheelScore) {
-    wheelScore = {
-      id: `${message.guild.id}-${message.author.id}`,
-      user: message.author.id,
-      guild: message.guild.id,
+      lives: 10,
       currency: 0
     }
   }
@@ -295,13 +281,13 @@ client.on("message", message => {
       message.channel.send(message.member.user + victim(2) + ". You gained a life!");
     } else
     if (outcome === 3) {
-      wheelScore.currency += 10;
-      client.setWheelScore.run(wheelScore);
+      victimGameScore.currency += 10;
+      client.setVictimGameScore.run(victimGameScore);
       message.channel.send(message.member.user + victim(3) + ". You gained Ꝟ10!");
     }
     if (outcome === 4) {
-      wheelScore.currency -= 10;
-      client.setWheelScore.run(wheelScore);
+      victimGameScore.currency -= 10;
+      client.setVictimGameScore.run(victimGameScore);
       message.channel.send(message.member.user + victim(4) + ". You lost Ꝟ10!");
     }
     if (outcome === 5) {
@@ -322,8 +308,8 @@ client.on("message", message => {
         const prizes = [100, 100, 100, 100, 100, 200, 200, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 2000, 5000, 10000];
         const prize = prizes[Math.floor(Math.random() * prizes.length)];
         message.channel.send(`You received **Ꝟ${prize}**!`);
-        wheelScore.currency = wheelScore.currency + prize;
-        client.setWheelScore.run(wheelScore);
+        victimGameScore.currency += prize;
+        client.setVictimGameScore.run(victimGameScore);
       } else
       if (outcome === 2) {
         const prizes = [1, 1, 1, 3, 5];
@@ -347,7 +333,7 @@ client.on("message", message => {
     if (!args[0]) {
       const embed = new Discord.RichEmbed()
         .setTitle("Shop:")
-        .setDescription(`Your current currency: Ꝟ${wheelScore.currency}`)
+        .setDescription(`Your current currency: Ꝟ${victimGameScore.currency}`)
         .setColor(0xf9af0e);
       if (score.level < 5) {
         embed.addField(`You need to be at least **level 5** in order to be able to purchase something from the shop!`);
@@ -382,7 +368,7 @@ client.on("message", message => {
         embed
       });
     }
-    if (wheelScore.currency <= 0) {
+    if (victimGameScore.currency <= 0) {
       message.channel.send(`You don't have enough currency!`);
       return;
     } else
@@ -393,37 +379,37 @@ client.on("message", message => {
       const embed = new Discord.RichEmbed()
         .setAuthor(message.author.username, message.author.avatarURL)
         .setColor(0xf9af0e);
-      if (args[0] == 1 && wheelScore.currency >= 200) {
+      if (args[0] == 1 && victimGameScore.currency >= 200) {
         embed.addField(`Purchased Item`, `1 :heartpulse:`, true);
         embed.addField(`Cost`, `Ꝟ200`, true);
         victimGameScore.lives = victimGameScore.lives + 1;
         client.setVictimGameScore.run(victimGameScore);
-        wheelScore.currency = wheelScore.currency - 200;
-        client.setWheelScore.run(wheelScore);
+        victimGameScore.currency -= 200;
+        client.setVictimGameScore.run(victimGameScore);
       } else
-      if (args[0] == 2 && wheelScore.currency >= 500) {
+      if (args[0] == 2 && victimGameScore.currency >= 500) {
         embed.addField(`Purchased Item`, `3 :heartpulse:`, true);
         embed.addField(`Cost`, `Ꝟ500`, true);
         victimGameScore.lives = victimGameScore.lives + 3;
         client.setVictimGameScore.run(victimGameScore);
-        wheelScore.currency = wheelScore.currency - 500;
-        client.setWheelScore.run(wheelScore);
+        victimGameScore.currency -= 500;
+        client.setVictimGameScore.run(victimGameScore);
       } else
-      if (args[0] == 3 && wheelScore.currency >= 700) {
+      if (args[0] == 3 && victimGameScore.currency >= 700) {
         embed.addField(`Purchased Item`, `10 :heartpulse:`, true);
         embed.addField(`Cost`, `Ꝟ800`, true);
         victimGameScore.lives = victimGameScore.lives + 10;
         client.setVictimGameScore.run(victimGameScore);
-        wheelScore.currency = wheelScore.currency - 700;
-        client.setWheelScore.run(wheelScore);
+        victimGameScore.currency -= 700;
+        client.setVictimGameScore.run(victimGameScore);
       } else
-      if (args[0] == 4 && wheelScore.currency >= 1100 && itemInventory.indexOf("Golden Idol of Midas") == -1) {
+      if (args[0] == 4 && victimGameScore.currency >= 1100 && itemInventory.indexOf("Golden Idol of Midas") == -1) {
         itemInventory.push("Golden Idol of Midas");
         fs.writeFile('database/inventory.json', JSON.stringify(userInventory), (err) => {
           if (err) console.log(err);
         });
-        wheelScore.currency = wheelScore.currency - 1100;
-        client.setWheelScore.run(wheelScore);
+        victimGameScore.currency -= 1100;
+        client.setVictimGameScore.run(victimGameScore);
         embed.addField(`Purchased Item`, `Golden Idol of Midas`, true);
         embed.addField(`Cost`, `Ꝟ1100`, true);
       } else {
@@ -438,67 +424,67 @@ client.on("message", message => {
       const embed = new Discord.RichEmbed()
         .setAuthor(message.author.username, message.author.avatarURL)
         .setColor(0xf9af0e);
-      if (args[0] == 1 && wheelScore.currency >= 200) {
+      if (args[0] == 1 && victimGameScore.currency >= 200) {
         embed.addField(`Purchased Item`, `1 :heartpulse:`, true);
         embed.addField(`Cost`, `Ꝟ200`, true);
         victimGameScore.lives = victimGameScore.lives + 1;
         client.setVictimGameScore.run(victimGameScore);
-        wheelScore.currency = wheelScore.currency - 200;
-        client.setWheelScore.run(wheelScore);
+        victimGameScore.currency -= 200;
+        client.setVictimGameScore.run(victimGameScore);
       } else
-      if (args[0] == 2 && wheelScore.currency >= 500) {
+      if (args[0] == 2 && victimGameScore.currency >= 500) {
         embed.addField(`Purchased Item`, `3 :heartpulse:`, true);
         embed.addField(`Cost`, `Ꝟ500`, true);
         victimGameScore.lives = victimGameScore.lives + 3;
         client.setVictimGameScore.run(victimGameScore);
-        wheelScore.currency = wheelScore.currency - 500;
-        client.setWheelScore.run(wheelScore);
+        victimGameScore.currency -= 500;
+        client.setVictimGameScore.run(victimGameScore);
       } else
-      if (args[0] == 3 && wheelScore.currency >= 700) {
+      if (args[0] == 3 && victimGameScore.currency >= 700) {
         embed.addField(`Purchased Item`, `10 :heartpulse:`, true);
         embed.addField(`Cost`, `Ꝟ800`, true);
         victimGameScore.lives = victimGameScore.lives + 10;
         client.setVictimGameScore.run(victimGameScore);
-        wheelScore.currency = wheelScore.currency - 700;
-        client.setWheelScore.run(wheelScore);
+        victimGameScore.currency -= 700;
+        client.setVictimGameScore.run(victimGameScore);
       } else
-      if (args[0] == 4 && wheelScore.currency >= 1100 && itemInventory.indexOf("Golden Idol of Midas") == -1) {
+      if (args[0] == 4 && victimGameScore.currency >= 1100 && itemInventory.indexOf("Golden Idol of Midas") == -1) {
         itemInventory.push("Golden Idol of Midas");
         fs.writeFile('database/inventory.json', JSON.stringify(userInventory), (err) => {
           if (err) console.log(err);
         });
-        wheelScore.currency = wheelScore.currency - 1100;
-        client.setWheelScore.run(wheelScore);
+        victimGameScore.currency -= 1100;
+        client.setVictimGameScore.run(victimGameScore);
         embed.addField(`Purchased Item`, `Golden Idol of Midas`, true);
         embed.addField(`Cost`, `Ꝟ1100`, true);
       } else
-      if (args[0] == 5 && wheelScore.currency >= 1500 && itemInventory.indexOf("The Golden Poop Emoji") == -1) {
+      if (args[0] == 5 && victimGameScore.currency >= 1500 && itemInventory.indexOf("The Golden Poop Emoji") == -1) {
         itemInventory.push("The Golden Poop Emoji");
         fs.writeFile('database/inventory.json', JSON.stringify(userInventory), (err) => {
           if (err) console.log(err);
         });
-        wheelScore.currency = wheelScore.currency - 1500;
-        client.setWheelScore.run(wheelScore);
+        victimGameScore.currency -= 1500;
+        client.setVictimGameScore.run(victimGameScore);
         embed.addField(`Purchased Item`, `The Golden Poop Emoji`, true);
         embed.addField(`Cost`, `Ꝟ1500`, true);
       } else
-      if (args[0] == 6 && wheelScore.currency >= 1700 && itemInventory.indexOf("PokéBall of holiness") == -1) {
+      if (args[0] == 6 && victimGameScore.currency >= 1700 && itemInventory.indexOf("PokéBall of holiness") == -1) {
         itemInventory.push("PokéBall of holiness");
         fs.writeFile('database/inventory.json', JSON.stringify(userInventory), (err) => {
           if (err) console.log(err);
         });
-        wheelScore.currency = wheelScore.currency - 1700;
-        client.setWheelScore.run(wheelScore);
+        victimGameScore.currency -= 1700;
+        client.setVictimGameScore.run(victimGameScore);
         embed.addField(`Purchased Item`, `PokéBall of holiness`, true);
         embed.addField(`Cost`, `Ꝟ1700`, true);
       } else
-      if (args[0] == 7 && wheelScore.currency >= 2000 && itemInventory.indexOf("Kirdby's Yo-yo") == -1) {
+      if (args[0] == 7 && victimGameScore.currency >= 2000 && itemInventory.indexOf("Kirdby's Yo-yo") == -1) {
         itemInventory.push("Kirby's Yo-yo");
         fs.writeFile('database/inventory.json', JSON.stringify(userInventory), (err) => {
           if (err) console.log(err);
         });
-        wheelScore.currency = wheelScore.currency - 2000;
-        client.setWheelScore.run(wheelScore);
+        victimGameScore.currency -= 2000;
+        client.setVictimGameScore.run(victimGameScore);
         embed.addField(`Purchased Item`, `Kirby's Yo-yo"`, true);
         embed.addField(`Cost`, `Ꝟ2000`, true);
       } else {
@@ -512,96 +498,96 @@ client.on("message", message => {
       const embed = new Discord.RichEmbed()
         .setAuthor(message.author.username, message.author.avatarURL)
         .setColor(0xf9af0e);
-      if (args[0] == 1 && wheelScore.currency >= 200) {
+      if (args[0] == 1 && victimGameScore.currency >= 200) {
         embed.addField(`Purchased Item`, `1 :heartpulse:`, true);
         embed.addField(`Cost`, `Ꝟ200`, true);
         victimGameScore.lives = victimGameScore.lives + 1;
         client.setVictimGameScore.run(victimGameScore);
-        wheelScore.currency = wheelScore.currency - 200;
-        client.setWheelScore.run(wheelScore);
+        victimGameScore.currency -= 200;
+        client.setVictimGameScore.run(victimGameScore);
       } else
-      if (args[0] == 2 && wheelScore.currency >= 500) {
+      if (args[0] == 2 && victimGameScore.currency >= 500) {
         embed.addField(`Purchased Item`, `3 :heartpulse:`, true);
         embed.addField(`Cost`, `Ꝟ500`, true);
         victimGameScore.lives = victimGameScore.lives + 3;
         client.setVictimGameScore.run(victimGameScore);
-        wheelScore.currency = wheelScore.currency - 500;
-        client.setWheelScore.run(wheelScore);
+        victimGameScore.currency -= 500;
+        client.setVictimGameScore.run(victimGameScore);
       } else
-      if (args[0] == 3 && wheelScore.currency >= 700) {
+      if (args[0] == 3 && victimGameScore.currency >= 700) {
         embed.addField(`Purchased Item`, `10 :heartpulse:`, true);
         embed.addField(`Cost`, `Ꝟ800`, true);
         victimGameScore.lives = victimGameScore.lives + 10;
         client.setVictimGameScore.run(victimGameScore);
-        wheelScore.currency = wheelScore.currency - 700;
-        client.setWheelScore.run(wheelScore);
+        victimGameScore.currency -= 700;
+        client.setVictimGameScore.run(victimGameScore);
       } else
-      if (args[0] == 4 && wheelScore.currency >= 1100 && itemInventory.indexOf("Golden Idol of Midas") == -1) {
+      if (args[0] == 4 && victimGameScore.currency >= 1100 && itemInventory.indexOf("Golden Idol of Midas") == -1) {
         itemInventory.push("Golden Idol of Midas");
         fs.writeFile('database/inventory.json', JSON.stringify(userInventory), (err) => {
           if (err) console.log(err);
         });
-        wheelScore.currency = wheelScore.currency - 1100;
-        client.setWheelScore.run(wheelScore);
+        victimGameScore.currency -= 1100;
+        client.setVictimGameScore.run(victimGameScore);
         embed.addField(`Purchased Item`, `Golden Idol of Midas`, true);
         embed.addField(`Cost`, `Ꝟ1100`, true);
       } else
-      if (args[0] == 5 && wheelScore.currency >= 1500 && itemInventory.indexOf("The Golden Poop Emoji") == -1) {
+      if (args[0] == 5 && victimGameScore.currency >= 1500 && itemInventory.indexOf("The Golden Poop Emoji") == -1) {
         itemInventory.push("The Golden Poop Emoji");
         fs.writeFile('database/inventory.json', JSON.stringify(userInventory), (err) => {
           if (err) console.log(err);
         });
-        wheelScore.currency = wheelScore.currency - 1500;
-        client.setWheelScore.run(wheelScore);
+        victimGameScore.currency -= 1500;
+        client.setVictimGameScore.run(victimGameScore);
         embed.addField(`Purchased Item`, `The Golden Poop Emoji`, true);
         embed.addField(`Cost`, `Ꝟ1500`, true);
       } else
-      if (args[0] == 6 && wheelScore.currency >= 1700 && itemInventory.indexOf("Holy PokéBall") == -1) {
+      if (args[0] == 6 && victimGameScore.currency >= 1700 && itemInventory.indexOf("Holy PokéBall") == -1) {
         itemInventory.push("Holy PokéBall");
         fs.writeFile('database/inventory.json', JSON.stringify(userInventory), (err) => {
           if (err) console.log(err);
         });
-        wheelScore.currency = wheelScore.currency - 1700;
-        client.setWheelScore.run(wheelScore);
+        victimGameScore.currency -= 1700;
+        client.setVictimGameScore.run(victimGameScore);
         embed.addField(`Purchased Item`, `Holy`, true);
         embed.addField(`Cost`, `Ꝟ1700`, true);
       } else
-      if (args[0] == 7 && wheelScore.currency >= 2000 && itemInventory.indexOf("Kirdby's Yo-yo") == -1) {
+      if (args[0] == 7 && victimGameScore.currency >= 2000 && itemInventory.indexOf("Kirdby's Yo-yo") == -1) {
         itemInventory.push("Kirby's Yo-yo");
         fs.writeFile('database/inventory.json', JSON.stringify(userInventory), (err) => {
           if (err) console.log(err);
         });
-        wheelScore.currency = wheelScore.currency - 2000;
-        client.setWheelScore.run(wheelScore);
+        victimGameScore.currency = victimGameScore.currency - 2000;
+        client.setVictimGameScore.run(victimGameScore);
         embed.addField(`Purchased Item`, `Kirby's Yo-yo"`, true);
         embed.addField(`Cost`, `Ꝟ2000`, true);
       } else
-      if (args[0] == 8 && wheelScore.currency >= 2500 && itemInventory.indexOf("Cluster of Rats (Divine Edition)") == -1) {
+      if (args[0] == 8 && victimGameScore.currency >= 2500 && itemInventory.indexOf("Cluster of Rats (Divine Edition)") == -1) {
         itemInventory.push("Cluster of Rats (Divine Edition)");
         fs.writeFile('database/inventory.json', JSON.stringify(userInventory), (err) => {
           if (err) console.log(err);
         });
-        wheelScore.currency = wheelScore.currency - 2500;
-        client.setWheelScore.run(wheelScore);
+        victimGameScore.currency = victimGameScore.currency - 2500;
+        client.setVictimGameScore.run(victimGameScore);
         embed.addField(`Purchased Item`, `Cluster of Rats (Divine Edition)`, true);
         embed.addField(`Cost`, `Ꝟ2500`, true);
       } else
-      if (args[0] == 9 && wheelScore.currency >= 6000 && itemInventory.indexOf("Magical Eastern Island Statue") == -1) {
+      if (args[0] == 9 && victimGameScore.currency >= 6000 && itemInventory.indexOf("Magical Eastern Island Statue") == -1) {
         itemInventory.push("Magical Easter Island Statue");
         fs.writeFile('database/inventory.json', JSON.stringify(userInventory), (err) => {
           if (err) console.log(err);
         });
-        wheelScore.currency = wheelScore.currency - 6000;
+        victimGameScore.currency -= 6000;
         embed.addField(`Purchased Item`, `Magical Easter Islans Statue`, true);
         embed.addField(`Cost`, `Ꝟ6000`, true);
       } else
-      if (args[0] == 10 && wheelScore.currency >= 10000 && itemInventory.indexOf("Preserved Load of Bread from Pompeii") == -1) {
+      if (args[0] == 10 && victimGameScore.currency >= 10000 && itemInventory.indexOf("Preserved Load of Bread from Pompeii") == -1) {
         itemInventory.push("Preserved Loaf of Bread from Pompeii");
         fs.writeFile('database/inventory.json', JSON.stringify(userInventory), (err) => {
           if (err) console.log(err);
         });
-        wheelScore.currency = wheelScore.currency - 10000;
-        client.setWheelScore.run(wheelScore);
+        victimGameScore.currency -= 10000;
+        client.setVictimGameScore.run(victimGameScore);
         embed.addField(`Purchased Item`, `Preserved Loaf Of Bread from Pompeii`, true);
         embed.addField(`Cost`, `Ꝟ10000`, true);
       } else {
@@ -876,7 +862,7 @@ client.on("message", message => {
         }
       }
       embed.addField(`Lives:`, `${victimGameScore.lives} :heartpulse:`, true);
-      embed.addField(`Currency:`, `Ꝟ${wheelScore.currency}`, true);
+      embed.addField(`Currency:`, `Ꝟ${victimGameScore.currency}`, true);
       embed.setTimestamp()
       return message.channel.send({
         embed
@@ -1015,7 +1001,6 @@ client.on("message", message => {
       if (!user) {
         return message.channel.send("Mention the user you want to give something to.");
       } else {
-        let userCurrency = client.getWheelScore.get(user.id, message.guild.id);
         if (!score) {
           score = {
             id: `${message.guild.id}-${user.id}`,
@@ -1023,14 +1008,6 @@ client.on("message", message => {
             guild: message.guild.id,
             points: 0,
             level: 1
-          }
-        }
-        if (!wheelScore) {
-          wheelScore = {
-            id: `${message.guild.id}-${user.id}`,
-            user: user.id,
-            guild: message.guild.id,
-            currency: 0
           }
         }
         if (!args[1]) {
@@ -1051,8 +1028,8 @@ client.on("message", message => {
           message.channel.send(`Successfully gave user ${user} \`${toAdd}\` EXP.`);
         } else
         if (args[1] === "currency") {
-          wheelScore.currency += toAdd;
-          client.setWheelScore.run(wheelScore);
+          victimGameScore.currency += toAdd;
+          client.setVictimGameScore.run(victimGameScore);
           message.channel.send(`Successfully gave user ${user} \`${toAdd}\` currency.`);
         } else {
           return message.channel.send("State what you want to give the user. You can choose between: ```v.give [@user] levels\nv.give [@user] exp\nv.give [@user] currency```");
