@@ -204,7 +204,7 @@ client.on("message", message => {
   } else {
     victimGameScore.lives = victimGameScore.lives;
   }
-  if (message.content.indexOf(prefix) !== 0) return;
+  if (message.content.toLowerCase().indexOf(prefix) !== 0) return;
   const args = message.content.slice(prefix.toLowerCase().length).trim().split(/ +/g);
   const command = args.shift().toLowerCase();
   if (command === "help") {
@@ -214,7 +214,7 @@ client.on("message", message => {
   if (command === "invite")
     message.channel.send("You can invite Victini to you server by clicking on the following link. Please note that Victini is still *in Beta*, and is buggy at the moment. For further inquiries, please contact user `Hares#5947`.\nhttps://discordapp.com/oauth2/authorize?client_id=372037843574456342&scope=bot&permissions=2146958591");
   if (command === "prefix")
-    message.channel.send(`\`\`\`The default prefix of victini is v.\n\nYour server's prefix is ${settings.prefix}\`\`\``);
+    message.channel.send(`\`\`\`The default prefix of victini is v.\n\nYour server's prefix is ${settings.prefix}\nNote that this is case insensitive.\`\`\``);
   if (command === "lenny") {
     message.delete();
     message.channel.send("( ͡° ͜ʖ ͡°)");
@@ -953,7 +953,7 @@ client.on("message", message => {
         var farewellmsgstatus = "Disabled";
       }
       if (!args[0]) {
-        message.channel.send(`Server status:\`\`\`Leveling System [levels]: ${levelsysstatus}\nWelcome messages [welcomemsg]: ${welcomemsgstatus}\nFarewell messages [farewellmsg]: ${farewellmsgstatus}\nPrefix: ${settings.prefix}\n\nTo disable a setting, do v.settings disable [levels/farewellmsg/welcomemsg].\nTo enable a setting, do v.settings enable [levels/farewellmsg/welcomemsg].\nPrefix cannot be changed as of right now.\`\`\``);
+        message.channel.send(`Server status:\`\`\`Leveling System [levels]: ${levelsysstatus}\nWelcome messages [welcomemsg]: ${welcomemsgstatus}\nFarewell messages [farewellmsg]: ${farewellmsgstatus}\nPrefix: ${settings.prefix}\n\nTo disable a setting, do v.settings disable [levels/farewellmsg/welcomemsg].\nTo enable a setting, do v.settings enable [levels/farewellmsg/welcomemsg].\nTo change the prefix do v.settings prefix your new prefix.\`\`\``);
       }
       if (args[0] === "enable") {
         if (args[1] === "levels") {
@@ -1019,6 +1019,11 @@ client.on("message", message => {
         } else {
           message.channel.send("You can disable: ```v.settings disable levels\nv.settings disable welcomemsg\nv.settings disable farewellmsg```");
         }
+      }
+      if (args[0] === "prefix") {
+        settings.prefix = args[1].toLowerCase();
+        client.setSettings.run(settings);
+        message.channel.send(`Prefix has successfully been changed to ${settings.prefix}`);
       }
     }
     if (command === "give") {
