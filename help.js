@@ -87,7 +87,7 @@ module.exports = async (type, args, message, isBotExec) => {
         message.channel.send("The `v.reset` command allows execs to reset a person on their server back to level 1.");
         break;
       default:
-        message.channel.send("Type the following commands to get further help:\n```v.help exec-only say\nv.help exec-only kick\nv.help exec-only clear```");
+        message.channel.send("Type the following commands to get further help:\n```v.help exec-only say\nv.help exec-only kick\nv.help exec-only clear\nv.help exec-only give\nv.help exec-only reset```");
       }
     } else
       message.channel.send("Exec-only commands require the `Victini Exec`-role to be used.");
