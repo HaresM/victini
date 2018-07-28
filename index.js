@@ -78,7 +78,7 @@ client.on("ready", () => {
   client.getScore = sql.prepare("SELECT * FROM scores WHERE user = ? AND guild = ?");
   client.setScore = sql.prepare("INSERT OR REPLACE INTO scores (id, user, guild, points, level) VALUES (@id, @user, @guild, @points, @level);");
   client.getSettings = sql.prepare("SELECT * FROM settings WHERE guild = ?");
-  client.setSettings = sql.prepare("INSERT OR REPLACE INTO settings (guild, levelsys, welcomemsg, farewellmsg) VALUES (@guild, @levelsys, @welcomemsg, @farewellmsg);");
+  client.setSettings = sql.prepare("INSERT OR REPLACE INTO settings (guild, levelsys, welcomemsg, farewellmsg, prefix) VALUES (@guild, @levelsys, @welcomemsg, @farewellmsg, @prefix);");
   client.getVictimGameScore = sql.prepare("SELECT * FROM victimGameScores WHERE user = ? AND guild = ?");
   client.setVictimGameScore = sql.prepare("INSERT OR REPLACE INTO victimGameScores (id, user, guild, lives, currency) VALUES (@id, @user, @guild, @lives, @currency);");
 });
@@ -87,7 +87,8 @@ client.on("guildCreate", guild => {
     guild: guild.id,
     levelsys: 1,
     welcomemsg: 1,
-    farewellmsg: 1
+    farewellmsg: 1,
+    prefix: "v."
   }
   client.setSettings.run(settings)
   console.log(`Victini joined the ${guild.name} server, with ID ${guild.id.toString()}.`);
@@ -156,10 +157,12 @@ client.on("message", message => {
       guild: message.guild.id,
       levelsys: 1,
       welcomemsg: 1,
-      farewellmsg: 1
+      farewellmsg: 1,
+      prefix: "v."
     }
     client.setSettings.run(settings)
   }
+  prefix = settings.prefix
   if (settings.levelsys === 1) {
     if (message.content.indexOf(prefix) !== 0) {
       score.points++;
@@ -928,7 +931,7 @@ client.on("message", message => {
         var farewellmsgstatus = "Disabled";
       }
       if (!args[0]) {
-        message.channel.send(`Server status:\`\`\`Leveling System [levels]: ${levelsysstatus}\nWelcome messages [welcomemsg]: ${welcomemsgstatus}\nFarewell messages [farewellmsg]: ${farewellmsgstatus}\n\nTo disable a setting, do v.settings disable [levels/farewellmsg/welcomemsg].\nTo enable a setting, do v.settings enable [levels/farewellmsg/welcomemsg]\`\`\``);
+        message.channel.send(`Server status:\`\`\`Leveling System [levels]: ${levelsysstatus}\nWelcome messages [welcomemsg]: ${welcomemsgstatus}\nFarewell messages [farewellmsg]: ${farewellmsgstatus}\nPrefix: ${settings.prefix}\n\nTo disable a setting, do v.settings disable [levels/farewellmsg/welcomemsg].\nTo enable a setting, do v.settings enable [levels/farewellmsg/welcomemsg].\nPrefix cannot be changed as of right now.\`\`\``);
       }
       if (args[0] === "enable") {
         if (args[1] === "levels") {
