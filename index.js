@@ -213,6 +213,8 @@ client.on("message", message => {
   }
   if (command === "invite")
     message.channel.send("You can invite Victini to you server by clicking on the following link. Please note that Victini is still *in Beta*, and is buggy at the moment. For further inquiries, please contact user `Hares#5947`.\nhttps://discordapp.com/oauth2/authorize?client_id=372037843574456342&scope=bot&permissions=2146958591");
+  if (command === "prefix")
+    message.channel.send(`\`\`\`The default prefix of victini is v.\n\nYour server's prefix is ${settings.prefix}\`\`\``);
   if (command === "lenny") {
     message.delete();
     message.channel.send("( ͡° ͜ʖ ͡°)");
@@ -237,9 +239,8 @@ client.on("message", message => {
     message.delete();
     message.channel.send("( ͡o ͜ʖ ͡o)");
   }
-  if (command === "thinking") {
+  if (command === "thinking")
     message.channel.send("https://cdn.discordapp.com/attachments/347376772951572490/364168246628188162/the_real_thinking_emoji.gif");
-  }
   if (command === "victim") {
     //lose a life
     const victim1 = JSON.parse(fs.readFileSync('database/victim.json')).victim1;
@@ -317,13 +318,14 @@ client.on("message", message => {
         client.setVictimGameScore.run(victimGameScore);
       } else
       if (outcome === 2) {
-        const prizes = [1, 1, 1, 3, 5];
+        const prizes = [1, 1, 1, 2, 2, 3, 4, 5, 6, 7, 8, 9, 10, 1000];
         const prize = prizes[Math.floor(Math.random() * prizes.length)];
-        if (prize == 1) {
+        if (prize == 1)
           message.channel.send(`You received **${prize} life**!`);
-        } else {
+        if (prize === 1000)
+          message.channel.send(`Here have **${prize} lives**! I have no idea what you will do with that many lives though victim possibly? ¯\_(ツ)_/¯`);
+        else
           message.channel.send(`You received **${prize} lives**!`);
-        }
         victimGameScore.lives = victimGameScore.lives + prize;
         client.setVictimGameScore.run(victimGameScore);
       }
@@ -898,12 +900,32 @@ client.on("message", message => {
       let member = message.mentions.members.first();
       if (!member)
         return message.channel.send("Please mention a valid member of this server");
-      if (!member.kickable || member.user.id === "311534497403371521")
+      if (!member.kickable)
         return message.channel.send("The specified user could not be kicked.");
       let reason = args.slice(1).join(' ');
       if (!reason)
         return message.channel.send("Please indicate a reason for the kick!");
       member.kick(reason).then(message.channel.send(`${member.user.tag} has been kicked by ${message.author.tag}, because: of the following reason: \`\`\`${reason}\`\`\``))
+    }
+    if (command === "ban") {
+      let member = message.mentions.members.first();
+      if (!member)
+        return message.channel.send("Please mention a valid member of this server");
+      if (!member.bannable)
+        return message.channel.send("The specified user could not be banned.");
+      let reason = args.slice(1).join(' ');
+      if (!reason)
+        return message.channel.send("Please indicate a reason for the ban!");
+      message.guild.ban(member, reason).then(message.channel.send(`${member.user.tag} has been banned by ${message.author.tag}, because: of the following reason: \`\`\`${reason}\`\`\``))
+    }
+    if (command === "unban") {
+      let member = args[0];
+      if (!member)
+        return message.channel.send("Please specify a valid user id.");
+      let reason = args.slice(1).join(' ');
+      if (!reason)
+        return message.channel.send("Please indicate a reason for the unban!");
+      message.guild.unban(member, reason).then(message.channel.send(`${member} has been unbanned by ${message.author.tag}, because: of the following reason: \`\`\`${reason}\`\`\``))
     }
     if (command === "clear") {
       const deleteCount = args[0];
