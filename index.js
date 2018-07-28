@@ -208,6 +208,8 @@ client.on("message", message => {
     const helpfile = require('./help.js');
     helpfile(args[0], args, message, isBotExec);
   }
+  if (command === "invite")
+    message.channel.send("You can invite Victini to you server by clicking on the following link. Please note that Victini is still *in Beta*, and is buggy at the moment. For further inquiries, please contact user `Hares#5947`.\nhttps://discordapp.com/oauth2/authorize?client_id=372037843574456342&scope=bot&permissions=2146958591");
   if (command === "lenny") {
     message.delete();
     message.channel.send("( ͡° ͜ʖ ͡°)");

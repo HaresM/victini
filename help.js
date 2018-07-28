@@ -1,16 +1,4 @@
 module.exports = async (type, args, message, isBotExec) => {
-  if (type === "gen-info") {
-    switch (args[1]) {
-    case "prefix":
-      message.channel.send("Victini's prefix is `v.` Note that this is a *lower-case* \"v\"!");
-      break;
-    case "invite":
-      message.channel.send("You can invite Victini to you server by clicking on the following link. Please note that Victini is still *in Beta*, and is buggy at the moment. For further inquiries, please contact user `Hares#5947`.\nhttps://discordapp.com/oauth2/authorize?client_id=372037843574456342&scope=bot&permissions=2146958591");
-      break;
-    default:
-      message.channel.send("Type the following commands to get help on specific stuff:\n```v.help gen-info prefix\nv.help gen-info invite```");
-    }
-  }
   if (type === "commands") {
     switch (args[1]) {
     case "8ball":
@@ -93,6 +81,6 @@ module.exports = async (type, args, message, isBotExec) => {
       message.channel.send("Exec-only commands require the `Victini Exec`-role to be used.");
   }
   if (!type) {
-    message.channel.send("Type the following commands to get help on specific stuff:\n```v.help gen-info\nv.help commands\nv.help exec-only```")
+    message.channel.send("Type the following commands to get help on specific stuff:\n```v.help commands\nv.help exec-only```")
   }
 }
