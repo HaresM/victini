@@ -172,9 +172,8 @@ client.on("message", message => {
         score.level = curLevel;
       }
       if (score.level > curLevel) {
-        if (score.level === 1) {
+        if (score.level === 1)
           return
-        }
         const msg = message.channel.send("Your level doesn't match up with the level you are supposed to have at your amount of xp. Please wait a moment while I recalculate your level.").then(score.level = curLevel).then(msg => {
           msg.edit(`Congrats, ${message.author}! You've leveled up to level **${curLevel}**!`)
         });
@@ -203,6 +202,13 @@ client.on("message", message => {
     }, 7200000);
   } else {
     victimGameScore.lives = victimGameScore.lives;
+  }
+  if (isBotExec(message.member)) {
+    if (message.content.startsWith("v.resetprefix")) {
+      settings.prefix = "v.";
+      client.setSettings.run(settings);
+      message.channel.send(`Prefix has successfully been reset back to ${settings.prefix}`);
+    }
   }
   if (message.content.toLowerCase().indexOf(prefix) !== 0) return;
   const args = message.content.slice(prefix.toLowerCase().length).trim().split(/ +/g);
@@ -323,7 +329,7 @@ client.on("message", message => {
         if (prize == 1)
           message.channel.send(`You received **${prize} life**!`);
         if (prize === 1000)
-          message.channel.send(`Here have **${prize} lives**! I have no idea what you will do with that many lives though victim possibly? ¯\_(ツ)_/¯`);
+          message.channel.send(`Here have **${prize} lives**! I have no idea what you will do with that many lives though victim possibly? ¯\\_(ツ)_/¯`);
         else
           message.channel.send(`You received **${prize} lives**!`);
         victimGameScore.lives = victimGameScore.lives + prize;
@@ -812,11 +818,11 @@ client.on("message", message => {
     message.channel.send("https://cdn.discordapp.com/attachments/320716421757927436/376351118449573909/sketch1509192675057.png");
   }
   if (command === "8ball") {
-    if (message.content.startsWith(prefix + "8ball")) {
-      const magicArray = ['It is certain.', 'It is decidedly so.', 'Without a doubt.', 'Yes - definitely.', 'You may rely on it.', 'As I see it, yes.', 'Most likely.', 'Outlook good.', 'Yes.', 'Signs point to yes.', 'Reply hazy, try again.', 'Ask again later.', 'Better not tell you now.', 'Cannot predict now.', 'Concentrate and ask again.', 'I would not count on it.', 'My reply is no.', 'My sources say no.', 'Outlook not so good.', 'Are you done asking questions yet?', 'Why the fuck should I even know this?', 'The answer lies within yourself.', 'Why are you asking me?', 'Follow the seahorse.', 'Very doubtful.'];
-      const randomReply = Math.floor(Math.random() * magicArray.length);
-      message.channel.send(`${magicArray[randomReply]}`)
-    }
+    if (!args[0])
+      return message.channel.send("Please pose a question to the 8ball");
+    const magicArray = ["It is certain.", "It is decidedly so.", "Without a doubt.", "Yes - definitely.", "You may rely on it.", "As I see it, yes.", "Most likely.", "Outlook good.", "Yes.", "Signs point to yes.", "Reply hazy, try again", "Ask again later.", "Better not tell you now.", "Cannot predict now.", "Concentrate and ask again.", "Don't count on it.", "My reply is no.", "My sources say no.", "Outlook not so good.", "Very doubtful.", "Follow the seahorse."];
+    const randomReply = Math.floor(Math.random() * magicArray.length);
+    message.channel.send(`${magicArray[randomReply]}`)
   }
   if (command === "reminder") {
     var remindTime = args[0] * 60 * 1000;
@@ -953,7 +959,7 @@ client.on("message", message => {
         var farewellmsgstatus = "Disabled";
       }
       if (!args[0]) {
-        message.channel.send(`Server status:\`\`\`Leveling System [levels]: ${levelsysstatus}\nWelcome messages [welcomemsg]: ${welcomemsgstatus}\nFarewell messages [farewellmsg]: ${farewellmsgstatus}\nPrefix: ${settings.prefix}\n\nTo disable a setting, do v.settings disable [levels/farewellmsg/welcomemsg].\nTo enable a setting, do v.settings enable [levels/farewellmsg/welcomemsg].\nTo change the prefix do v.settings prefix your new prefix.\`\`\``);
+        message.channel.send(`Server status:\`\`\`Leveling System [levels]: ${levelsysstatus}\nWelcome messages [welcomemsg]: ${welcomemsgstatus}\nFarewell messages [farewellmsg]: ${farewellmsgstatus}\nPrefix: ${settings.prefix}\n\nTo disable a setting, do v.settings disable [levels/farewellmsg/welcomemsg].\nTo enable a setting, do v.settings enable [levels/farewellmsg/welcomemsg].\nTo change the prefix do v.settings prefix "your new prefix".\`\`\``);
       }
       if (args[0] === "enable") {
         if (args[1] === "levels") {
@@ -1053,7 +1059,7 @@ client.on("message", message => {
       } else
       if (args[1] === "exp") {
         score.points += toAdd;
-        score.level = Math.floor(0.5 * Math.sqrt(toAdd));
+        score.level = Math.floor(0.5 * Math.sqrt(score.points));
         client.setScore.run(score);
         message.channel.send(`Successfully gave user ${user} \`${toAdd}\` EXP.`);
       } else
@@ -1066,22 +1072,18 @@ client.on("message", message => {
       }
     }
   }
-  if (command === "reset") {
-    var user = message.mentions.members.first();
-    if (!user) {
-      return message.channel.send("Mention the user you want to reset.");
-    }
-    let score = client.getScore.get(user.id, message.guild.id);
-    score = {
-      id: `${message.guild.id}-${user.id}`,
-      user: user.id,
-      guild: message.guild.id,
-      points: 0,
-      level: 1
-    }
-    client.setScore.run(score);
-    message.channel.send(`Successfully reset user ${user}`);
-  }
+  // Not working for some unknown reason.
+  // if (command === "reset") {
+  //   var user = message.mentions.members.first();
+  //   if (!user) {
+  //     return message.channel.send("Mention the user you want to reset.");
+  //   }
+  //   score = client.getScore.get(user.id, message.guild.id);
+  //   score.points = 0;
+  //   score.level = 1;
+  //   client.setScore.run(score);
+  //   message.channel.send(`Successfully reset user ${user}`);
+  // }
   if (message.author.id === "311534497403371521" || message.author.id === "272986016242204672") {
     if (command === "restart") {
       const embed = new Discord.RichEmbed()

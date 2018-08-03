@@ -154,7 +154,6 @@
         "is stabbed by their own waifu. What a realistic way to end. :knife: :broken_heart:",
         "inherits a large estate (many millions of dollars) from a senile donor, whom remains unknown to this day. :money_mouth:",
         "finds a key with rotten mold covering it in their pocket. Wonder what it's for? :key:",
-        "catches a random shiny Pokemon! (please be fair and roll randomly) :star2:",
         "learns how to speak backwards english fluently. :regional_indicator_c: :regional_indicator_o: :regional_indicator_o: :regional_indicator_l: :regional_indicator_l: :regional_indicator_o: :regional_indicator_o: :regional_indicator_c:",
         "is a special snowflake. :snowflake:",
         ", you hear a voice in your head that says, \"You have only one question, but you may ask me anything.  I will answer truthfully.\"  You see <@178342197521940481> wearing a red silk robe and a crown of thorns standing before you and you notice that time seems to have stopped. Choose carefully. :angel: :red_circle:",
@@ -198,7 +197,8 @@
         "received a chocolate chip cookie! :cookie:",
         "adopted a puppy! :dog2:",
         "ate what they though was a juicy fruit and gained stretchy powers! ",
-        "becomes immortal. :star2:"
+        "becomes immortal. :star2:",
+        "catches a random shiny Pokemon! (please be fair and roll randomly) :star2:"
     ],
     "victim3": [
         "found 100 bucks on the street! :dollar:",
@@ -206,7 +206,6 @@
         "drowns in a pool then becomes what the youth of today knows as \"waterboy\"! :ocean:",
         "'s mouth fills with marshmallows every time they wish so. :candy:",
         "grows 20 years older! :older_man:",
-        "is surprised, but nothing happens. How boring. (Or lucky depending on your situation :smiley:)",
         "feels very lucky right now. Go buy a lotto ticket or something. :slot_machine: :tickets:",
         "stole from an old man"
     ],
@@ -214,6 +213,6 @@
         "test"
     ],
     "victim5": [
-        "test"
+        "is surprised, but nothing happens. How boring. (Or lucky depending on your situation :smiley:)"
     ]
 }
