@@ -210,6 +210,12 @@ client.on("message", message => {
       message.channel.send(`Prefix has successfully been reset back to ${settings.prefix}`);
     }
   }
+  if (message.content === "(╯°□°）╯︵ ┻━┻") {
+    message.channel.send("┬─┬ ノ( ゜-゜ノ)")
+    score.tableflips++
+    if (score.tableflips > 50)
+      message.reply("STOP FLIPPING THE GOD DAMN TABLES")
+  }
   if (message.content.toLowerCase().indexOf(prefix) !== 0) return;
   const args = message.content.slice(prefix.toLowerCase().length).trim().split(/ +/g);
   const command = args.shift().toLowerCase();
