@@ -333,7 +333,7 @@ client.on("message", message => {
         const prizes = [1, 1, 1, 2, 2, 3, 4, 5, 6, 7, 8, 9, 10, 1000];
         const prize = prizes[Math.floor(Math.random() * prizes.length)];
         if (prize == 1)
-          message.channel.send(`You received **${prize} life**!`);
+          return message.channel.send(`You received **${prize} life**!`);
         if (prize === 1000)
           message.channel.send(`Here have **${prize} lives**! I have no idea what you will do with that many lives though victim possibly? ¯\\_(ツ)_/¯`);
         else
