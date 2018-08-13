@@ -76,7 +76,7 @@ client.on("ready", () => {
     createtable("CREATE TABLE victimGameScores (id TEXT PRIMARY KEY, user TEXT, guild TEXT, lives INTEGER, currency INTEGER);", "idx_victimGameScores_id", "victimGameScores", "id");
   }
   client.getScore = sql.prepare("SELECT * FROM scores WHERE user = ? AND guild = ?");
-  client.setScore = sql.prepare("INSERT OR REPLACE INTO scores (id, user, guild, points, level, tableflips) VALUES (@id, @user, @guild, @points, @level, tableflips);");
+  client.setScore = sql.prepare("INSERT OR REPLACE INTO scores (id, user, guild, points, level, tableflips) VALUES (@id, @user, @guild, @points, @level, @tableflips);");
   client.getSettings = sql.prepare("SELECT * FROM settings WHERE guild = ?");
   client.setSettings = sql.prepare("INSERT OR REPLACE INTO settings (guild, levelsys, welcomemsg, farewellmsg, prefix, welcomefarewellchannel) VALUES (@guild, @levelsys, @welcomemsg, @farewellmsg, @prefix, @welcomefarewellchannel);");
   client.getVictimGameScore = sql.prepare("SELECT * FROM victimGameScores WHERE user = ? AND guild = ?");
