@@ -78,7 +78,7 @@ client.on("ready", () => {
   client.getScore = sql.prepare("SELECT * FROM scores WHERE user = ? AND guild = ?");
   client.setScore = sql.prepare("INSERT OR REPLACE INTO scores (id, user, guild, points, level) VALUES (@id, @user, @guild, @points, @level);");
   client.getSettings = sql.prepare("SELECT * FROM settings WHERE guild = ?");
-  client.setSettings = sql.prepare("INSERT OR REPLACE INTO settings (guild, levelsys, welcomemsg, farewellmsg, prefix) VALUES (@guild, @levelsys, @welcomemsg, @farewellmsg, @prefix);");
+  client.setSettings = sql.prepare("INSERT OR REPLACE INTO settings (guild, levelsys, welcomemsg, farewellmsg, prefix, welcome/farewellchannel) VALUES (@guild, @levelsys, @welcomemsg, @farewellmsg, @prefix, @welcome/farewellchannel);");
   client.getVictimGameScore = sql.prepare("SELECT * FROM victimGameScores WHERE user = ? AND guild = ?");
   client.setVictimGameScore = sql.prepare("INSERT OR REPLACE INTO victimGameScores (id, user, guild, lives, currency) VALUES (@id, @user, @guild, @lives, @currency);");
 });
@@ -88,7 +88,8 @@ client.on("guildCreate", guild => {
     levelsys: 1,
     welcomemsg: 1,
     farewellmsg: 1,
-    prefix: "v."
+    prefix: "v.",
+    welcomefarewellchannel: 0
   }
   client.setSettings.run(settings)
   console.log(`Victini joined the ${guild.name} server, with ID ${guild.id.toString()}.`);
@@ -158,7 +159,8 @@ client.on("message", message => {
       levelsys: 1,
       welcomemsg: 1,
       farewellmsg: 1,
-      prefix: "v."
+      prefix: "v.",
+      welcomefarewellchannel: 0
     }
     client.setSettings.run(settings)
   }
