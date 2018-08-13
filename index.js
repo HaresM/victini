@@ -76,9 +76,9 @@ client.on("ready", () => {
     createtable("CREATE TABLE victimGameScores (id TEXT PRIMARY KEY, user TEXT, guild TEXT, lives INTEGER, currency INTEGER);", "idx_victimGameScores_id", "victimGameScores", "id");
   }
   client.getScore = sql.prepare("SELECT * FROM scores WHERE user = ? AND guild = ?");
-  client.setScore = sql.prepare("INSERT OR REPLACE INTO scores (id, user, guild, points, level) VALUES (@id, @user, @guild, @points, @level);");
+  client.setScore = sql.prepare("INSERT OR REPLACE INTO scores (id, user, guild, points, level, tableflips) VALUES (@id, @user, @guild, @points, @level, tableflips);");
   client.getSettings = sql.prepare("SELECT * FROM settings WHERE guild = ?");
-  client.setSettings = sql.prepare("INSERT OR REPLACE INTO settings (guild, levelsys, welcomemsg, farewellmsg, prefix, welcome/farewellchannel) VALUES (@guild, @levelsys, @welcomemsg, @farewellmsg, @prefix, @welcome/farewellchannel);");
+  client.setSettings = sql.prepare("INSERT OR REPLACE INTO settings (guild, levelsys, welcomemsg, farewellmsg, prefix, welcomefarewellchannel) VALUES (@guild, @levelsys, @welcomemsg, @farewellmsg, @prefix, @welcomefarewellchannel);");
   client.getVictimGameScore = sql.prepare("SELECT * FROM victimGameScores WHERE user = ? AND guild = ?");
   client.setVictimGameScore = sql.prepare("INSERT OR REPLACE INTO victimGameScores (id, user, guild, lives, currency) VALUES (@id, @user, @guild, @lives, @currency);");
 });
@@ -215,6 +215,7 @@ client.on("message", message => {
   if (message.content === "(╯°□°）╯︵ ┻━┻") {
     message.channel.send("┬─┬ ノ( ゜-゜ノ)")
     score.tableflips++
+    client.setScore.run(score);
     if (score.tableflips > 50)
       message.reply("STOP FLIPPING THE GOD DAMN TABLES")
   }
