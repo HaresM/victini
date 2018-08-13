@@ -150,7 +150,8 @@ client.on("message", message => {
       user: message.author.id,
       guild: message.guild.id,
       points: 0,
-      level: 1
+      level: 1,
+      tableflips: 0
     }
   }
   if (!settings) {
