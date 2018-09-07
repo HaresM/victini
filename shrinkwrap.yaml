@@ -1496,7 +1496,7 @@ packages:
     resolution:
       integrity: sha512-VwCe+uhKz2M1cH0UEnNxVQyLwGK8DIJgbUPF9svEh0zxUl2DP7LORCDIloLqDUxR6JnC3s01GU0YPxiOmjcqVA==
 registry: 'https://registry.npmjs.org/'
-shrinkwrapMinorVersion: 8
+shrinkwrapMinorVersion: 9
 shrinkwrapVersion: 3
 specifiers:
   better-sqlite3: ^4.1.4

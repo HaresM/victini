@@ -1,14 +1,14 @@
-// const http = require('http');
-// const express = require('express');
-// const app = express();
-// app.get("/", (request, response) => {
-//   //console.log(Date.now() + " Ping Received");
-//   response.sendStatus(200);
-// });
-// app.listen(process.env.PORT);
-// setInterval(() => {
-//   http.get(`http://${process.env.PROJECT_DOMAIN}.glitch.me/`);
-// }, 200000);
+ // const http = require('http');
+ // const express = require('express');
+ // const app = express();
+ // app.get("/", (request, response) => {
+ //   //console.log(Date.now() + " Ping Received");
+ //   response.sendStatus(200);
+ // });
+ // app.listen(process.env.PORT);
+ // setInterval(() => {
+ //   http.get(`http://${process.env.PROJECT_DOMAIN}.glitch.me/`);
+ // }, 200000);
 // Dependancies
 const Discord = require("discord.js");
 const client = new Discord.Client();
@@ -176,10 +176,10 @@ client.on("message", message => {
       }
       if (score.level > curLevel) {
         if (score.level === 1)
-          return
-        const msg = message.channel.send("Your level doesn't match up with the level you are supposed to have at your amount of xp. Please wait a moment while I recalculate your level.").then(score.level = curLevel).then(msg => {
-          msg.edit(`Congrats, ${message.author}! You've leveled up to level **${curLevel}**!`)
-        });
+          return;
+          //const msg = message.channel.send("Your level doesn't match up with the level you are supposed to have at your amount of xp. Please wait a moment while I recalculate your level.").then(score.level = curLevel).then(msg => {
+          //msg.edit(`Congrats, ${message.author}! You've leveled up to level **${curLevel}**!`)
+        //});
       }
       client.setScore.run(score);
     }
@@ -637,11 +637,11 @@ client.on("message", message => {
       },
       {
         "item": "Kirby's Yo-yo",
-        "desc": "Using this special yo-yo will instantly give you special yo-yo skils, and a purple baseball cap, as well as a bandage magically appear on your face as well."
+        "desc": "Using this special yo-yo will instantly give you special yo-yo skils, as well as a purple baseball cap, and a bandage magically appear on your face as well."
       },
       {
         "item": "Cluster of Rats (Divine Edition)",
-        "desc": "When Doraemon's tears accidentally fell on the original Japanese sculpture of rats, it began radiating a mystical light. It is said to grant superpowers to anyone who dares to lick it's surface."
+        "desc": "When Doraemon's tears accidentally fell on the original Japanese sculpture of rats, it began radiating a mystical light. It is said to grant superpowers to anyone who dares to lick its surface."
       },
       {
         "item": "Magical Easter Island Statue",
@@ -649,7 +649,7 @@ client.on("message", message => {
       },
       {
         "item": "Preserved Loaf of Bread from Pompeii",
-        "desc": "This piece of bread is said to be around since the dawn of time. One bite of it will provide enough kinetic energy to shoot you to infinity and beyond. It is said that its core consists of all the secrets of the universe."
+        "desc": "This piece of bread is said to be around since the dawn of time. One bite of it will provide enough kinetic energy to shoot you to infinity, and beyond. It is said that its core consists of all the secrets of the universe."
       }
     ];
     let itemInventory = userInventory[message.author.id].inventory;
@@ -1082,18 +1082,20 @@ client.on("message", message => {
       }
     }
   }
+  
   // Not working for some unknown reason.
-  // if (command === "reset") {
-  //   var user = message.mentions.members.first();
-  //   if (!user) {
-  //     return message.channel.send("Mention the user you want to reset.");
-  //   }
-  //   score = client.getScore.get(user.id, message.guild.id);
-  //   score.points = 0;
-  //   score.level = 1;
-  //   client.setScore.run(score);
-  //   message.channel.send(`Successfully reset user ${user}`);
-  // }
+   if (command === "reset") {
+     var user = message.mentions.members.first();
+     if (!user) {
+       return message.channel.send("Mention the user you want to reset.");
+     }
+     score = client.getScore.get(user.id, message.guild.id);
+     score.points = 0;
+     score.level = 1;
+     client.setScore.run(score);
+     message.channel.send(`Successfully reset user ${user}`);
+   }
+  
   if (message.author.id === "311534497403371521" || message.author.id === "272986016242204672") {
     if (command === "restart") {
       const embed = new Discord.RichEmbed()
