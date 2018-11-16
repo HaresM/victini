@@ -34,7 +34,7 @@ function isBotExec(member) {
 }
 
 function hasRole(member, role) {
-  var _role = member.guild.roles.find("name", role);
+  var _role = member.guild.roles.find(role => role.name);
   try {
     return member.roles.has(_role.id)
   } catch (Error) {
@@ -76,7 +76,7 @@ client.on("ready", () => {
     createtable("CREATE TABLE victimGameScores (id TEXT PRIMARY KEY, user TEXT, guild TEXT, lives INTEGER, currency INTEGER);", "idx_victimGameScores_id", "victimGameScores", "id");
   }
   client.getScore = sql.prepare("SELECT * FROM scores WHERE user = ? AND guild = ?");
-  client.setScore = sql.prepare("INSERT OR REPLACE INTO scores (id, user, guild, points, level, tableflips) VALUES (@id, @user, @guild, @points, @level, @tableflips);");
+  client.setScore = sql.prepare("INSERT OR REPLACE INTO scores (id, user, guild, points, level) VALUES (@id, @user, @guild, @points, @level);");
   client.getSettings = sql.prepare("SELECT * FROM settings WHERE guild = ?");
   client.setSettings = sql.prepare("INSERT OR REPLACE INTO settings (guild, levelsys, welcomemsg, farewellmsg, prefix, welcomefarewellchannel) VALUES (@guild, @levelsys, @welcomemsg, @farewellmsg, @prefix, @welcomefarewellchannel);");
   client.getVictimGameScore = sql.prepare("SELECT * FROM victimGameScores WHERE user = ? AND guild = ?");
@@ -150,8 +150,7 @@ client.on("message", message => {
       user: message.author.id,
       guild: message.guild.id,
       points: 0,
-      level: 1,
-      tableflips: 0
+      level: 1
     }
   }
   if (!settings) {
@@ -212,18 +211,6 @@ client.on("message", message => {
       client.setSettings.run(settings);
       message.channel.send(`Prefix has successfully been reset back to ${settings.prefix}`);
     }
-  }
-  try {
-  if (message.content === "(╯°□°）╯︵ ┻━┻") {
-    message.channel.send("┬─┬ ノ( ゜-゜ノ)")
-    score.tableflips++
-    client.setScore.run(score);
-    if (score.tableflips > 50)
-      message.reply("STOP FLIPPING THE GOD DAMN TABLES")
-  }
-  }
-  catch (err) {
-    message.channel.send(err)
   }
   if (message.content.toLowerCase().indexOf(prefix) !== 0) return;
   const args = message.content.slice(prefix.toLowerCase().length).trim().split(/ +/g);
