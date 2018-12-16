@@ -1,14 +1,14 @@
- // const http = require('http');
- // const express = require('express');
- // const app = express();
- // app.get("/", (request, response) => {
- //   //console.log(Date.now() + " Ping Received");
- //   response.sendStatus(200);
- // });
- // app.listen(process.env.PORT);
- // setInterval(() => {
- //   http.get(`http://${process.env.PROJECT_DOMAIN}.glitch.me/`);
- // }, 200000);
+ const http = require('http');
+ const express = require('express');
+ const app = express();
+ app.get("/", (request, response) => {
+   //console.log(Date.now() + " Ping Received");
+   response.sendStatus(200);
+ });
+ app.listen(process.env.PORT);
+ setInterval(() => {
+   http.get(`http://${process.env.PROJECT_DOMAIN}.glitch.me/`);
+ }, 200000);
 // Dependancies
 const Discord = require("discord.js");
 const client = new Discord.Client();
@@ -16,9 +16,6 @@ const fs = require("fs");
 const weather = require("weather-js");
 const SQLite = require("better-sqlite3");
 const sql = new SQLite('./database/db.sqlite');
-const ytdl = require('ytdl-core');
-const google = require('googleapis')
-const opus = require("opusscript");
 const Enmap = require('enmap');
 const Set = require("es6-set");
 var Long = require("long");
