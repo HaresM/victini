@@ -8,7 +8,7 @@ exports.run = async (client, message, args, level) => {// eslint-disable-line no
 
 exports.conf = {
   enabled: true,
-  aliases: [],
+  aliases: ["restart"],
   permLevel: "Bot Admin"
 };
 
