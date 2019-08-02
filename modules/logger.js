@@ -3,7 +3,6 @@ Logger class for easy and aesthetically pleasing console logging
 */
 const chalk = require("chalk");
 const moment = require("moment");
-const fs = require('fs');
 
 exports.log = (content, type = "log") => {
   const timestamp = `[${moment().format("YYYY-MM-DD HH:mm:ss")}]:`;
@@ -22,9 +21,6 @@ exports.log = (content, type = "log") => {
     }
     case "cmd": {
       return console.log(`${timestamp} ${chalk.black.bgWhite(type.toUpperCase())} ${content}`);
-      fs.appendFile('commandlog.txt', `${timestamp} ${chalk.black.bgWhite(type.toUpperCase())} ${content}`, function (err) {
-        if (err) throw err;
-      });
     }
     case "ready": {
       return console.log(`${timestamp} ${chalk.black.bgGreen(type.toUpperCase())} ${content}`);
