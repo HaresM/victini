@@ -4,6 +4,9 @@ module.exports = (client) => {
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min + 1)) + min; //The maximum is inclusive and the minimum is inclusive
   }
+  client.rand = (int) => {
+    return Math.floor(Math.random() * parseInt(int));
+  }
 
   /*
   PERMISSION LEVEL FUNCTION

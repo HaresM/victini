@@ -1,3 +1,11 @@
+const express = require('express');
+const app = express();
+app.get("/", (request, response) => {
+  // console.log(Date.now() + " Ping Received");
+  response.sendStatus(200);
+});
+app.listen(process.env.PORT);
+
 // discord.js libary and client setup
 const Discord = require("discord.js");
 const client = new Discord.Client();
@@ -12,6 +20,7 @@ require("./modules/functions.js")(client);
 client.logger = require("./modules/logger");
 client.config = require("./config/config.js");
 client.commands = new Enmap();
+client.aliases = new Enmap();
 client.settings = new Enmap({name: "settings"});
 
 const init = async () => {
