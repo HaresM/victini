@@ -1,4 +1,18 @@
+const fs = require("fs");
+const path = require('path');
 module.exports = (client) => {
+ //   client.traverseDir = (dir) => {
+ //   fs.readdirSync(dir).forEach(file => {
+ //     let fullPath = path.join(dir, file);
+ //     if (fs.lstatSync(fullPath).isDirectory()) {
+ //       return fullPath
+ //        console.log(fullPath);
+ //        client.traverseDir(fullPath);
+ //      } else {
+ //        console.log(fullPath);
+ //      }  
+ //   });
+ // }
   client.getRandomInt = (min, max) => {
     min = Math.ceil(min);
     max = Math.floor(max);

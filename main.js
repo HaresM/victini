@@ -12,6 +12,7 @@ const client = new Discord.Client();
 
 // Dependancies
 const { promisify } = require("util");
+const fs = require("fs");
 const readdir = promisify(require("fs").readdir);
 const Enmap = require("enmap");
 
@@ -27,6 +28,9 @@ const init = async () => {
 
   const commands = await readdir("./commands/");
   client.logger.log(`Loading a total of ${commands.length} commands.`);
+  // let category = fs.readdirSync("commands/", { withFileTypes: true })
+  //   .filter(dirent => dirent.isDirectory())
+  //   .map(dirent => dirent.name)
   commands.forEach(f => {
     if (!f.endsWith(".js")) return;
     const response = client.loadCommand(f);
