@@ -7,7 +7,7 @@ exports.run = async (client, message, args, level) => { // eslint-disable-line n
   message.channel.send(`= SERVER STATISTICS =
 • Users      :: ${message.guild.memberCount.toLocaleString()}
 • Channels   :: ${message.guild.channels.size.toLocaleString()}
-•  Roles      :: ${message.guild.roles.size}
+• Roles      :: ${message.guild.roles.size}
 `, {code: "asciidoc"});
 };
 

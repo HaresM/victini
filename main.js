@@ -9,6 +9,7 @@ app.listen(process.env.PORT);
 // discord.js libary and client setup
 const Discord = require("discord.js");
 const client = new Discord.Client();
+client.embed = new Discord.RichEmbed()
 
 // Dependancies
 const { promisify } = require("util");
